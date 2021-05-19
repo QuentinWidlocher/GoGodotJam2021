@@ -1,5 +1,4 @@
-# ggj/Space
-
+# GoGodotJam 2021
 
 
 ## Getting Started
