@@ -9,18 +9,21 @@ jobs:
     builds:
         name: Builds
         runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            platform: [ linux, windows ]
         steps:
-            - name: Build for Windows
+            - name: Build for ${{ matrix.platform }}
+              id: build
               uses: josephbmanley/build-godot-action@v1.4.1
               with:
                   name: GoGodotJam2021
-                  preset: windows
-
-            - name: Build for Linux
-              uses: josephbmanley/build-godot-action@v1.4.1
+                  preset: ${{ matrix.platform }}
+            - name: Upload ${{ matrix.platform }} artifact
+              uses: actions/upload-artifact@v2
               with:
-                  name: GoGodotJam2021
-                  preset: linux
+                name: ${{ matrix.platform }} build
+                path: ${{ github.workspace }}/${{ steps.build.outputs.build }}
 
     sonarcloud:
         name: SonarCloud
