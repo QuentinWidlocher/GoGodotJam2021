@@ -15,7 +15,7 @@ jobs:
         steps:
             - name: Build for ${{ matrix.platform }}
               id: build
-              uses: josephbmanley/build-godot-action@v1.4.1
+              uses: josephbmanley/build-godot-action@master
               with:
                   name: GoGodotJam2021
                   preset: ${{ matrix.platform }}
