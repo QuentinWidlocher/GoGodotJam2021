@@ -15,11 +15,10 @@ jobs:
         steps:
             - name: Build for ${{ matrix.platform }}
               id: build
-              uses: josephbmanley/build-godot-action@master
+              uses: josephbmanley/build-godot-action@v1.4.1
               with:
                   name: GoGodotJam2021
                   preset: ${{ matrix.platform }}
-                  projectDir: "./"
             - name: Upload ${{ matrix.platform }} artifact
               uses: actions/upload-artifact@v2
               with:

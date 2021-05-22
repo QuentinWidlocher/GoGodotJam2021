@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoGodotJam 2021", "GoGodotJam 2021.csproj", "{997B97DC-381F-4ED8-BDCA-7973B3AAEB04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoGodotJam 2021", "GoGodotJam2021.csproj", "{997B97DC-381F-4ED8-BDCA-7973B3AAEB04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
