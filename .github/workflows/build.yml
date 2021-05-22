@@ -19,6 +19,7 @@ jobs:
               with:
                   name: GoGodotJam2021
                   preset: ${{ matrix.platform }}
+                  projectDir: "./"
             - name: Upload ${{ matrix.platform }} artifact
               uses: actions/upload-artifact@v2
               with:
