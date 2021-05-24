@@ -14,6 +14,14 @@ public struct PlayerStat
         Defense = 1,
         MovingSpeed = 1,
     };
+    
+    public static PlayerStat BaseModifiers = new PlayerStat
+    {
+        HealthPoints = 1,
+        DamageDealt = 1,
+        Defense = 1,
+        MovingSpeed = 1,
+    };
 
     public override string ToString() =>
         $"{nameof(HealthPoints)}: {HealthPoints}, {nameof(DamageDealt)}: {DamageDealt}, {nameof(Defense)}: {Defense}, {nameof(MovingSpeed)}: {MovingSpeed}";
@@ -29,13 +37,7 @@ public class StatSystem : Node
     /**
      * Modifiers to apply to the base stats to get the actual stats. Start at 1 so nothing changes
      */
-    public static PlayerStat StatModifiers = new PlayerStat
-    {
-        HealthPoints = 1,
-        DamageDealt = 1,
-        Defense = 1,
-        MovingSpeed = 1,
-    };
+    public static PlayerStat StatModifiers = PlayerStat.BaseModifiers;
 
     /**
      * Actual player stats, readonly. Only the modifiers should change
