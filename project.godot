@@ -11,7 +11,13 @@ config_version=4
 [application]
 
 config/name="GoGodotJam2021"
+run/main_scene="res://Node.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+StatSystem="*res://Scripts/Singletons/StatSystem.cs"
+Test="*res://Scripts/Singletons/Test.cs"
 
 [physics]
 
