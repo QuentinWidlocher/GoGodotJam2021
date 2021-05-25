@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Levels/Wall.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=2]
+
+[node name="TestRoom" type="Node2D"]
+
+[node name="Wall" parent="." instance=ExtResource( 1 )]
+position = Vector2( 288, 568 )
+
+[node name="Wall15" parent="." instance=ExtResource( 1 )]
+position = Vector2( 224, 568 )
+
+[node name="Wall2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 352, 568 )
+
+[node name="Wall3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 416, 568 )
+
+[node name="Wall4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 480, 568 )
+
+[node name="Wall5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 544, 568 )
+
+[node name="Wall6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 608, 568 )
+
+[node name="Wall7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 672, 568 )
+
+[node name="Wall8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 736, 568 )
+
+[node name="Wall9" parent="." instance=ExtResource( 1 )]
+position = Vector2( 608, 376 )
+
+[node name="Wall10" parent="." instance=ExtResource( 1 )]
+position = Vector2( 672, 376 )
+
+[node name="Wall11" parent="." instance=ExtResource( 1 )]
+position = Vector2( 736, 376 )
+
+[node name="Wall12" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160, 224 )
+
+[node name="Wall13" parent="." instance=ExtResource( 1 )]
+position = Vector2( 224, 224 )
+
+[node name="Wall14" parent="." instance=ExtResource( 1 )]
+position = Vector2( 288, 224 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 480, 288 )
+Gravity = 50.0
+Acceleration = 150.0
+MaxVelocity = 500.0
+Friction = 0.75
+JumpVelocity = 900.0
+JumpTime = 0.15
