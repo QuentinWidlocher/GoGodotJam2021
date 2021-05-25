@@ -11,6 +11,7 @@ config_version=4
 [application]
 
 config/name="GoGodotJam2021"
+run/main_scene="res://Node.tscn"
 config/icon="res://icon.png"
 
 [input]
@@ -51,6 +52,12 @@ attack_main={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
+
+[autoload]
+
+StatSystem="*res://Scripts/Singletons/StatSystem.cs"
+Test="*res://Scripts/Singletons/Test.cs"
+
 
 [physics]
 
