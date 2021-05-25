@@ -9,7 +9,10 @@ extents = Vector2( 32, 32 )
 [node name="Player" type="KinematicBody2D"]
 modulate = Color( 0.827451, 0, 0, 1 )
 script = ExtResource( 2 )
+Gravity = 40.0
 Friction = 0.8
+JumpVelocity = 500.0
+JumpTime = 0.1
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

@@ -53,8 +53,6 @@ position = Vector2( 288, 224 )
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 480, 288 )
 Gravity = 50.0
-Acceleration = 150.0
-MaxVelocity = 500.0
 Friction = 0.75
 JumpVelocity = 900.0
 JumpTime = 0.15
