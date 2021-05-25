@@ -7,8 +7,12 @@ public class Test : Node
 {
 	private RichTextLabel ValueLabel = null!;
 	private RichTextLabel DeltaLabel = null!;
+	
 	private Button Generator1Button = null!;
 	private Button Upgrade1Button = null!;
+	
+	private Button Generator2Button = null!;
+	private Button Upgrade2Button = null!;
 
 	private float PreviousCurrency;
 		
@@ -16,10 +20,15 @@ public class Test : Node
 	{
 		ValueLabel = GetNode<RichTextLabel>("Value");
 		DeltaLabel = GetNode<RichTextLabel>("Delta");
+		
 		Generator1Button = GetNode<Button>("Generator1");
 		Upgrade1Button = GetNode<Button>("Upgrade1");
+		
+		Generator2Button = GetNode<Button>("Generator2");
+		Upgrade2Button = GetNode<Button>("Upgrade2");
 
 		UpdateButtonLabel(Generator01, Generator1Button, Upgrade1Button);
+		UpdateButtonLabel(Generator02, Generator2Button, Upgrade2Button);
 	}
 
 	public override void _Process(float delta)
@@ -30,11 +39,14 @@ public class Test : Node
 
 		PreviousCurrency = IdleSystem.Currency;
 		
-		ValueLabel.Text = $"Total currency : {Math.Round(IdleSystem.Currency, 2)} Mana";
+		ValueLabel.Text = $"Total : {Math.Round(IdleSystem.Currency, 2)} Mana";
 		DeltaLabel.Text = $"Production : {Math.Round(IdleSystem.Production, 2)} Mana/s";
 
 		Generator1Button.Disabled = !IdleSystem.CanAffordGenerator(Generator01);
 		Upgrade1Button.Disabled = !IdleSystem.CanAffordUpgrade(Generator01);
+		
+		Generator2Button.Disabled = !IdleSystem.CanAffordGenerator(Generator02);
+		Upgrade2Button.Disabled = !IdleSystem.CanAffordUpgrade(Generator02);
 	}
 
 	public void OnGenerator1Pressed()
@@ -47,6 +59,18 @@ public class Test : Node
 	{
 		IdleSystem.BuyUpgrade(Generator01);
 		UpdateButtonLabel(Generator01, Generator1Button, Upgrade1Button);
+	}
+	
+	public void OnGenerator2Pressed()
+	{
+		IdleSystem.BuyGenerator(Generator02);
+		UpdateButtonLabel(Generator02, Generator2Button, Upgrade2Button);
+	}
+	
+	public void OnUpgrade2Pressed()
+	{
+		IdleSystem.BuyUpgrade(Generator02);
+		UpdateButtonLabel(Generator02, Generator2Button, Upgrade2Button);
 	}
 
 	private static void UpdateButtonLabel(GeneratorId id, Button button, Button upgradeButton)

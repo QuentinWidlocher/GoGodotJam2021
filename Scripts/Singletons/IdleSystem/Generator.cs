@@ -13,18 +13,16 @@ public class Generator
     // How much the cost of the generator goes up when bought
     public float CostMultiplier;
     // How many upgrades the generator got
-    public int Upgrades = 1;
-    // How much Mana the upgrade code by default
-    public float UpgradeCostBase = 1;
+    public int Upgrades;
     // How many generators like this are bought
-    public int Bought;
+    public float Bought;
     
     // Compute the production by using the parameters 
     public Func<Generator, float> ProductionFormula = g => g.ProductionBase;
     // Compute the cost by using the parameters
     public Func<Generator, float> CostFormula = g => g.CostBase;
     // Compute the upgrade cost by using the parameters
-    public Func<Generator, float> UpgradeCostFormula = g => g.UpgradeCostBase;
+    public Func<Generator, float> UpgradeCostFormula = g => g.CostBase;
 
     /**
      * Computed values for the costs and the production
@@ -33,5 +31,8 @@ public class Generator
     public float Production => ProductionFormula(this);
     public float UpgradeCost => UpgradeCostFormula(this);
 
-    public override string ToString() => $"{nameof(Generator)} | {nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(ProductionBase)}: {ProductionBase}, {nameof(CostBase)}: {CostBase}, {nameof(CostMultiplier)}: {CostMultiplier}, {nameof(Upgrades)}: {Upgrades}, {nameof(UpgradeCostBase)}: {UpgradeCostBase}, {nameof(Bought)}: {Bought}";
+    public override string ToString()
+    {
+        return $"{nameof(Generator)} | {nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(ProductionBase)}: {ProductionBase}, {nameof(CostBase)}: {CostBase}, {nameof(CostMultiplier)}: {CostMultiplier}, {nameof(Upgrades)}: {Upgrades}, {nameof(Bought)}: {Bought}";
+    }
 }

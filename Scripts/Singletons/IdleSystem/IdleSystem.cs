@@ -18,14 +18,24 @@ public class IdleSystem : Timer
         {
             Id = GeneratorId.Generator01,
             Name = "Mana Sap Tap",
-            ProductionBase = 0.3f,
-            ProductionFormula = g => Mathf.Pow(g.Bought, g.ProductionBase),
-            CostBase = 0.5f,
-            CostMultiplier = 1.3f,
+            ProductionBase = 0.4f,
+            CostBase = 0.6f,
+            CostMultiplier = 1.5f,
+            ProductionFormula = g => Mathf.Pow(Mathf.Pow(g.Bought, g.Upgrades + 1), g.ProductionBase)/2,
             CostFormula = g => g.CostBase * Mathf.Pow(g.CostMultiplier, g.Bought),
-            UpgradeCostBase = 25f,
-            UpgradeCostFormula = g => Mathf.Pow(g.UpgradeCostBase, g.Upgrades),
+            UpgradeCostFormula = g => 40 * Mathf.Pow(g.Upgrades + 1, 2),
             Bought = 1,
+        },
+        new Generator
+        {
+            Id = GeneratorId.Generator02,
+            Name = "Prophecy Sword",
+            ProductionBase = 1f,
+            CostBase = 15f,
+            CostMultiplier = 1.6f,
+            ProductionFormula = g => Mathf.Pow(Mathf.Pow(g.Bought, g.Upgrades + 1), g.ProductionBase)/2,
+            CostFormula = g => g.CostBase * Mathf.Pow(g.CostMultiplier, g.Bought),
+            UpgradeCostFormula = g => 80 * Mathf.Pow(g.Upgrades + 1, 2),
         }
     };
 
@@ -33,6 +43,7 @@ public class IdleSystem : Timer
     {
         // We update the currency each seconds (by default)
         Connect("timeout", this, nameof(UpdateCurrency));
+        WaitTime = .5f;
         Start();
 
         ComputeProduction();
@@ -59,7 +70,7 @@ public class IdleSystem : Timer
         if (generator?.UpgradeCost <= Currency)
         {
             Currency -= generator.UpgradeCost;
-            generator.Bought = 0;
+            generator.Bought = 1;
             generator.Upgrades++;
             ComputeProduction();
         }
