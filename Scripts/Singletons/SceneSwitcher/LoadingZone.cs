@@ -5,7 +5,7 @@ public class LoadingZone : Area2D
 {
 	[Export] public readonly Scene ToScene;
 	[Export] public readonly string? FromId;
-	[Export] public string Id = "FROM_X_TO_Y_#1";
+	[Export] public string Id = "X_TO_Y_1";
 
 	public Position2D Spawn = null!;
 
