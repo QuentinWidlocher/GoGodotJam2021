@@ -22,7 +22,7 @@ public class Player : KinematicBody2D
     private Vector2 _vel;
     private int _jumps = 0;
     private float _jumpTimer = 0;
-    private PackedScene _bolt = GD.Load<PackedScene>("res://Scenes/Player/Bolt.tscn");
+    private readonly PackedScene _bolt = GD.Load<PackedScene>("res://Scenes/Player/Bolt.tscn");
     private bool _isFacingRight = true;
     private bool _isAimingUp = true;
     private bool _hasLanded = false;
@@ -78,10 +78,7 @@ public class Player : KinematicBody2D
         _vel.x *= Friction;
 
         if (Input.IsActionJustPressed("attack_main")) {
-            var bolt = (Bolt)_bolt.Instance();
-            var facing = _isFacingRight ? Vector2.Right : Vector2.Left;
-            bolt.Shoot(Position + 32 * facing, facing);
-            GetParent().AddChild(bolt);
+            Attack();
         }
 
         // Applying the gravity before jumping so the jump velocity isn't affected by gravity
@@ -109,5 +106,16 @@ public class Player : KinematicBody2D
         if (!Input.IsActionPressed("jump") && _jumpTimer >= JumpTime) {
             _jumpTimer = 0;
         }
+    }
+
+    public void Attack()
+    {
+        var bolt = (Bolt)_bolt.Instance();
+        bolt.Damage = StatSystem.PlayerStat.DamageDealt;
+        
+        var facing = _isFacingRight ? Vector2.Right : Vector2.Left;
+        bolt.Shoot(Position + 32 * facing, facing);
+        
+        GetParent().AddChild(bolt);
     }
 }
