@@ -25,7 +25,15 @@ public class Player : KinematicBody2D
     private PackedScene _bolt = GD.Load<PackedScene>("res://Scenes/Player/Bolt.tscn");
     private bool _isFacingRight = true;
     private bool _isAimingUp = true;
+    private bool _hasLanded = false;
+    private AnimatedSprite _sprite = null!;
+    private AnimationPlayer _animations = null!;
 
+    public override void _Ready()
+    {
+        _sprite = (AnimatedSprite)GetNode("AnimatedSprite");
+        _animations = (AnimationPlayer)GetNode("AnimationPlayer");
+    }
 
     public override void _PhysicsProcess(float delta) {
         GetInput(delta);
@@ -33,12 +41,20 @@ public class Player : KinematicBody2D
         _vel = MoveAndSlide(_vel, Vector2.Up);
 
         if (IsOnFloor()) {
+            if (!_hasLanded) {
+                _animations.Play("landing");
+            }
+            _hasLanded = true;
+
             _jumps = 0;
         }
+        if (!IsOnFloor()) { _hasLanded = false; }
         // Preventing the player from continuing their jump when bonking on a ceiling
         if (IsOnCeiling()) {
             _jumpTimer = JumpTime;
         }
+
+        _sprite.FlipH = !_isFacingRight;
     }
 
     public void GetInput(float delta)
@@ -72,6 +88,12 @@ public class Player : KinematicBody2D
         _vel.y += Gravity;
         
         // When the jump button is held, _jumpTimer counts up to only let the player gain y velocity until JumpTime is reached
+        if (Input.IsActionJustPressed("jump")) {
+            if (_jumps < MaxJumps) {
+                _animations.Stop();
+                _animations.Play("jump");
+            }
+        }
         if (Input.IsActionPressed("jump")) {
             _jumpTimer += delta;
             if (_jumpTimer < JumpTime && _jumps < MaxJumps) {
