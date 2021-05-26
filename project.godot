@@ -11,13 +11,14 @@ config_version=4
 [application]
 
 config/name="GoGodotJam2021"
-run/main_scene="res://Node.tscn"
+run/main_scene="res://Scenes/Levels/Zones/Hub.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 StatSystem="*res://Scripts/Singletons/StatSystem.cs"
 Test="*res://Scripts/Singletons/Test.cs"
+SceneSwitcher="*res://Scripts/Singletons/SceneSwitcher/SceneSwitcher.cs"
 
 [importer_defaults]
 
