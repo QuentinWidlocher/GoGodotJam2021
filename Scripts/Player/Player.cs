@@ -4,17 +4,17 @@ using System;
 public class Player : KinematicBody2D
 {
     [Export]
-    public float Gravity = 400;
+    public float Gravity = 50;
     [Export]
-    public float Acceleration = 100;
+    public float Acceleration = 150;
     [Export]
-    public float MaxVelocity = 400;
+    public float MaxVelocity = 500;
     [Export]
-    public float Friction = 0.8f;
+    public float Friction = 0.75f;
     [Export]
-    public float JumpVelocity = 5000;
+    public float JumpVelocity = 900;
     [Export]
-    public float JumpTime = 0.3f;
+    public float JumpTime = 0.15f;
     
     // MaxJumps is public to change the number of max jumps from other classes (is there a better way to do this?)
     public int MaxJumps = 2;

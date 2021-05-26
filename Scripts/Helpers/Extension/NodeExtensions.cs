@@ -5,12 +5,42 @@ using Godot;
 
 namespace Helpers
 {
-
     public static class NodeExtensions
     {
-        public static IEnumerable<T> GetChildrenWhere<T>(this Node instance, Func<T, bool> predicate)
+        public static IEnumerable<T> GetChildrenWhere<T>(this Node instance, Func<T, bool> predicate) where T : Node
         {
-            return instance.GetChildren().Cast<T>().Where(predicate);
+            return instance.GetChildren().OfType<T>().Where(predicate);
+        }
+        
+        /**
+         * If FindNode() and GetChildrenWhere() had a baby
+         */
+        public static T? FindInChildrenWhere<T>(this Node instance, Func<T, bool>? predicate = null, bool recursive = true) where T : Node
+        {
+            // We start by getting all the children of the searched type
+            var results = instance.GetChildren().OfType<T>();
+
+            // We filter the list if possible
+            if (predicate != null)
+                results = results.Where(predicate);
+
+            // If we don't have a result yet, but told to keep looking...
+            if (recursive && !results.Any())
+            {
+                // ... we iterate over each child and do a recursive call
+                T? result = null;
+                foreach (var node in instance.GetChildren().Cast<Node>())
+                {
+                    // The first to gives a result is taken
+                    result ??= node.FindInChildrenWhere(predicate, recursive);
+                    if (result != null) break;
+                }
+
+                return result;
+            }
+
+            // If we have a result or don't (but don't need to keep searching) we return
+            return results.FirstOrDefault();
         }
     }
 }

@@ -1,0 +1,138 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Scenes/Levels/LoadingZone.tscn" type="PackedScene" id=4]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
+
+[sub_resource type="TileSet" id=2]
+0/name = "Sprite"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 32, 32 )
+0/navigation_offset = Vector2( 32, 32 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 1 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[sub_resource type="DynamicFont" id=3]
+size = 45
+font_data = ExtResource( 3 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 26.6214, 65.0764 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 24
+font_data = ExtResource( 3 )
+
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 6 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 2 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 65536, 0, 0, 65548, 0, 0, 131084, 0, 0, 196620, 0, 0, 262144, 0, 0, 262156, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 749.715, 415.209 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 111.1
+margin_top = 92.7555
+margin_right = 725.1
+margin_bottom = 154.756
+theme = SubResource( 4 )
+text = "Welcome to the First Zone !"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoadingZoneToHub" parent="." instance=ExtResource( 4 )]
+FromId = "HUB_TO_FZ_1"
+Id = "FZ_TO_HUB_1"
+
+[node name="CollisionShape2D" parent="LoadingZoneToHub" index="0"]
+position = Vector2( 9.77723, 384.471 )
+shape = SubResource( 5 )
+
+[node name="Spawn" parent="LoadingZoneToHub" index="1"]
+position = Vector2( 79.1114, 415.209 )
+
+[node name="LoadingZoneToHub2" parent="." instance=ExtResource( 4 )]
+FromId = "HUB_TO_FZ_2"
+Id = "FZ_TO_HUB_2"
+
+[node name="CollisionShape2D" parent="LoadingZoneToHub2" index="0"]
+position = Vector2( -0.901482, 190.919 )
+shape = SubResource( 5 )
+
+[node name="Spawn" parent="LoadingZoneToHub2" index="1"]
+position = Vector2( 72.976, 190.819 )
+
+[node name="Label2" type="Label" parent="LoadingZoneToHub2"]
+margin_left = 93.0336
+margin_top = 269.953
+margin_right = 276.034
+margin_bottom = 302.953
+rect_pivot_offset = Vector2( 330.81, 214.486 )
+theme = SubResource( 7 )
+text = "< To Hub"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoadingZoneToSecondZone" parent="." instance=ExtResource( 4 )]
+ToScene = 2
+FromId = "SZ_TO_FZ_1"
+Id = "FZ_TO_SZ_1"
+
+[node name="CollisionShape2D" parent="LoadingZoneToSecondZone" index="0"]
+position = Vector2( 835.321, 383.411 )
+shape = SubResource( 5 )
+
+[node name="Spawn" parent="LoadingZoneToSecondZone" index="1"]
+position = Vector2( 749.715, 414.978 )
+
+[node name="Label2" type="Label" parent="LoadingZoneToSecondZone"]
+margin_left = 588.566
+margin_top = 369.853
+margin_right = 771.566
+margin_bottom = 402.853
+rect_pivot_offset = Vector2( 330.81, 214.486 )
+theme = SubResource( 7 )
+text = "To Second Zone >"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[editable path="LoadingZoneToHub"]
+[editable path="LoadingZoneToHub2"]
+[editable path="LoadingZoneToSecondZone"]
