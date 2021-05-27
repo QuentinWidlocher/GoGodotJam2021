@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using Godot;
+using Helpers;
 
 public class Enemy01 : RigidBasicEnemy
 {
     [Export] public float JumpForce = 10;
     [Export] public float JumpEveryXSec = 1;
+    [Export] public float Damage = 1; 
     public new float MaxHealthPoints = 2f;
 
     private Timer _timer = null!;
@@ -30,9 +32,22 @@ public class Enemy01 : RigidBasicEnemy
         {
             PrepareJump();
         }
+
+        foreach (var body in GetCollidingBodies())
+        {
+            if (body is Player player)
+            {
+                player.Hit(Damage, this);
+            }
+        }
     }
 
-    public void OnBodyEntered(Node body)
+    public void OnBodyTouched(Node body)
+    {
+        
+    }
+
+    public void OnDetectionZoneEntered(Node body)
     {
         if (body is Player target)
         {
@@ -40,7 +55,7 @@ public class Enemy01 : RigidBasicEnemy
         }
     }
 
-    public void OnBodyExited(Node body)
+    public void OnDetectionZoneExited(Node body)
     {
         if (body is Player)
         {

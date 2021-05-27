@@ -1,19 +1,29 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Enemies/Enemy01.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/Helpers/Signals/HitSignaler.cs" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 31, 31 )
+
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 30, 30 )
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 420.0
 
+[sub_resource type="OccluderPolygon2D" id=3]
+polygon = PoolVector2Array( -30, -30, 30, -30, 30, 30, -30, 30 )
+
 [node name="Enemy01" type="RigidBody2D"]
 collision_layer = 0
+collision_mask = 3
 mode = 2
 gravity_scale = 3.0
+contacts_reported = 3
+contact_monitor = true
+can_sleep = false
 script = ExtResource( 2 )
 JumpForce = 100.0
 
@@ -26,7 +36,7 @@ collision_mask = 2
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.333333, 0.333333, 0.333333, 1 )
@@ -43,8 +53,13 @@ shape = SubResource( 2 )
 
 [node name="FloorCast" type="RayCast2D" parent="."]
 enabled = true
-cast_to = Vector2( 0, 30 )
+cast_to = Vector2( 0, 35 )
 
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
+occluder = SubResource( 3 )
+
+[connection signal="body_entered" from="." to="." method="OnBodyTouched"]
 [connection signal="OnHitRelay" from="KinematicBody2D" to="." method="OnHit"]
-[connection signal="body_entered" from="DetectionRadius" to="." method="OnBodyEntered"]
-[connection signal="body_exited" from="DetectionRadius" to="." method="OnBodyExited"]
+[connection signal="body_entered" from="DetectionRadius" to="." method="OnDetectionZoneEntered"]
+[connection signal="body_exited" from="DetectionRadius" to="." method="OnDetectionZoneExited"]
