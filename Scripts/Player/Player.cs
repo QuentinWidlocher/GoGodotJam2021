@@ -13,7 +13,7 @@ public class Player : KinematicBody2D
     [Export] public float JumpVelocity = 900f;
     [Export] public float JumpTime = 0.15f;
     [Export] public float DashForce = 1000f;
-    [Export] public int DashDuration = 100;
+    [Export] public int DashDuration = 250;
     [Export] public int DashCoolDown = 500;
     [Export] public float KnockbackForce = 500;
     [Export] public int InvicibilityCoolDown = 1500;
@@ -29,15 +29,31 @@ public class Player : KinematicBody2D
     private bool _isFacingRight = true;
     private bool _isAimingUp = true;
     private bool _hasLanded = false;
-    private bool _vulnerable = true;
     private Vector2 _knockingBack; // over my shouuulder 🎵
     private AnimatedSprite _sprite = null!;
     private AnimationPlayer _animations = null!;
-    
+
     private bool _isDashing;
     private bool _canDash = true;
 
-    private Vector2 _facingDirection => _isFacingRight ? Vector2.Right : Vector2.Left;
+    private Vector2 FacingDirection => _isFacingRight ? Vector2.Right : Vector2.Left;
+    private bool HaveJumpsLeft => _jumps < MaxJumps;
+
+    private bool _vulnerable = true;
+    private bool Vulnerable
+    {
+        get => _vulnerable;
+        set
+        {
+            _vulnerable = value;
+            // Uncheck the player layer and the enemy mask so we can walk through them 
+            SetCollisionLayerBit(1, value);
+            SetCollisionMaskBit(2, value);
+
+            byte alpha = (byte) (value ? 255 : 255 / 2);
+            Modulate = Color.Color8(255, 255, 255, alpha);
+        }
+    }
 
     public override void _Ready()
     {
@@ -112,7 +128,7 @@ public class Player : KinematicBody2D
         }
         else
         {
-            _vel = _facingDirection * DashForce;
+            _vel = FacingDirection * DashForce;
         }
 
         if (_knockingBack != Vector2.Zero)
@@ -170,7 +186,7 @@ public class Player : KinematicBody2D
         var bolt = (Bolt) _bolt.Instance();
         bolt.Damage = StatSystem.PlayerStat.DamageDealt;
 
-        bolt.Shoot(Position + 32 * _facingDirection, _facingDirection);
+        bolt.Shoot(Position + 32 * FacingDirection, FacingDirection);
 
         GetParent().AddChild(bolt);
     }
@@ -178,24 +194,30 @@ public class Player : KinematicBody2D
     public void Dash()
     {
         // You can only dash if you're not already dashing, are on the ground and can dash 
-        if (_isDashing || !_hasLanded || !_canDash) return;
-        
+        if (_isDashing || !HaveJumpsLeft || !_canDash) return;
+
         _isDashing = true;
         _canDash = false;
-        RunAfterDelay(_ => _isDashing = false, DashDuration)
-            .ThenAfterDelay(_ => _canDash = true, DashCoolDown);
+        Vulnerable = false;
+        _jumps++;
+        RunAfterDelay(() =>
+            {
+                _isDashing = false;
+                Vulnerable = true;
+            }, DashDuration)
+            .ThenAfterDelay(() => _canDash = true, DashCoolDown);
     }
 
     public void Hit(float damage, Node2D source)
     {
-        if (!_vulnerable) return;
-            
+        if (!Vulnerable) return;
+
         // _knockingBack is a force that's applied after the movement and gradually decreases over time 
         _knockingBack = (Position - source.Position).Normalized() * KnockbackForce;
 
-        _vulnerable = false;
-        RunAfterDelay(_ => _vulnerable = true, InvicibilityCoolDown);
-        
+        Vulnerable = false;
+        RunAfterDelay(() => Vulnerable = true, InvicibilityCoolDown);
+
         HealthPoints -= damage;
 
         if (HealthPoints <= 0)
