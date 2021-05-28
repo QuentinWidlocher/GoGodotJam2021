@@ -22,9 +22,9 @@ public class Player : KinematicBody2D
 
     // MaxJumps is public to change the number of max jumps from other classes (is there a better way to do this?)
     public int MaxJumps = 2;
+    public int RemainingHeal = StatSystem.PlayerStat.MaxHeals;
 
     private float _healthPoints;
-
     public float HealthPoints
     {
         get => _healthPoints;
@@ -34,7 +34,7 @@ public class Player : KinematicBody2D
             EmitSignal(nameof(HealthChange), value);
         }
     }
-
+    
     private Vector2 _vel;
     private int _jumps = 0;
     private float _jumpTimer = 0;
@@ -122,6 +122,11 @@ public class Player : KinematicBody2D
             {
                 Dash();
             }
+
+            if (Input.IsActionJustPressed("heal"))
+            {
+                Heal();
+            }
         }
         else
         {
@@ -175,6 +180,16 @@ public class Player : KinematicBody2D
         {
             _jumpTimer = 0;
         }
+    }
+
+    private void Heal()
+    {
+        if (RemainingHeal <= 0) return;
+
+        RemainingHeal--;
+        GD.Print($"Healing {StatSystem.PlayerStat.HealingAmount} points");
+        GD.Print($"{RemainingHeal} heal remaining");
+        HealthPoints += StatSystem.PlayerStat.HealingAmount;
     }
 
     public void Attack()
