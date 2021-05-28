@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Threading.Tasks;
+using GodotOnReady.Attributes;
 using Helpers;
 using static Helpers.TaskHelpers;
 
@@ -212,8 +213,9 @@ public class Player : KinematicBody2D
     {
         if (!Vulnerable) return;
 
-        // _knockingBack is a force that's applied after the movement and gradually decreases over time 
-        _knockingBack = (Position - source.Position).Normalized() * KnockbackForce;
+        // _knockingBack is a force that's applied after the movement and gradually decreases over time
+        var knockDirection = Position > source.Position ? 1 : -1;
+        _knockingBack = new Vector2(knockDirection, -0.5f) * KnockbackForce;
 
         Vulnerable = false;
         RunAfterDelay(() => Vulnerable = true, InvicibilityCoolDown);
