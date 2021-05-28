@@ -1,7 +1,5 @@
 using Godot;
 using System;
-using System.Threading.Tasks;
-using GodotOnReady.Attributes;
 using Helpers;
 using static Helpers.TaskHelpers;
 
@@ -19,9 +17,24 @@ public class Player : KinematicBody2D
     [Export] public float KnockbackForce = 500;
     [Export] public int InvicibilityCoolDown = 1500;
 
+    [Signal]
+    public delegate void HealthChange(float newValue);
+
     // MaxJumps is public to change the number of max jumps from other classes (is there a better way to do this?)
     public int MaxJumps = 2;
-    public float HealthPoints;
+    public int RemainingHeal = StatSystem.PlayerStat.MaxHeals;
+
+    private float _healthPoints;
+
+    public float HealthPoints
+    {
+        get => _healthPoints;
+        set
+        {
+            _healthPoints = value;
+            EmitSignal(nameof(HealthChange), value);
+        }
+    }
 
     private Vector2 _vel;
     private int _jumps = 0;
@@ -41,6 +54,7 @@ public class Player : KinematicBody2D
     private bool HaveJumpsLeft => _jumps < MaxJumps;
 
     private bool _vulnerable = true;
+
     private bool Vulnerable
     {
         get => _vulnerable;
@@ -126,6 +140,11 @@ public class Player : KinematicBody2D
             {
                 Dash();
             }
+
+            if (Input.IsActionJustPressed("heal"))
+            {
+                Heal();
+            }
         }
         else
         {
@@ -134,7 +153,6 @@ public class Player : KinematicBody2D
 
         if (_knockingBack != Vector2.Zero)
         {
-            GD.Print(_knockingBack);
             _vel += _knockingBack;
             _knockingBack = _knockingBack.LinearInterpolate(Vector2.Zero, .5f);
             if (_knockingBack.Length() < 1)
@@ -180,6 +198,14 @@ public class Player : KinematicBody2D
         {
             _jumpTimer = 0;
         }
+    }
+
+    private void Heal()
+    {
+        if (RemainingHeal <= 0) return;
+
+        RemainingHeal--;
+        HealthPoints += StatSystem.PlayerStat.HealingAmount;
     }
 
     public void Attack()

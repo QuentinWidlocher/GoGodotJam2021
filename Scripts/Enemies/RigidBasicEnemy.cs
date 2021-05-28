@@ -13,7 +13,6 @@ public abstract class RigidBasicEnemy : RigidBody2D
 
     public void OnHit(float damage)
     {
-        GD.Print("Ouch, ", damage, " damage on ", _healthPoints, " hp");
         _healthPoints -= damage;
 
         if (_healthPoints <= 0)

@@ -1,0 +1,127 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/Textures/HealBar.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/UI/VaniaUI.cs" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0, 0, 0, 0.235294 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Theme" id=2]
+Panel/styles/panel = SubResource( 11 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 24
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0.498039, 0, 0, 0.462745 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 1, 0.341176, 0.341176, 1 )
+border_color = Color( 0.393066, 0.105944, 0.105944, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="Theme" id=6]
+ProgressBar/colors/font_color = Color( 0.94, 0.94, 0.94, 1 )
+ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+ProgressBar/fonts/font = null
+ProgressBar/styles/bg = SubResource( 12 )
+ProgressBar/styles/fg = SubResource( 13 )
+
+[sub_resource type="CanvasItemMaterial" id=7]
+blend_mode = 1
+
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="StyleBoxLine" id=9]
+color = Color( 1, 1, 1, 1 )
+thickness = 4
+
+[sub_resource type="Theme" id=10]
+resource_local_to_scene = true
+ProgressBar/colors/font_color = Color( 0.94, 0.94, 0.94, 1 )
+ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+ProgressBar/fonts/font = null
+ProgressBar/styles/bg = SubResource( 8 )
+ProgressBar/styles/fg = SubResource( 9 )
+
+[node name="VaniaUI" type="CanvasLayer"]
+
+[node name="UI" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+PlayerPath = NodePath("../../Player")
+
+[node name="HealthBar" type="Control" parent="UI"]
+margin_left = 20.0
+margin_top = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UI/HealthBar"]
+margin_right = 276.0
+margin_bottom = 78.0
+theme = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/HealthBar"]
+margin_left = 18.2234
+margin_top = 4.00452
+margin_right = 75.2234
+margin_bottom = 32.0045
+custom_fonts/font = SubResource( 3 )
+text = "Health"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/HealthBar"]
+anchor_bottom = 0.35
+margin_left = 11.0
+margin_top = 35.0
+margin_right = 261.0
+margin_bottom = 50.0
+theme = SubResource( 6 )
+value = 50.0
+allow_greater = true
+allow_lesser = true
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealBar" type="TextureProgress" parent="UI/HealthBar"]
+material = SubResource( 7 )
+margin_left = 12.0
+margin_top = 54.6765
+margin_right = 262.0
+margin_bottom = 69.6765
+theme = SubResource( 10 )
+max_value = 13.0
+value = 5.0
+texture_progress = ExtResource( 2 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
