@@ -17,10 +17,23 @@ public class Player : KinematicBody2D
     [Export] public int DashCoolDown = 500;
     [Export] public float KnockbackForce = 500;
     [Export] public int InvicibilityCoolDown = 1500;
+    
+    [Signal] public delegate void HealthChange(float newValue);
 
     // MaxJumps is public to change the number of max jumps from other classes (is there a better way to do this?)
     public int MaxJumps = 2;
-    public float HealthPoints;
+
+    private float _healthPoints;
+
+    public float HealthPoints
+    {
+        get => _healthPoints;
+        set
+        {
+            _healthPoints = value;
+            EmitSignal(nameof(HealthChange), value);
+        }
+    }
 
     private Vector2 _vel;
     private int _jumps = 0;
@@ -117,7 +130,6 @@ public class Player : KinematicBody2D
 
         if (_knockingBack != Vector2.Zero)
         {
-            GD.Print(_knockingBack);
             _vel += _knockingBack;
             _knockingBack = _knockingBack.LinearInterpolate(Vector2.Zero, .5f);
             if (_knockingBack.Length() < 1)

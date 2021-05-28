@@ -9,7 +9,7 @@ public struct PlayerStat
 
     public static PlayerStat Default = new PlayerStat
     {
-        HealthPoints = 100,
+        HealthPoints = 10,
         DamageDealt = 1,
         Defense = 1,
         MovingSpeed = 1,
