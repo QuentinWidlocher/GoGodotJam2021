@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Scenes/Levels/LoadingZone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/Levels/Hub.cs" type="Script" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -46,14 +47,15 @@ font_data = ExtResource( 3 )
 default_font = SubResource( 5 )
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 124.593, 22.4492 )
+extents = Vector2( 23.7079, 63.6595 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Hub" type="Node2D"]
+script = ExtResource( 5 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 2 )
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 12, 0, 0, 65536, 0, 0, 65548, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 262156, 0, 0, 327680, 0, 0, 393216, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 12, 0, 0, 65536, 0, 0, 65548, 0, 0, 131072, 0, 0, 131084, 0, 0, 196608, 0, 0, 196620, 0, 0, 262144, 0, 0, 262156, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 127.961, 415.699 )
@@ -65,7 +67,21 @@ margin_right = 724.0
 margin_bottom = 76.0
 rect_pivot_offset = Vector2( 330.81, 214.486 )
 theme = SubResource( 4 )
-text = "Welcome to the hub !"
+text = "Welcome to the hub"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 565.34
+margin_top = 324.089
+margin_right = 794.34
+margin_bottom = 357.089
+rect_pivot_offset = Vector2( 17.5564, -112.363 )
+theme = SubResource( 6 )
+text = "Rest at the tree >"
 align = 1
 valign = 1
 __meta__ = {
@@ -73,13 +89,13 @@ __meta__ = {
 }
 
 [node name="Label2" type="Label" parent="."]
-margin_left = 500.428
-margin_top = 268.652
-margin_right = 683.428
-margin_bottom = 301.652
-rect_pivot_offset = Vector2( 330.81, 214.486 )
+margin_left = 64.4204
+margin_top = 324.089
+margin_right = 293.42
+margin_bottom = 357.089
+rect_pivot_offset = Vector2( 17.5564, -112.363 )
 theme = SubResource( 6 )
-text = "To First Zone >"
+text = "< Continue your journey"
 align = 1
 valign = 1
 __meta__ = {
@@ -92,35 +108,20 @@ FromId = "FZ_TO_HUB_1"
 Id = "HUB_TO_FZ_1"
 
 [node name="CollisionShape2D" parent="LoadingZoneToFirstZone" index="0"]
-position = Vector2( 830.622, 383.882 )
+position = Vector2( 18.5394, 383.882 )
 
 [node name="Spawn" parent="LoadingZoneToFirstZone" index="1"]
 position = Vector2( 744.192, 415.699 )
 
-[node name="LoadingZoneToFirstZone2" parent="." instance=ExtResource( 4 )]
-ToScene = 1
-FromId = "FZ_TO_HUB_2"
-Id = "HUB_TO_FZ_2"
+[node name="Sprite" parent="LoadingZoneToFirstZone/Spawn" index="0"]
+position = Vector2( -616.972, 0.375824 )
 
-[node name="CollisionShape2D" parent="LoadingZoneToFirstZone2" index="0"]
-position = Vector2( 836.234, 191.941 )
+[node name="Area2D" type="Area2D" parent="."]
 
-[node name="Spawn" parent="LoadingZoneToFirstZone2" index="1"]
-position = Vector2( 739.703, 197.553 )
-
-[node name="LoadingZoneToSecondZone" parent="." instance=ExtResource( 4 )]
-ToScene = 2
-FromId = "SZ_TO_HUB_1"
-Id = "HUB_TO_SZ_1"
-
-[node name="CollisionShape2D" parent="LoadingZoneToSecondZone" index="0"]
-position = Vector2( 420.923, -24.6942 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 826.202, 383.616 )
 shape = SubResource( 7 )
-disabled = true
 
-[node name="Spawn" parent="LoadingZoneToSecondZone" index="1"]
-position = Vector2( 423.168, 38.5711 )
+[connection signal="body_entered" from="Area2D" to="." method="OpenTreeMenu"]
 
 [editable path="LoadingZoneToFirstZone"]
-[editable path="LoadingZoneToFirstZone2"]
-[editable path="LoadingZoneToSecondZone"]
