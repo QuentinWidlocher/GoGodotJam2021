@@ -1,26 +1,30 @@
 using System.Threading.Tasks;
 using Godot;
 using Helpers;
+using static Helpers.TaskHelpers;
 
-public class Enemy01 : RigidBasicEnemy
+public class Enemy01 : RigidDetectionEnemy
 {
     [Export] public float JumpForce = 10;
     [Export] public float JumpEveryXSec = 1;
-    [Export] public float Damage = 1; 
+    [Export] public new float Damage = 1;
     public new float MaxHealthPoints = 2f;
 
     private Timer _timer = null!;
-    private RayCast2D _floorCast = null!;
-
-    private Node2D? _target;
+    private RayCast2D _floorCast1 = null!;
+    private RayCast2D _floorCast2 = null!;
+    
     private bool _preparingJump;
+
+    private bool OnGround => _floorCast1.IsColliding() || _floorCast2.IsColliding();
 
     public override void _Ready()
     {
         base._Ready();
         
         _timer = GetNode<Timer>("Timer");
-        _floorCast = GetNode<RayCast2D>("FloorCast");
+        _floorCast1 = GetNode<RayCast2D>("FloorCast1");
+        _floorCast2 = GetNode<RayCast2D>("FloorCast2");
 
         _timer.OneShot = true;
         _timer.Connect("timeout", this, nameof(Jump));
@@ -28,38 +32,12 @@ public class Enemy01 : RigidBasicEnemy
 
     public override void _Process(float delta)
     {
-        if (!_preparingJump && _target != null && _floorCast.IsColliding())
+        base._Process(delta);
+        
+        // We prepare to jump only if we're not already preparing to, if the player has been seen and if we're on ground
+        if (!_preparingJump && _hasSeenPlayer && _target != null && OnGround)
         {
             PrepareJump();
-        }
-
-        foreach (var body in GetCollidingBodies())
-        {
-            if (body is Player player)
-            {
-                player.Hit(Damage, this);
-            }
-        }
-    }
-
-    public void OnBodyTouched(Node body)
-    {
-        
-    }
-
-    public void OnDetectionZoneEntered(Node body)
-    {
-        if (body is Player target)
-        {
-            _target = target;
-        }
-    }
-
-    public void OnDetectionZoneExited(Node body)
-    {
-        if (body is Player)
-        {
-            _target = null;
         }
     }
 
@@ -84,11 +62,12 @@ public class Enemy01 : RigidBasicEnemy
 
     private void DisableFloorDetection(int ms)
     {
-        _floorCast.Enabled = false;
-        Task.Run(async () =>
+        _floorCast1.Enabled = false;
+        _floorCast2.Enabled = false;
+        RunAfterDelay(() =>
         {
-            await Task.Delay(ms);
-            _floorCast.Enabled = true;
-        });
+            _floorCast1.Enabled = true;
+            _floorCast2.Enabled = true;
+        }, ms);
     }
 }

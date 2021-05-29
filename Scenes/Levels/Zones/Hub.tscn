@@ -7,19 +7,19 @@
 [ext_resource path="res://Scripts/Levels/Hub.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/UI/VaniaUI.tscn" type="PackedScene" id=6]
 
-[sub_resource type="Gradient" id=10]
+[sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.364532, 0.995074 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=11]
-gradient = SubResource( 10 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=3]
 size = 45
 font_data = ExtResource( 3 )
 
-[sub_resource type="Theme" id=8]
-default_font = SubResource( 7 )
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 24
@@ -28,7 +28,7 @@ font_data = ExtResource( 3 )
 [sub_resource type="Theme" id=6]
 default_font = SubResource( 5 )
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 23.7079, 63.6595 )
 
 [node name="Hub" type="Node2D"]
@@ -39,12 +39,12 @@ PlayerPath = NodePath("Player")
 position = Vector2( 1123.73, 227.743 )
 rotation = 3.14159
 scale = Vector2( 0.347417, 294.668 )
-texture = SubResource( 11 )
+texture = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -252.152, 512.78 )
 scale = Vector2( 0.317143, 251.033 )
-texture = SubResource( 11 )
+texture = SubResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
@@ -60,7 +60,7 @@ margin_top = 14.0
 margin_right = 724.0
 margin_bottom = 76.0
 rect_pivot_offset = Vector2( 330.81, 214.486 )
-theme = SubResource( 8 )
+theme = SubResource( 4 )
 text = "Welcome to the hub"
 align = 1
 valign = 1
@@ -114,9 +114,12 @@ position = Vector2( -616.972, 0.375824 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 1007.2, 384.075 )
-shape = SubResource( 9 )
+shape = SubResource( 7 )
 
-[node name="VaniaUI" parent="." instance=ExtResource( 6 )]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VaniaUI" parent="CanvasLayer" instance=ExtResource( 6 )]
+PlayerPath = NodePath("../../Player")
 
 [connection signal="body_entered" from="Area2D" to="." method="OpenTreeMenu"]
 

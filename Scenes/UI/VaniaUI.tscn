@@ -59,25 +59,22 @@ ProgressBar/fonts/font = null
 ProgressBar/styles/bg = SubResource( 8 )
 ProgressBar/styles/fg = SubResource( 9 )
 
-[node name="VaniaUI" type="CanvasLayer"]
-
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-PlayerPath = NodePath("../../Player")
 
-[node name="HealthBar" type="Control" parent="UI"]
+[node name="HealthBar" type="Control" parent="."]
 margin_left = 20.0
 margin_top = 20.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="UI/HealthBar"]
+[node name="Panel" type="Panel" parent="HealthBar"]
 margin_right = 276.0
 margin_bottom = 78.0
 theme = SubResource( 2 )
@@ -85,7 +82,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="UI/HealthBar"]
+[node name="Label" type="Label" parent="HealthBar"]
 margin_left = 18.2234
 margin_top = 4.00452
 margin_right = 75.2234
@@ -96,7 +93,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ProgressBar" type="ProgressBar" parent="UI/HealthBar"]
+[node name="ProgressBar" type="ProgressBar" parent="HealthBar"]
 anchor_bottom = 0.35
 margin_left = 11.0
 margin_top = 35.0
@@ -111,7 +108,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealBar" type="TextureProgress" parent="UI/HealthBar"]
+[node name="HealBar" type="TextureProgress" parent="HealthBar"]
 material = SubResource( 7 )
 margin_left = 12.0
 margin_top = 54.6765

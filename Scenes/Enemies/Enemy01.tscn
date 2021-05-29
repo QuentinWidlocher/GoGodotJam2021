@@ -51,7 +51,13 @@ shape = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="FloorCast" type="RayCast2D" parent="."]
+[node name="FloorCast1" type="RayCast2D" parent="."]
+position = Vector2( -30.7013, 0 )
+enabled = true
+cast_to = Vector2( 0, 35 )
+
+[node name="FloorCast2" type="RayCast2D" parent="."]
+position = Vector2( 31.035, 0 )
 enabled = true
 cast_to = Vector2( 0, 35 )
 
@@ -59,7 +65,11 @@ cast_to = Vector2( 0, 35 )
 visible = false
 occluder = SubResource( 4 )
 
-[connection signal="body_entered" from="." to="." method="OnBodyTouched"]
+[node name="PlayerCast" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( -100, 100 )
+collision_mask = 3
+
 [connection signal="OnHitRelay" from="KinematicBody2D" to="." method="OnHit"]
 [connection signal="body_entered" from="DetectionRadius" to="." method="OnDetectionZoneEntered"]
 [connection signal="body_exited" from="DetectionRadius" to="." method="OnDetectionZoneExited"]

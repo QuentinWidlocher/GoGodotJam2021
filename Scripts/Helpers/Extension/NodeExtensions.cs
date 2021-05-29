@@ -7,9 +7,15 @@ namespace Helpers
 {
     public static class NodeExtensions
     {
+        
+        public static IEnumerable<T> GetChildren<T>(this Node instance) where T: Node
+        {
+            return instance.GetChildren().OfType<T>();
+        }
+        
         public static IEnumerable<T> GetChildrenWhere<T>(this Node instance, Func<T, bool> predicate) where T : Node
         {
-            return instance.GetChildren().OfType<T>().Where(predicate);
+            return instance.GetChildren<T>().Where(predicate);
         }
         
         /**
