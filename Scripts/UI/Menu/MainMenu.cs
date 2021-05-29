@@ -16,7 +16,7 @@ public class MainMenu : Control
 
 	public void OnContinueButtonPressed()
 	{
-		_sceneSwitcher.GoToScene(Scene.Hub);
+		_sceneSwitcher.Switch(Scene.Hub, "TO_HUB_1");
 	}
 	
 	public void OnExitButtonPressed()

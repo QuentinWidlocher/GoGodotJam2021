@@ -4,8 +4,6 @@ using Range = Godot.Range;
 
 public class VaniaUI : Control
 {
-	[Export] private NodePath PlayerPath = null!;
-
 	private Range _hpBar = null!;
 	private Range _healBar = null!;
 	private Player _player = null!;
@@ -14,7 +12,7 @@ public class VaniaUI : Control
 
 	public override void _Ready()
 	{
-		_player = GetNode<Player>(PlayerPath);
+		_player = GetNode<Player>("/root/Player");
 		_player.Connect(nameof(Player.HealthChange), this, nameof(OnPlayerHpChange));
 		
 		_hpBar = GetNode<Range>("HealthBar/ProgressBar");

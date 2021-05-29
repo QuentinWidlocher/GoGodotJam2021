@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="GoGodotJam2021"
-run/main_scene="res://Scenes/Levels/Zones/Hub.tscn"
+run/main_scene="res://Scenes/UI/Menu/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -20,6 +20,7 @@ StatSystem="*res://Scripts/Singletons/StatSystem.cs"
 Test="*res://Scripts/Singletons/Test.cs"
 SceneSwitcher="*res://Scripts/Singletons/SceneSwitcher/SceneSwitcher.cs"
 PauseScreen="*res://Scenes/UI/Menu/PauseScreen.tscn"
+Player="*res://Scenes/Player/Player.tscn"
 
 [importer_defaults]
 

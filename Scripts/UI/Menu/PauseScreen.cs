@@ -46,6 +46,6 @@ public class PauseScreen : Control
 	public void OnExitButtonPressed()
 	{
 		Pause(false);
-		_sceneSwitcher.GoToScene(Scene.MainMenu);
+		_sceneSwitcher.Switch(Scene.MainMenu);
 	}
 }

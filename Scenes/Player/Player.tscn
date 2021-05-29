@@ -63,7 +63,9 @@ tracks/0/keys = {
 "values": [ Vector2( 2, 2 ), Vector2( 2.4, 1.4 ), Vector2( 2, 2 ) ]
 }
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"ToSave",
+]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 2 )
@@ -79,7 +81,7 @@ shape = SubResource( 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 6 )
 animation = "idle"
-frame = 2
+frame = 1
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
