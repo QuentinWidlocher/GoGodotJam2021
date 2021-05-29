@@ -57,8 +57,13 @@ public class Player : KinematicBody2D
         {
             if (!_hasLanded)
             {
-                _animations.Play("landing");
+                //_animations.Play("landing");
             }
+            
+            if (Input.IsActionPressed("left") || Input.IsActionPressed("right"))
+                _sprite.Play("run");
+            else
+                _sprite.Play("idle");
 
             _hasLanded = true;
 
@@ -76,6 +81,18 @@ public class Player : KinematicBody2D
         }
 
         _sprite.FlipH = !_isFacingRight;
+
+        // Setting sprites by order of priority
+        if (_vel.y > 0)
+            _sprite.Play("fall");
+        if (_vel.y > 400)
+            _sprite.Play("fall_fast");
+
+        if (Input.IsActionPressed("attack_main"))
+            _sprite.Play("attack");
+
+        if (_isDashing)
+            _sprite.Play("dash");
     }
 
     public void GetInput(float delta)
@@ -137,8 +154,8 @@ public class Player : KinematicBody2D
         {
             if (_jumps < MaxJumps)
             {
-                _animations.Stop();
-                _animations.Play("jump");
+                //_animations.Stop();
+                //_animations.Play("jump");
             }
         }
 
@@ -148,6 +165,7 @@ public class Player : KinematicBody2D
             if (_jumpTimer < JumpTime && _jumps < MaxJumps)
             {
                 _vel.y = -JumpVelocity;
+                _sprite.Play("jump");
             }
         }
 
@@ -156,6 +174,8 @@ public class Player : KinematicBody2D
         {
             _jumps++;
             _jumpTimer = 0;
+            if (_jumps <= MaxJumps)
+                _sprite.Play("fall");
         }
 
         // This is just so _jumpTimer is zeroed even if the player hits a ceiling (which would set the timer to JumpTime)
@@ -202,6 +222,8 @@ public class Player : KinematicBody2D
         {
             Die();
         }
+
+        _animations.Play("hurt");
     }
 
     private void Die()

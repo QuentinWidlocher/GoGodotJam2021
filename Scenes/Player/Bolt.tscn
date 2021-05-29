@@ -1,14 +1,31 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Bolt.cs" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Assets/bolt.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Textures/LightCookieSmooth.png" type="Texture" id=3]
 
-[sub_resource type="CanvasItemMaterial" id=1]
-blend_mode = 2
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.736434, 1 )
+colors = PoolColorArray( 0, 0.765625, 1, 1, 0, 0.180392, 1, 1, 0, 0.345098, 1, 0 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 58.14
+initial_velocity_random = 1.0
+angular_velocity = 167.45
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 9.3
+scale = 2.0
+color_ramp = SubResource( 4 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 12, 12 )
+extents = Vector2( 16, 5 )
 
 [node name="Bolt" type="KinematicBody2D"]
 collision_layer = 2
@@ -16,11 +33,16 @@ collision_mask = 5
 script = ExtResource( 1 )
 Speed = 1500.0
 
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 8, 0 )
+amount = 50
+explosiveness = 0.23
+local_coords = false
+process_material = SubResource( 5 )
+
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 0.945098, 1, 0, 1 )
-material = SubResource( 1 )
-position = Vector2( -9.53674e-07, 5.68434e-14 )
-scale = Vector2( 0.375, 0.375 )
+position = Vector2( 0, 1 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
