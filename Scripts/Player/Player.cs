@@ -202,10 +202,11 @@ public class Player : KinematicBody2D
 
     private void Heal()
     {
-        if (RemainingHeal <= 0) return;
+        if (RemainingHeal <= 0 || Math.Abs(HealthPoints - StatSystem.PlayerStat.HealthPoints) < 0.1) return;
 
         RemainingHeal--;
         HealthPoints += StatSystem.PlayerStat.HealingAmount;
+        HealthPoints = Mathf.Min(HealthPoints, StatSystem.PlayerStat.HealthPoints);
     }
 
     public void Attack()
