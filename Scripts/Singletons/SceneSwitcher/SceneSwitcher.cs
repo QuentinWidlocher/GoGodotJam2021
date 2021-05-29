@@ -76,8 +76,5 @@ public class SceneSwitcher : Node
                 }
             }
         }
-        
-        if (CurrentScene != Scene.MainMenu)
-            _saveSystem.Save();
     }
 }

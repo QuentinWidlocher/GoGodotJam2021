@@ -8,7 +8,7 @@ namespace Helpers
     public static class NodeExtensions
     {
         
-        public static IEnumerable<T> GetChildren<T>(this Node instance) where T: Node
+        public static IEnumerable<T> GetChildren<T>(this Node instance)
         {
             return instance.GetChildren().OfType<T>();
         }

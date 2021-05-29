@@ -1,13 +1,13 @@
 using Godot;
 
-public abstract class RigidBasicEnemy : RigidBody2D
+public abstract class RigidBasicEnemy : RigidBody2D, Enemy
 {
-    [Export] public float MaxHealthPoints = 10f;
-
-    private float _healthPoints;
+    public float MaxHealthPoints { get; set; }
+    public float _healthPoints { get; set; }
 
     public override void _Ready()
     {
+        MaxHealthPoints = 10;
         _healthPoints = MaxHealthPoints;
     }
 

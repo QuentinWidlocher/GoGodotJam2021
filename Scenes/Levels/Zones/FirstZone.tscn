@@ -20,6 +20,8 @@ extents = Vector2( 20, 34.7405 )
 
 [node name="JumpingEnemy" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1419.92, 660.899 )
+JumpEveryXSec = null
+Damage = null
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
@@ -44,6 +46,8 @@ texture = SubResource( 2 )
 
 [node name="JumpingEnemy2" parent="." instance=ExtResource( 5 )]
 position = Vector2( 2067.52, 1433.48 )
+JumpEveryXSec = null
+Damage = null
 
 [node name="FlyingEnemy" parent="." instance=ExtResource( 1 )]
 position = Vector2( 852.64, 785.054 )

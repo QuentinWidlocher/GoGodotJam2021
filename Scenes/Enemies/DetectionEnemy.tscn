@@ -11,7 +11,9 @@ radius = 420.0
 [sub_resource type="OccluderPolygon2D" id=3]
 polygon = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 
-[node name="DetectionEnemy" type="KinematicBody2D"]
+[node name="DetectionEnemy" type="KinematicBody2D" groups=[
+"EnemiesToSave",
+]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 1 )

@@ -3,7 +3,7 @@ using Godot;
 using Helpers;
 using static Helpers.TaskHelpers;
 
-public class Enemy01 : RigidDetectionEnemy
+public class JumpingEnemy : RigidDetectionEnemy
 {
     [Export] public float JumpForce = 10;
     [Export] public float JumpEveryXSec = 1;

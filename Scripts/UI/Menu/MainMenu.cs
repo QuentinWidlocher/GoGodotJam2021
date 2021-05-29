@@ -26,13 +26,13 @@ public class MainMenu : Control
 
 	public void OnContinueButtonPressed()
 	{
-		_saveSystem.Load();
+		var nextScene = _saveSystem.GetSavedLastScene();
 		_alreadyLoadedOnce = true;
 		
 		// Since the scene switcher has still not changed, CurrentScene is either null or = to the current scene when saved
-		var nextScene = _sceneSwitcher.CurrentScene ?? Scene.Hub;
 		var defaultLoadZone = nextScene == Scene.Hub ? "TO_HUB_1" : null;
 		_sceneSwitcher.Switch(nextScene, defaultLoadZone);
+		_saveSystem.CallDeferred(nameof(SaveSystem.Load));
 	}
 	
 	public void OnExitButtonPressed()
