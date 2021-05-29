@@ -5,16 +5,19 @@ public class PauseScreen : Control
 	private bool _gamePaused;
 
 	private Button _continueButton = null!;
+	private SceneSwitcher _sceneSwitcher = null!;
 	
 	public override void _Ready()
 	{
 		_continueButton = GetNode<Button>("ContinueButton");
+		_sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
+		
 		Pause(false);	
 	}
 
 	public override void _Process(float delta)
 	{
-		if (Input.IsActionJustPressed("pause"))
+		if (_sceneSwitcher.CurrentScene != Scene.MainMenu && Input.IsActionJustPressed("pause"))
 			TogglePause();
 	}
 
@@ -42,6 +45,7 @@ public class PauseScreen : Control
 	
 	public void OnExitButtonPressed()
 	{
-		GetTree().Quit();
+		Pause(false);
+		_sceneSwitcher.GoToScene(Scene.MainMenu);
 	}
 }

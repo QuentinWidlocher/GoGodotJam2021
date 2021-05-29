@@ -8,11 +8,13 @@ public class SceneSwitcher : Node
 {
     private readonly Dictionary<Scene, PackedScene> _sceneList = new Dictionary<Scene, PackedScene>
     {
+        {Scene.MainMenu, GD.Load<PackedScene>("res://Scenes/UI/Menu/MainMenu.tscn")},
         {Scene.Hub, GD.Load<PackedScene>("res://Scenes/Levels/Zones/Hub.tscn")},
         {Scene.FirstZone, GD.Load<PackedScene>("res://Scenes/Levels/Zones/FirstZone.tscn")},
         {Scene.SecondZone, GD.Load<PackedScene>("res://Scenes/Levels/Zones/SecondZone.tscn")},
     };
 
+    public Scene? CurrentScene;
     private Node? _currentSceneNode;
 
     public void Switch(Scene sceneToSwitchTo, LoadingZone? loadingZone = null)
@@ -41,6 +43,7 @@ public class SceneSwitcher : Node
 
         // We remember the now current scene
         _currentSceneNode = newScene;
+        CurrentScene = sceneToGoTo;
 
         // If we're using a loading zone and it has the information to get a custom spawn point
         if (loadingZone?.FromId != null)

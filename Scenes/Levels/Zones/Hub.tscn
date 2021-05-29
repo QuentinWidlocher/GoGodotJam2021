@@ -97,7 +97,7 @@ __meta__ = {
 }
 
 [node name="LoadingZoneToFirstZone" parent="." instance=ExtResource( 4 )]
-ToScene = 1
+ToScene = 2
 FromId = "FZ_TO_HUB_1"
 Id = "HUB_TO_FZ_1"
 
