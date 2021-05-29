@@ -21,6 +21,7 @@ Test="*res://Scripts/Singletons/Test.cs"
 SceneSwitcher="*res://Scripts/Singletons/SceneSwitcher/SceneSwitcher.cs"
 PauseScreen="*res://Scenes/UI/Menu/PauseScreen.tscn"
 Player="*res://Scenes/Player/Player.tscn"
+SaveSystem="*res://Scripts/Singletons/SaveSystem.cs"
 
 [importer_defaults]
 

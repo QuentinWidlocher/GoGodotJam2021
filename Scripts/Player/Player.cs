@@ -36,7 +36,7 @@ public class Player : KinematicBody2D
         }
     }
 
-    private Vector2 _vel;
+    private Vector2 _vel = Vector2.Zero;
     private int _jumps = 0;
     private float _jumpTimer = 0;
     private readonly PackedScene _bolt = GD.Load<PackedScene>("res://Scenes/Player/Bolt.tscn");

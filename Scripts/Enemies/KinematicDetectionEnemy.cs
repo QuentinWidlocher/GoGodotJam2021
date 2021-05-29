@@ -30,7 +30,6 @@ public class KinematicDetectionEnemy: KinematicBasicEnemy
             if (_playerCast.GetCollider() is Player)
             {
                 _hasSeenPlayer = true;
-                GD.Print("C'est bon");
             }
         }
 
@@ -49,7 +48,6 @@ public class KinematicDetectionEnemy: KinematicBasicEnemy
         if (body is Player target)
         {
             _target = target;
-            GD.Print("In range");
         }
     }
 

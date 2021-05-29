@@ -6,11 +6,13 @@ public class PauseScreen : Control
 
 	private Button _continueButton = null!;
 	private SceneSwitcher _sceneSwitcher = null!;
+	private SaveSystem _saveSystem = null!;
 	
 	public override void _Ready()
 	{
 		_continueButton = GetNode<Button>("ContinueButton");
 		_sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
+		_saveSystem = GetNode<SaveSystem>("/root/SaveSystem");
 		
 		Pause(false);	
 	}
@@ -46,6 +48,7 @@ public class PauseScreen : Control
 	public void OnExitButtonPressed()
 	{
 		Pause(false);
+		_saveSystem.Save();
 		_sceneSwitcher.Switch(Scene.MainMenu);
 	}
 }

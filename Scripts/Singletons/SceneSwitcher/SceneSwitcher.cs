@@ -17,6 +17,12 @@ public class SceneSwitcher : Node
 
     public Scene? CurrentScene;
     private Node? _currentSceneNode;
+    private SaveSystem _saveSystem = null!;
+
+    public override void _Ready()
+    {
+        _saveSystem = GetNode<SaveSystem>("/root/SaveSystem");
+    }
 
     public void Switch(Scene sceneToSwitchTo, string? loadingZoneFromId = null)
     {
@@ -33,6 +39,7 @@ public class SceneSwitcher : Node
 
     private void GoToScene(Scene sceneToGoTo, string? loadingZoneFromId = null)
     {
+        GD.Print("GoToScene | ", sceneToGoTo, ", ", loadingZoneFromId);
         // We create the instance of our next scene 
         var newScene = _sceneList[sceneToGoTo].Instance();
         
@@ -69,5 +76,8 @@ public class SceneSwitcher : Node
                 }
             }
         }
+        
+        if (CurrentScene != Scene.MainMenu)
+            _saveSystem.Save();
     }
 }
