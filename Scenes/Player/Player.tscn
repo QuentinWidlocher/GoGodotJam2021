@@ -143,7 +143,9 @@ tracks/0/keys = {
 "values": [ Vector2( 2, 2 ), Vector2( 2.3, 1.85 ), Vector2( 2, 2 ) ]
 }
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"ToSave",
+]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 2 )
@@ -159,10 +161,31 @@ shape = SubResource( 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/hurt = SubResource( 13 )
 anims/jump = SubResource( 11 )
 anims/landing = SubResource( 12 )
+
+[node name="Light2D" type="Light2D" parent="."]
+light_mask = 0
+position = Vector2( 1.21179, -1.9942 )
+texture = ExtResource( 3 )
+color = Color( 0.647059, 0.835294, 1, 1 )
+energy = 0.64
+shadow_enabled = true
+shadow_color = Color( 0.0117647, 0, 0, 1 )
+shadow_filter = 2
+shadow_filter_smooth = 64.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+drag_margin_h_enabled = true
+smoothing_enabled = true
+smoothing_speed = 7.0
+offset_v = -1.0
+drag_margin_left = 0.1
+drag_margin_right = 0.1
+editor_draw_drag_margin = true

@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Threading.Tasks;
 using Helpers;
 using static Helpers.TaskHelpers;
 
@@ -13,31 +12,63 @@ public class Player : KinematicBody2D
     [Export] public float JumpVelocity = 900f;
     [Export] public float JumpTime = 0.15f;
     [Export] public float DashForce = 1000f;
-    [Export] public int DashDuration = 100;
+    [Export] public int DashDuration = 250;
     [Export] public int DashCoolDown = 500;
     [Export] public float KnockbackForce = 500;
     [Export] public int InvicibilityCoolDown = 1500;
 
+    [Signal]
+    public delegate void HealthChange(float newValue);
+
     // MaxJumps is public to change the number of max jumps from other classes (is there a better way to do this?)
     public int MaxJumps = 2;
-    public float HealthPoints;
+    public int RemainingHeal = StatSystem.PlayerStat.MaxHeals;
 
-    private Vector2 _vel;
+    private float _healthPoints;
+
+    public float HealthPoints
+    {
+        get => _healthPoints;
+        set
+        {
+            _healthPoints = value;
+            EmitSignal(nameof(HealthChange), value);
+        }
+    }
+
+    private Vector2 _vel = Vector2.Zero;
     private int _jumps = 0;
     private float _jumpTimer = 0;
     private readonly PackedScene _bolt = GD.Load<PackedScene>("res://Scenes/Player/Bolt.tscn");
     private bool _isFacingRight = true;
     private bool _isAimingUp = true;
     private bool _hasLanded = false;
-    private bool _vulnerable = true;
     private Vector2 _knockingBack; // over my shouuulder 🎵
     private AnimatedSprite _sprite = null!;
     private AnimationPlayer _animations = null!;
-    
+
     private bool _isDashing;
     private bool _canDash = true;
 
-    private Vector2 _facingDirection => _isFacingRight ? Vector2.Right : Vector2.Left;
+    private Vector2 FacingDirection => _isFacingRight ? Vector2.Right : Vector2.Left;
+    private bool HaveJumpsLeft => _jumps < MaxJumps;
+
+    private bool _vulnerable = true;
+
+    private bool Vulnerable
+    {
+        get => _vulnerable;
+        set
+        {
+            _vulnerable = value;
+            // Uncheck the player layer and the enemy mask so we can walk through them 
+            SetCollisionLayerBit(1, value);
+            SetCollisionMaskBit(2, value);
+
+            byte alpha = (byte) (value ? 255 : 255 / 2);
+            Modulate = Color.Color8(255, 255, 255, alpha);
+        }
+    }
 
     public override void _Ready()
     {
@@ -126,15 +157,19 @@ public class Player : KinematicBody2D
             {
                 Dash();
             }
+
+            if (Input.IsActionJustPressed("heal"))
+            {
+                Heal();
+            }
         }
         else
         {
-            _vel = _facingDirection * DashForce;
+            _vel = FacingDirection * DashForce;
         }
 
         if (_knockingBack != Vector2.Zero)
         {
-            GD.Print(_knockingBack);
             _vel += _knockingBack;
             _knockingBack = _knockingBack.LinearInterpolate(Vector2.Zero, .5f);
             if (_knockingBack.Length() < 1)
@@ -185,12 +220,21 @@ public class Player : KinematicBody2D
         }
     }
 
+    private void Heal()
+    {
+        if (RemainingHeal <= 0 || Math.Abs(HealthPoints - StatSystem.PlayerStat.HealthPoints) < 0.1) return;
+
+        RemainingHeal--;
+        HealthPoints += StatSystem.PlayerStat.HealingAmount;
+        HealthPoints = Mathf.Min(HealthPoints, StatSystem.PlayerStat.HealthPoints);
+    }
+
     public void Attack()
     {
         var bolt = (Bolt) _bolt.Instance();
         bolt.Damage = StatSystem.PlayerStat.DamageDealt;
 
-        bolt.Shoot(Position + 32 * _facingDirection, _facingDirection);
+        bolt.Shoot(Position + 32 * FacingDirection, FacingDirection);
 
         GetParent().AddChild(bolt);
     }
@@ -198,24 +242,31 @@ public class Player : KinematicBody2D
     public void Dash()
     {
         // You can only dash if you're not already dashing, are on the ground and can dash 
-        if (_isDashing || !_hasLanded || !_canDash) return;
-        
+        if (_isDashing || !HaveJumpsLeft || !_canDash) return;
+
         _isDashing = true;
         _canDash = false;
-        RunAfterDelay(_ => _isDashing = false, DashDuration)
-            .ThenAfterDelay(_ => _canDash = true, DashCoolDown);
+        Vulnerable = false;
+        _jumps++;
+        RunAfterDelay(() =>
+            {
+                _isDashing = false;
+                Vulnerable = true;
+            }, DashDuration)
+            .ThenAfterDelay(() => _canDash = true, DashCoolDown);
     }
 
     public void Hit(float damage, Node2D source)
     {
-        if (!_vulnerable) return;
-            
-        // _knockingBack is a force that's applied after the movement and gradually decreases over time 
-        _knockingBack = (Position - source.Position).Normalized() * KnockbackForce;
+        if (!Vulnerable) return;
 
-        _vulnerable = false;
-        RunAfterDelay(_ => _vulnerable = true, InvicibilityCoolDown);
-        
+        // _knockingBack is a force that's applied after the movement and gradually decreases over time
+        var knockDirection = Position > source.Position ? 1 : -1;
+        _knockingBack = new Vector2(knockDirection, -0.5f) * KnockbackForce;
+
+        Vulnerable = false;
+        RunAfterDelay(() => Vulnerable = true, InvicibilityCoolDown);
+
         HealthPoints -= damage;
 
         if (HealthPoints <= 0)

@@ -22,7 +22,7 @@ public class LoadingZone : Area2D
 	{
 		if (body is Player)
 		{
-			_sceneSwitcher.Switch(ToScene, this);
+			_sceneSwitcher.Switch(ToScene, FromId);
 		}
 	}
 }

@@ -7,15 +7,21 @@ namespace Helpers
 {
     public static class NodeExtensions
     {
+        
+        public static IEnumerable<T> GetChildren<T>(this Node instance)
+        {
+            return instance.GetChildren().OfType<T>();
+        }
+        
         public static IEnumerable<T> GetChildrenWhere<T>(this Node instance, Func<T, bool> predicate) where T : Node
         {
-            return instance.GetChildren().OfType<T>().Where(predicate);
+            return instance.GetChildren<T>().Where(predicate);
         }
         
         /**
          * If FindNode() and GetChildrenWhere() had a baby
          */
-        public static T? FindInChildrenWhere<T>(this Node instance, Func<T, bool>? predicate = null, bool recursive = true) where T : Node
+        public static T? FindInChildrenWhere<T>(this Node instance, Func<T, bool>? predicate = null, bool recursive = false) where T : Node
         {
             // We start by getting all the children of the searched type
             var results = instance.GetChildren().OfType<T>();
@@ -41,6 +47,14 @@ namespace Helpers
 
             // If we have a result or don't (but don't need to keep searching) we return
             return results.FirstOrDefault();
+        }
+        
+        /**
+         * If FindNode() and GetChildrenWhere() had a baby
+         */
+        public static T? FindInChildren<T>(this Node instance, bool recursive = false) where T : Node
+        {
+            return instance.FindInChildrenWhere<T>(null, recursive);
         }
     }
 }

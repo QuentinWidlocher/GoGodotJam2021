@@ -6,13 +6,17 @@ public struct PlayerStat
     public float DamageDealt;
     public float Defense;
     public float MovingSpeed;
+    public float HealingAmount;
+    public int MaxHeals;
 
     public static PlayerStat Default = new PlayerStat
     {
-        HealthPoints = 100,
+        HealthPoints = 10,
         DamageDealt = 1,
         Defense = 1,
         MovingSpeed = 1,
+        HealingAmount = 5,
+        MaxHeals = 1,
     };
     
     public static PlayerStat BaseModifiers = new PlayerStat
@@ -21,6 +25,8 @@ public struct PlayerStat
         DamageDealt = 1,
         Defense = 1,
         MovingSpeed = 1,
+        HealingAmount = 1,
+        MaxHeals = 1,
     };
 
     public override string ToString() =>
@@ -48,6 +54,8 @@ public class StatSystem : Node
         DamageDealt = BasePlayerStat.DamageDealt * StatModifiers.DamageDealt,
         Defense = BasePlayerStat.Defense * StatModifiers.Defense,
         MovingSpeed = BasePlayerStat.MovingSpeed * StatModifiers.MovingSpeed,
+        HealingAmount = BasePlayerStat.HealingAmount * StatModifiers.HealingAmount,
+        MaxHeals = BasePlayerStat.MaxHeals * StatModifiers.MaxHeals
     };
 
     public static float ManaCount;
