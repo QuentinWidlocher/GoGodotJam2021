@@ -7,4 +7,5 @@ public interface Enemy
     public Vector2 Position { get; set; }
 
     public NodePath GetPath();
+    public void QueueFree();
 }

@@ -23,7 +23,6 @@ public abstract class RigidBasicEnemy : RigidBody2D, Enemy
 
     public void Die()
     {
-        GD.Print("ded");
         QueueFree();
     }
 }

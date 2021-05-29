@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Godot.Collections;
 using static Helpers.NodeExtensions;
+using static Helpers.TaskHelpers;
 using Object = System.Object;
 
 public class SaveSystem : Node
@@ -19,8 +22,6 @@ public class SaveSystem : Node
 
 	public void Save()
 	{
-		GD.Print("SAVE | ", _player.Position);
-
 		var enemiesInfos = new Dictionary();
 		foreach (var enemy in GetTree().GetNodesInGroup("EnemiesToSave").Cast<Enemy>())
 		{
@@ -59,18 +60,45 @@ public class SaveSystem : Node
 
 		if (saveData != null)
 		{
-			GD.Print("LOAD | ", saveData["PlayerPosition"]);
-			_player.Position = (Vector2) saveData["PlayerPosition"] + new Vector2(0, -50);
-			_player.HealthPoints = (float) saveData["PlayerHealth"];
+			var storedPosition = (Vector2) saveData["PlayerPosition"];
+			var tileMap = GetTree().CurrentScene.FindInChildren<TileMap>();
+
+			if (tileMap != null)
+			{
+				var tilePosition = tileMap.MapToWorld(tileMap.WorldToMap(storedPosition));
+				var topOfTile = tilePosition + (tileMap.CellSize / 2);
+				_player.Position = topOfTile;
+			}
+			else
+			{
+				_player.Position = storedPosition;
+			}
+			
 			_player.RemainingHeal = (int) saveData["PlayerHeal"];
+			_player.HealthPoints = (float) saveData["PlayerHealth"];
 			_sceneSwitcher.CurrentScene = (Scene)((int) saveData["CurrentScene"]);
+			
+			var camera = _player.FindInChildren<Camera2D>();
+			if (camera != null)
+			{
+				camera.SmoothingEnabled = false;
+				RunAfterDelay(() => camera.SmoothingEnabled = true, 100);
+			}
 
 			foreach (var enemy in GetTree().CurrentScene.GetChildren<Enemy>())
 			{
-				var infos = (Dictionary)((Dictionary) saveData["EnemiesInfos"])[enemy.GetPath()];
-				enemy._healthPoints = (float) infos["EnemiesHealth"];
-				enemy.MaxHealthPoints = (float) infos["EnemiesMaxHealth"];
-				enemy.Position = (Vector2) infos["EnemiesPosition"];
+				try
+				{
+					Dictionary infos = (Dictionary)((Dictionary) saveData["EnemiesInfos"])[enemy.GetPath()];
+					
+					enemy._healthPoints = (float) infos["EnemiesHealth"];
+					enemy.MaxHealthPoints = (float) infos["EnemiesMaxHealth"];
+					enemy.Position = (Vector2) infos["EnemiesPosition"];
+				}
+				catch (KeyNotFoundException e)
+				{
+					enemy.QueueFree();
+				}
 			}
 		}
 	}

@@ -39,7 +39,6 @@ public class SceneSwitcher : Node
 
     private void GoToScene(Scene sceneToGoTo, string? loadingZoneFromId = null)
     {
-        GD.Print("GoToScene | ", sceneToGoTo, ", ", loadingZoneFromId);
         // We create the instance of our next scene 
         var newScene = _sceneList[sceneToGoTo].Instance();
         

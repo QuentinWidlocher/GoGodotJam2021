@@ -104,7 +104,6 @@ public class FlyingEnemy : KinematicDetectionEnemy
 
     public void OnRestingTileFound(Node body)
     {
-        GD.Print(body);
         if (body is TileMap tileMap)
         {
             //if (tileMap.GlobalPosition.y > GlobalPosition.y) return;
