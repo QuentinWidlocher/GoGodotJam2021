@@ -57,11 +57,6 @@ animations = [ {
 "name": "attack",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 7 ) ],
-"loop": true,
-"name": "dash",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "fall_fast",
@@ -81,9 +76,14 @@ animations = [ {
 "loop": true,
 "name": "run",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "dash",
+"speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=11]
 resource_name = "hurt"
 length = 0.5
 step = 0.05
@@ -100,7 +100,7 @@ tracks/0/keys = {
 "values": [ false, true, false, true, false, true, false, true, false, true ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
@@ -127,7 +127,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, 2 ), Vector2( 1.9, 2.5 ), Vector2( 2, 2 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 length = 0.15
 step = 0.05
 tracks/0/type = "value"
@@ -152,7 +152,6 @@ script = ExtResource( 2 )
 Gravity = 40.0
 Friction = 0.8
 JumpVelocity = 500.0
-JumpTime = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -165,9 +164,9 @@ frame = 2
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hurt = SubResource( 13 )
-anims/jump = SubResource( 11 )
-anims/landing = SubResource( 12 )
+anims/hurt = SubResource( 11 )
+anims/jump = SubResource( 12 )
+anims/landing = SubResource( 13 )
 
 [node name="Light2D" type="Light2D" parent="."]
 light_mask = 0

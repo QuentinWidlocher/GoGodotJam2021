@@ -15,7 +15,7 @@ public class Player : KinematicBody2D
     [Export] public int DashDuration = 250;
     [Export] public int DashCoolDown = 500;
     [Export] public float KnockbackForce = 500;
-    [Export] public int InvicibilityCoolDown = 1500;
+    [Export] public int InvicibilityCoolDown = 500;
 
     [Signal]
     public delegate void HealthChange(float newValue);
@@ -182,7 +182,8 @@ public class Player : KinematicBody2D
         _vel.x *= Friction;
 
         // Applying the gravity before jumping so the jump velocity isn't affected by gravity
-        _vel.y += Gravity;
+        if (!IsOnFloor())
+            _vel.y += Gravity;
 
         // When the jump button is held, _jumpTimer counts up to only let the player gain y velocity until JumpTime is reached
         if (Input.IsActionJustPressed("jump"))
