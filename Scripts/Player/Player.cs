@@ -267,6 +267,7 @@ public class Player : KinematicBody2D
         Vulnerable = false;
         RunAfterDelay(() => Vulnerable = true, InvicibilityCoolDown);
 
+        GD.Print($"Ouch, {damage} damage from {source.Name}");
         HealthPoints -= damage;
 
         if (HealthPoints <= 0)

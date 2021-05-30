@@ -25,6 +25,7 @@ public class SpiritOrb : Particles2D
 	{
 		if (body is Player player)
 		{
+			GD.Print($"Gained {Value} spirits");
 			StatSystem.SpiritCount += Value;
 			QueueFree();
 		}

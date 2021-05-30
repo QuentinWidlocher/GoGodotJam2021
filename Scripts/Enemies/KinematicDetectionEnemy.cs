@@ -1,14 +1,13 @@
-using System.Diagnostics.CodeAnalysis;
 using Godot;
 
-public class KinematicDetectionEnemy: KinematicBasicEnemy
+public abstract class KinematicDetectionEnemy: KinematicBasicEnemy
 {
-    [Export] public float Damage = 1; 
+    [Export] public abstract float Damage { get; set; } 
     
     protected bool _hasSeenPlayer;
     protected Node2D? _target;
     
-    protected RayCast2D _playerCast;
+    protected RayCast2D _playerCast = null!;
     
     protected bool PlayerIsKnow => _target != null && _hasSeenPlayer;
 
