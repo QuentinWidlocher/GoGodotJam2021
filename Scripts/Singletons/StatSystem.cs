@@ -59,4 +59,6 @@ public class StatSystem : Node
     };
 
     public static float ManaCount;
+
+    public static int SpiritCount;
 }
