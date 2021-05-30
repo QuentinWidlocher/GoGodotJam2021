@@ -42,7 +42,7 @@ public class SpiritOrb : Particles2D
 
 	public void OnBodyTouched(Node body)
 	{
-		if (body is Player player)
+		if (!_fading && body is Player)
 		{
 			GD.Print($"Gained {Value} spirits");
 			_statSystem.SpiritCount += Value;

@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/UI/Menu/PauseScreen.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=2]
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.556863 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -14,21 +14,21 @@ expand_margin_right = 20.0
 expand_margin_top = 20.0
 expand_margin_bottom = 20.0
 
-[sub_resource type="Theme" id=7]
-Panel/styles/panel = SubResource( 8 )
+[sub_resource type="Theme" id=2]
+Panel/styles/panel = SubResource( 1 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=3]
 size = 45
 font_data = ExtResource( 2 )
 
-[sub_resource type="Theme" id=2]
-default_font = SubResource( 9 )
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=5]
 size = 24
 font_data = ExtResource( 2 )
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.32549, 0.27451, 0.388235, 1 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -39,7 +39,7 @@ expand_margin_right = 10.0
 expand_margin_top = 10.0
 expand_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.188235, 0.168627, 0.211765, 1 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -50,17 +50,17 @@ expand_margin_right = 10.0
 expand_margin_top = 10.0
 expand_margin_bottom = 10.0
 
-[sub_resource type="Theme" id=5]
+[sub_resource type="Theme" id=8]
 Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
 Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 10 )
+Button/fonts/font = SubResource( 5 )
 Button/styles/disabled = null
-Button/styles/focus = SubResource( 11 )
-Button/styles/hover = SubResource( 11 )
-Button/styles/normal = SubResource( 12 )
+Button/styles/focus = SubResource( 6 )
+Button/styles/hover = SubResource( 6 )
+Button/styles/normal = SubResource( 7 )
 Button/styles/pressed = null
 
 [node name="CanvasLayer" type="CanvasLayer"]
@@ -81,7 +81,7 @@ __meta__ = {
 [node name="Panel" type="Panel" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource( 7 )
+theme = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -89,7 +89,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Control"]
 anchor_right = 1.0
 margin_bottom = 51.0
-theme = SubResource( 2 )
+theme = SubResource( 4 )
 text = "Pause"
 align = 1
 __meta__ = {
@@ -100,9 +100,9 @@ __meta__ = {
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = 168.0
+margin_left = 153.0
 margin_top = -14.0
-margin_right = -168.0
+margin_right = -154.0
 margin_bottom = 14.0
 focus_neighbour_left = NodePath("../ExitButton")
 focus_neighbour_top = NodePath("../ExitButton")
@@ -110,10 +110,10 @@ focus_neighbour_right = NodePath("../ExitButton")
 focus_neighbour_bottom = NodePath("../ExitButton")
 focus_next = NodePath("../ExitButton")
 focus_previous = NodePath("../ExitButton")
-theme = SubResource( 5 )
+theme = SubResource( 8 )
 action_mode = 0
 button_mask = 7
-text = "Continue"
+text = "Resume"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -122,18 +122,18 @@ __meta__ = {
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = 168.0
-margin_top = 49.6818
-margin_right = -168.0
-margin_bottom = 77.6818
+margin_left = 154.0
+margin_top = 50.0
+margin_right = -154.0
+margin_bottom = 78.0
 focus_neighbour_left = NodePath("../ContinueButton")
 focus_neighbour_top = NodePath("../ContinueButton")
 focus_neighbour_right = NodePath("../ContinueButton")
 focus_neighbour_bottom = NodePath("../ContinueButton")
 focus_next = NodePath("../ContinueButton")
 focus_previous = NodePath("../ContinueButton")
-theme = SubResource( 5 )
-text = "Exit"
+theme = SubResource( 8 )
+text = "Main Menu"
 __meta__ = {
 "_edit_use_anchors_": false
 }
