@@ -27,7 +27,6 @@ contacts_reported = 3
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 2 )
-SpiritValue = 20
 Damage = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

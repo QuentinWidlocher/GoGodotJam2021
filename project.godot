@@ -28,6 +28,10 @@ SaveSystem="*res://Scripts/Singletons/SaveSystem.cs"
 window/size/width=850
 window/size/height=480
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/rmsmartshape/plugin.cfg" )
+
 [importer_defaults]
 
 texture={

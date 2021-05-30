@@ -7,20 +7,27 @@ public class VaniaUI : Control
 	private Range _hpBar = null!;
 	private Range _healBar = null!;
 	private Player _player = null!;
+	private Label _spirit = null!;
+	private StatSystem _statSystem = null!;
 
 	private float _hpValueToAimFor;
 
 	public override void _Ready()
 	{
+		_statSystem = GetNode<StatSystem>("/root/StatSystem");
+		
 		_player = GetNode<Player>("/root/Player");
 		_player.Connect(nameof(Player.HealthChange), this, nameof(OnPlayerHpChange));
 		
 		_hpBar = GetNode<Range>("HealthBar/ProgressBar");
-		_hpBar.MaxValue = StatSystem.PlayerStat.HealthPoints;
+		_hpBar.MaxValue = _statSystem.PlayerStat.HealthPoints;
 		_hpValueToAimFor = _player.HealthPoints;
 		
-		_healBar = GetNode<Range>("HealthBar/HealBar");
+		_healBar = GetNode<Range>("HealBar");
 		_healBar.Value = _player.RemainingHeal;
+
+		_spirit = GetNode<Label>("Spirit/Label");
+		_statSystem.Connect(nameof(StatSystem.SpiritChange), this, nameof(OnSpiritChange));
 	}
 
 	public override void _Process(float delta)
@@ -35,5 +42,10 @@ public class VaniaUI : Control
 	{
 		_hpValueToAimFor = newValue;
 		_healBar.Value = _player.RemainingHeal;
+	}
+
+	private void OnSpiritChange(int newValue)
+	{
+		_spirit.Text = newValue.ToString();
 	}
 }
