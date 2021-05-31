@@ -113,5 +113,14 @@ position = Vector2( 100.409, 31.1127 )
 
 [node name="VaniaUI" parent="CanvasLayer" instance=ExtResource( 6 )]
 
+[node name="LoadingZoneFromDeath" parent="." instance=ExtResource( 4 )]
+position = Vector2( 419.837, 286.614 )
+Id = "FROM_DEATH"
+
+[node name="CollisionShape2D" parent="LoadingZoneFromDeath" index="0"]
+visible = false
+disabled = true
+
 [editable path="LoadingZoneToFirstZone"]
 [editable path="LoadingZoneToIdle"]
+[editable path="LoadingZoneFromDeath"]

@@ -14,7 +14,7 @@ public class Player : KinematicBody2D
     [Export] public float DashForce = 1500f;
     [Export] public int DashDuration = 150;
     [Export] public int DashCoolDown = 100;
-    [Export] public float KnockbackForce = 500;
+    [Export] public float KnockbackForce = 200;
     [Export] public int InvicibilityCoolDown = 500;
     [Export] public int WallJumpKnockback = 1500;
 
@@ -38,6 +38,7 @@ public class Player : KinematicBody2D
     }
     
     private StatSystem _statSystem = null!;
+    private SceneSwitcher _sceneSwitcher = null!;
 
     private Vector2 _vel = Vector2.Zero;
     private int _jumps = 0;
@@ -79,6 +80,7 @@ public class Player : KinematicBody2D
         _sprite = (AnimatedSprite) GetNode("AnimatedSprite");
         _animations = (AnimationPlayer) GetNode("AnimationPlayer");
         _statSystem = GetNode<StatSystem>("/root/StatSystem");
+        _sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
 
         HealthPoints = _statSystem.PlayerStat.HealthPoints;
         RemainingHeal = _statSystem.PlayerStat.MaxHeals;
@@ -303,5 +305,8 @@ public class Player : KinematicBody2D
 
     private void Die()
     {
+        _knockingBack = Vector2.Zero;
+        _vel = Vector2.Zero;
+        _sceneSwitcher.Switch(Scene.Hub, "FROM_DEATH");
     }
 }
