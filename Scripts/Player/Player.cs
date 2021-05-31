@@ -39,6 +39,7 @@ public class Player : KinematicBody2D
     
     private StatSystem _statSystem = null!;
     private SceneSwitcher _sceneSwitcher = null!;
+    private RayCast2D _rayCast = null!;
 
     private Vector2 _vel = Vector2.Zero;
     private int _jumps = 0;
@@ -54,6 +55,8 @@ public class Player : KinematicBody2D
 
     private bool _isDashing;
     private bool _canDash = true;
+
+    private bool OnGround => _rayCast.IsColliding();
 
     private Vector2 FacingDirection => _isFacingRight ? Vector2.Right : Vector2.Left;
     private bool HaveJumpsLeft => _jumps < MaxJumps;
@@ -81,6 +84,7 @@ public class Player : KinematicBody2D
         _animations = (AnimationPlayer) GetNode("AnimationPlayer");
         _statSystem = GetNode<StatSystem>("/root/StatSystem");
         _sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
+        _rayCast = GetNode<RayCast2D>("RayCast2D");
 
         HealthPoints = _statSystem.PlayerStat.HealthPoints;
         RemainingHeal = _statSystem.PlayerStat.MaxHeals;
@@ -104,7 +108,7 @@ public class Player : KinematicBody2D
             }
         }
 
-        if (IsOnFloor())
+        if (IsOnFloor() || OnGround)
         {
             if (!_hasLanded)
             {
@@ -134,11 +138,11 @@ public class Player : KinematicBody2D
         _sprite.FlipH = !_isFacingRight;
 
         // Setting sprites by order of priority
-        if (_vel.y > 0)
+        if (_vel.y > 0 && !OnGround)
             _sprite.Play("fall");
-        if (_vel.y > 400)
+        if (_vel.y > 400 && !OnGround)
             _sprite.Play("fall_fast");
-        if (IsOnWall() && !IsOnFloor() && _statSystem.PlayerStat.HasWallJump)
+        if (IsOnWall() && !(IsOnFloor() || OnGround) && _statSystem.PlayerStat.HasWallJump)
             _sprite.Play("wall_slide");
         if (Input.IsActionPressed("attack_main"))
             _sprite.Play("attack");
@@ -204,13 +208,13 @@ public class Player : KinematicBody2D
         _vel.x *= Friction;
 
         // Applying the gravity before jumping so the jump velocity isn't affected by gravity
-        if (!IsOnFloor())
+        if (!(IsOnFloor() || OnGround))
             _vel.y += Gravity;
 
         // When the jump button is held, _jumpTimer counts up to only let the player gain y velocity until JumpTime is reached
         if (Input.IsActionJustPressed("jump") && _statSystem.PlayerStat.HasWallJump)
         {
-            if (IsOnWall() && !IsOnFloor()) {
+            if (IsOnWall() && !(IsOnFloor() || OnGround)) {
                 _vel.x += -Mathf.Sign(_vel.x) * WallJumpKnockback;
                 _isJumpFromWall = true;
             }
