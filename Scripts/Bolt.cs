@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using static Helpers.TaskHelpers;
 
 public class Bolt : KinematicBody2D
 {
@@ -26,11 +27,21 @@ public class Bolt : KinematicBody2D
             if (collision.Collider.HasMethod("OnHit")) {
                 collision.Collider.Call("OnHit", Damage);
             }
-            QueueFree();
+
+            DeleteBolt();
         }
     }
 
-    public void OnVisibilityNotifier2DScreenExited() {
+    public void OnVisibilityNotifier2DScreenExited()
+    {
         QueueFree();
+    }
+
+    private void DeleteBolt()
+    {
+        // We let the bolt slowly fade before we destroy it
+        _sprite.Visible = false;
+        _particles.Emitting = false;
+        RunAfterDelay(QueueFree, 1000);
     }
 }

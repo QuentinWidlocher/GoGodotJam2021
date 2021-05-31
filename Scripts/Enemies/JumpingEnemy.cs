@@ -5,10 +5,10 @@ using static Helpers.TaskHelpers;
 
 public class JumpingEnemy : RigidDetectionEnemy
 {
-    [Export] public float JumpForce = 10;
+    [Export] public float JumpForce = 100;
     [Export] public float JumpEveryXSec = 1;
-    [Export] public new float Damage = 1;
-    public new float MaxHealthPoints = 2f;
+    [Export] public override float Damage { get; set; }
+    [Export] public new float MaxHealthPoints = 3f;
 
     private Timer _timer = null!;
     private RayCast2D _floorCast1 = null!;
@@ -21,6 +21,8 @@ public class JumpingEnemy : RigidDetectionEnemy
     public override void _Ready()
     {
         base._Ready();
+        
+        _healthPoints = MaxHealthPoints;
         
         _timer = GetNode<Timer>("Timer");
         _floorCast1 = GetNode<RayCast2D>("FloorCast1");

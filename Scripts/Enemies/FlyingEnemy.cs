@@ -6,8 +6,9 @@ using static Helpers.NodeExtensions;
 
 public class FlyingEnemy : KinematicDetectionEnemy
 {
-    [Export] public new float Damage = 1;
-    [Export] public float Speed = 1;
+    [Export] public override float Damage { get; set; }
+    [Export] public float Speed = 200;
+    [Export] public new float MaxHealthPoints = 2f;
 
     private List<RayCast2D> _restDetectionCasts = new List<RayCast2D>();
 
@@ -22,13 +23,14 @@ public class FlyingEnemy : KinematicDetectionEnemy
     };
 
     private int _restSearchTime;
-    
-    public new float MaxHealthPoints = 2f;
 
     public override void _Ready()
     {
         base._Ready();
 
+        GD.Print(Damage);
+        
+        _healthPoints = MaxHealthPoints;
         _restDetectionCasts = GetNode<Node2D>("RestDetectionCasts").GetChildren<RayCast2D>().ToList();
     }
 

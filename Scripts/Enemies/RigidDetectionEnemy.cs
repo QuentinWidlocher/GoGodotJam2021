@@ -1,9 +1,9 @@
 using Godot;
 
-public class RigidDetectionEnemy: RigidBasicEnemy
+public abstract class RigidDetectionEnemy: RigidBasicEnemy
 {
-    [Export] public float Damage = 1; 
-    
+    [Export] public abstract float Damage { get; set; }
+
     protected bool _hasSeenPlayer;
     protected Node2D? _target;
     

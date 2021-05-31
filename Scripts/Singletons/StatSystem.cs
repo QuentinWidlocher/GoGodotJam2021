@@ -35,20 +35,23 @@ public struct PlayerStat
 
 public class StatSystem : Node
 {
+    [Signal]
+    public delegate void SpiritChange(int newValue);
+    
     /**
      * Base player stats, should not move and only exist to compute actual stats
      */
-    private static readonly PlayerStat BasePlayerStat = PlayerStat.Default;
+    private readonly PlayerStat BasePlayerStat = PlayerStat.Default;
 
     /**
      * Modifiers to apply to the base stats to get the actual stats. Start at 1 so nothing changes
      */
-    public static PlayerStat StatModifiers = PlayerStat.BaseModifiers;
+    public PlayerStat StatModifiers = PlayerStat.BaseModifiers;
 
     /**
      * Actual player stats, readonly. Only the modifiers should change
      */
-    public static PlayerStat PlayerStat => new PlayerStat
+    public PlayerStat PlayerStat => new PlayerStat
     {
         HealthPoints = BasePlayerStat.HealthPoints * StatModifiers.HealthPoints,
         DamageDealt = BasePlayerStat.DamageDealt * StatModifiers.DamageDealt,
@@ -58,5 +61,16 @@ public class StatSystem : Node
         MaxHeals = BasePlayerStat.MaxHeals * StatModifiers.MaxHeals
     };
 
-    public static float ManaCount;
+    public float ManaCount;
+
+    private int _spiritCount;
+    public int SpiritCount
+    {
+        get => _spiritCount;
+        set
+        {
+            EmitSignal(nameof(SpiritChange), value);
+            _spiritCount = value;
+        }
+    }
 }

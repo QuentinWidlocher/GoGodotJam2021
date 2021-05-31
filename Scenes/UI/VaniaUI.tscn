@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/Textures/HealBar.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/UI/VaniaUI.cs" type="Script" id=3]
+[ext_resource path="res://Assets/Fonts/deutsch_gothic/Deutsch.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.235294 )
@@ -59,6 +60,17 @@ ProgressBar/fonts/font = null
 ProgressBar/styles/bg = SubResource( 8 )
 ProgressBar/styles/fg = SubResource( 9 )
 
+[sub_resource type="DynamicFont" id=11]
+size = 22
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0, 0.670588, 1, 1 )
+corner_radius_top_left = 500
+corner_radius_top_right = 500
+corner_radius_bottom_right = 500
+corner_radius_bottom_left = 500
+
 [node name="UI" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
@@ -70,6 +82,8 @@ __meta__ = {
 [node name="HealthBar" type="Control" parent="."]
 margin_left = 20.0
 margin_top = 20.0
+margin_right = 20.0
+margin_bottom = 20.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -108,17 +122,53 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealBar" type="TextureProgress" parent="HealthBar"]
+[node name="HealBar" type="TextureProgress" parent="."]
 material = SubResource( 7 )
-margin_left = 12.0
-margin_top = 54.6765
-margin_right = 262.0
-margin_bottom = 69.6765
+margin_left = 32.0
+margin_top = 74.6765
+margin_right = 282.0
+margin_bottom = 89.6765
 theme = SubResource( 10 )
 max_value = 13.0
 value = 5.0
 texture_progress = ExtResource( 2 )
 nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Spirit" type="Control" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Spirit"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 139.0
+margin_top = 31.0
+margin_right = 220.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0, 0.670588, 1, 1 )
+text = "0"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Spirit"]
+margin_left = 265.67
+margin_top = 34.6607
+margin_right = 283.67
+margin_bottom = 52.6607
+custom_styles/panel = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
