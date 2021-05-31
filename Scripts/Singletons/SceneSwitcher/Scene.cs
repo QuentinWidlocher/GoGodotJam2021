@@ -4,6 +4,5 @@ public enum Scene
     IdleSystem,
     Hub,
     FirstZone,
-    SecondZone,
-    ThirdZone,
+    GameEnd,
 }

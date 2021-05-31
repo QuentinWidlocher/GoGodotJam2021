@@ -21,7 +21,7 @@ bg_color = Color( 0, 0, 0, 1 )
 
 [node name="CanvasLayer" type="CanvasLayer"]
 pause_mode = 2
-layer = 2
+layer = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Transition = SubResource( 1 )

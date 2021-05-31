@@ -66,6 +66,7 @@ Button/styles/pressed = null
 
 [node name="CanvasLayer" type="CanvasLayer"]
 pause_mode = 2
+layer = 2
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0

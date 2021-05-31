@@ -64,6 +64,11 @@ public class IdleMenu : CanvasLayer
 		// Rider wants me to perform math to gain accuracy, but I don't want accuracy, I want speed !
 		// ReSharper disable once CompareOfFloatsByEqualityOperator
 		if (PreviousCurrency == IdleSystem.Currency) return;
+
+		if (IdleSystem.Currency >= 100_000)
+		{
+			_sceneSwitcher.Switch(Scene.GameEnd);
+		}
 		
 		PreviousCurrency = IdleSystem.Currency;
 

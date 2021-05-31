@@ -37,7 +37,7 @@ cell_size = Vector2( 70, 70 )
 collision_mask = 6
 occluder_light_mask = 7
 format = 1
-tile_data = PoolIntArray( 1376280, 2, 0, 1376281, 2, 0, 1376282, 2, 0 )
+tile_data = PoolIntArray( 1245213, 1610612738, 0, 1245214, 1610612738, 0, 1245215, 1610612738, 0, 1376280, 2, 0, 1376281, 2, 0, 1376282, 2, 0 )
 script = ExtResource( 2 )
 
 [node name="Enemy02" parent="." instance=ExtResource( 1 )]

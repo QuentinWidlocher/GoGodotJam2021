@@ -13,7 +13,7 @@ public class SceneSwitcher : Node
         {Scene.IdleSystem, GD.Load<PackedScene>("res://Scenes/UI/Idle/IdleMenu.tscn")},
         {Scene.Hub, GD.Load<PackedScene>("res://Scenes/Levels/Zones/Hub.tscn")},
         {Scene.FirstZone, GD.Load<PackedScene>("res://Scenes/Levels/Zones/FirstZone.tscn")},
-        {Scene.SecondZone, GD.Load<PackedScene>("res://Scenes/Levels/Zones/SecondZone.tscn")},
+        {Scene.GameEnd, GD.Load<PackedScene>("res://Scenes/Levels/WinScreen.tscn")},
     };
 
     public Scene? CurrentScene;
