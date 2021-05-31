@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Assets/player_idle.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player/Player.cs" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Assets/player_dash.png" type="Texture" id=7]
 [ext_resource path="res://Assets/player_attack.png" type="Texture" id=8]
 [ext_resource path="res://Assets/player_fall.png" type="Texture" id=9]
+[ext_resource path="res://Assets/player_wall_slide.png" type="Texture" id=10]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 11.9779
@@ -30,24 +31,29 @@ region = Rect2( 64, 0, 32, 32 )
 atlas = ExtResource( 1 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=11]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=12]
+[sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 6 )
 region = Rect2( 32, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=13]
+[sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 6 )
 region = Rect2( 64, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=14]
+[sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 6 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=7]
+[sub_resource type="SpriteFrames" id=10]
 animations = [ {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "wall_slide",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
 "loop": true,
 "name": "idle",
@@ -63,15 +69,10 @@ animations = [ {
 "name": "fall",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
 "name": "run",
 "speed": 10.0
-}, {
-"frames": [ ExtResource( 7 ) ],
-"loop": true,
-"name": "dash",
-"speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
@@ -82,10 +83,14 @@ animations = [ {
 "loop": true,
 "name": "attack",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "dash",
+"speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=8]
-resource_name = "hurt"
+[sub_resource type="Animation" id=11]
 length = 0.5
 step = 0.05
 tracks/0/type = "value"
@@ -101,7 +106,7 @@ tracks/0/keys = {
 "values": [ false, true, false, true, false, true, false, true, false, true ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=12]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
@@ -128,7 +133,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, 2 ), Vector2( 1.9, 2.5 ), Vector2( 2, 2 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=13]
 length = 0.15
 step = 0.05
 tracks/0/type = "value"
@@ -159,14 +164,14 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
-frames = SubResource( 7 )
-animation = "idle"
+frames = SubResource( 10 )
+animation = "wall_slide"
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hurt = SubResource( 8 )
-anims/jump = SubResource( 9 )
-anims/landing = SubResource( 10 )
+anims/hurt = SubResource( 11 )
+anims/jump = SubResource( 12 )
+anims/landing = SubResource( 13 )
 
 [node name="Light2D" type="Light2D" parent="."]
 light_mask = 0

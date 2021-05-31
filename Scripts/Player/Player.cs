@@ -11,11 +11,12 @@ public class Player : KinematicBody2D
     [Export] public float Friction = 0.75f;
     [Export] public float JumpVelocity = 900f;
     [Export] public float JumpTime = 0.15f;
-    [Export] public float DashForce = 1000f;
-    [Export] public int DashDuration = 250;
-    [Export] public int DashCoolDown = 500;
+    [Export] public float DashForce = 1500f;
+    [Export] public int DashDuration = 150;
+    [Export] public int DashCoolDown = 100;
     [Export] public float KnockbackForce = 500;
     [Export] public int InvicibilityCoolDown = 500;
+    [Export] public int WallJumpKnockback = 1500;
 
     [Signal]
     public delegate void HealthChange(float newValue);
@@ -42,6 +43,7 @@ public class Player : KinematicBody2D
     private readonly PackedScene _bolt = GD.Load<PackedScene>("res://Scenes/Player/Bolt.tscn");
     private bool _isFacingRight = true;
     private bool _isAimingUp = true;
+    private bool _isJumpFromWall = true;
     private bool _hasLanded = false;
     private Vector2 _knockingBack; // over my shouuulder 🎵
     private AnimatedSprite _sprite = null!;
@@ -118,10 +120,10 @@ public class Player : KinematicBody2D
             _sprite.Play("fall");
         if (_vel.y > 400)
             _sprite.Play("fall_fast");
-
+        if (IsOnWall() && !IsOnFloor())
+            _sprite.Play("wall_slide");
         if (Input.IsActionPressed("attack_main"))
             _sprite.Play("attack");
-
         if (_isDashing)
             _sprite.Play("dash");
     }
@@ -188,17 +190,16 @@ public class Player : KinematicBody2D
         // When the jump button is held, _jumpTimer counts up to only let the player gain y velocity until JumpTime is reached
         if (Input.IsActionJustPressed("jump"))
         {
-            if (_jumps < MaxJumps)
-            {
-                //_animations.Stop();
-                //_animations.Play("jump");
+            if (IsOnWall() && !IsOnFloor()) {
+                _vel.x += -Mathf.Sign(_vel.x) * WallJumpKnockback;
+                _isJumpFromWall = true;
             }
         }
 
         if (Input.IsActionPressed("jump"))
         {
             _jumpTimer += delta;
-            if (_jumpTimer < JumpTime && _jumps < MaxJumps)
+            if (_jumpTimer < JumpTime && (_jumps < MaxJumps || _isJumpFromWall))
             {
                 _vel.y = -JumpVelocity;
                 _sprite.Play("jump");
@@ -208,10 +209,12 @@ public class Player : KinematicBody2D
         // Resetting jump variables once button is released
         if (Input.IsActionJustReleased("jump"))
         {
-            _jumps++;
+            if (!_isJumpFromWall)
+                _jumps++;
             _jumpTimer = 0;
             if (_jumps <= MaxJumps)
                 _sprite.Play("fall");
+            _isJumpFromWall = false;
         }
 
         // This is just so _jumpTimer is zeroed even if the player hits a ceiling (which would set the timer to JumpTime)
@@ -243,12 +246,12 @@ public class Player : KinematicBody2D
     public void Dash()
     {
         // You can only dash if you're not already dashing, are on the ground and can dash 
-        if (_isDashing || !HaveJumpsLeft || !_canDash) return;
+        if (_isDashing /*|| !HaveJumpsLeft*/ || !_canDash) return;
 
         _isDashing = true;
         _canDash = false;
         Vulnerable = false;
-        _jumps++;
+        //_jumps++;
         RunAfterDelay(() =>
             {
                 _isDashing = false;

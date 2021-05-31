@@ -183,10 +183,16 @@ PauseScreen="*res://Scenes/UI/Menu/PauseScreen.tscn"
 Player="*res://Scenes/Player/Player.tscn"
 SaveSystem="*res://Scripts/Singletons/SaveSystem.cs"
 
+[debug]
+
+settings/fps/force_fps=60
+settings/stdout/print_fps=true
+
 [display]
 
 window/size/width=850
 window/size/height=480
+window/size/resizable=false
 
 [editor_plugins]
 
