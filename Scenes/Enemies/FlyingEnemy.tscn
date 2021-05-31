@@ -29,6 +29,7 @@ animations = [ {
 } ]
 
 [node name="FlyingEnemy" instance=ExtResource( 2 )]
+Damage = 1.0
 
 [node name="CollisionShape2D" parent="DetectionRadius" index="0"]
 position = Vector2( 1.41583, 0 )

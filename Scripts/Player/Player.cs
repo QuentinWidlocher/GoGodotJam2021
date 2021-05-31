@@ -22,7 +22,7 @@ public class Player : KinematicBody2D
     public delegate void HealthChange(float newValue);
 
     // MaxJumps is public to change the number of max jumps from other classes (is there a better way to do this?)
-    public int MaxJumps = 2;
+    public int MaxJumps => _statSystem.PlayerStat.HasDoubleJump ? 2 : 1;
     public int RemainingHeal;
 
     private float _healthPoints;
@@ -159,7 +159,7 @@ public class Player : KinematicBody2D
                 Attack();
             }
 
-            if (Input.IsActionJustPressed("dash"))
+            if (Input.IsActionJustPressed("dash") && _statSystem.PlayerStat.HasDash)
             {
                 Dash();
             }

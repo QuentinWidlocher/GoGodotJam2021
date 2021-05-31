@@ -40,6 +40,7 @@ public class Bolt : KinematicBody2D
     private void DeleteBolt()
     {
         // We let the bolt slowly fade before we destroy it
+        GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
         _sprite.Visible = false;
         _particles.Emitting = false;
         RunAfterDelay(QueueFree, 1000);

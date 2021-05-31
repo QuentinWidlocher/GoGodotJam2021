@@ -79,7 +79,7 @@ public class SaveSystem : Node
 			
 			_player.RemainingHeal = (int) saveData["PlayerHeal"];
 			_player.HealthPoints = (float) saveData["PlayerHealth"];
-			_statSystem.SpiritCount = (int) saveData["SpiritAmount"];
+			_statSystem.SpiritCount = (float) saveData["SpiritAmount"];
 			_sceneSwitcher.CurrentScene = (Scene)((int) saveData["CurrentScene"]);
 			
 			var camera = _player.FindInChildren<Camera2D>();
