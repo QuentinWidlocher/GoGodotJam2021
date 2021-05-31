@@ -21,15 +21,12 @@ public class Generator
     public Func<Generator, float> ProductionFormula = g => g.ProductionBase;
     // Compute the cost by using the parameters
     public Func<Generator, float> CostFormula = g => g.CostBase;
-    // Compute the upgrade cost by using the parameters
-    public Func<Generator, float> UpgradeCostFormula = g => g.CostBase;
 
     /**
      * Computed values for the costs and the production
      */
     public float Cost => CostFormula(this);
     public float Production => ProductionFormula(this);
-    public float UpgradeCost => UpgradeCostFormula(this);
 
     public override string ToString()
     {

@@ -43,10 +43,8 @@ public class Test : Node
 		DeltaLabel.Text = $"Production : {Math.Round(IdleSystem.Production, 2)} Mana/s";
 
 		Generator1Button.Disabled = !IdleSystem.CanAffordGenerator(Generator01);
-		Upgrade1Button.Disabled = !IdleSystem.CanAffordUpgrade(Generator01);
 		
 		Generator2Button.Disabled = !IdleSystem.CanAffordGenerator(Generator02);
-		Upgrade2Button.Disabled = !IdleSystem.CanAffordUpgrade(Generator02);
 	}
 
 	public void OnGenerator1Pressed()
@@ -55,11 +53,6 @@ public class Test : Node
 		UpdateButtonLabel(Generator01, Generator1Button, Upgrade1Button);
 	}
 	
-	public void OnUpgrade1Pressed()
-	{
-		IdleSystem.BuyUpgrade(Generator01);
-		UpdateButtonLabel(Generator01, Generator1Button, Upgrade1Button);
-	}
 	
 	public void OnGenerator2Pressed()
 	{
@@ -67,11 +60,6 @@ public class Test : Node
 		UpdateButtonLabel(Generator02, Generator2Button, Upgrade2Button);
 	}
 	
-	public void OnUpgrade2Pressed()
-	{
-		IdleSystem.BuyUpgrade(Generator02);
-		UpdateButtonLabel(Generator02, Generator2Button, Upgrade2Button);
-	}
 
 	private static void UpdateButtonLabel(GeneratorId id, Button button, Button upgradeButton)
 	{
@@ -79,7 +67,6 @@ public class Test : Node
 		if (generator != null)
 		{
 			button.Text = $"Buy {generator.Name} ({generator.Bought}) : {Math.Round(generator.Cost, 2)} Mana";
-			upgradeButton.Text = $"Buy {generator.Name} Upgrade : {Math.Round(generator.UpgradeCost, 2)} Mana";
 		}
 	}
 }

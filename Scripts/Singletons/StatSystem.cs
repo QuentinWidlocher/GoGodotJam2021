@@ -36,7 +36,7 @@ public struct PlayerStat
 public class StatSystem : Node
 {
     [Signal]
-    public delegate void SpiritChange(int newValue);
+    public delegate void SpiritChange(float newValue);
     
     /**
      * Base player stats, should not move and only exist to compute actual stats
@@ -63,8 +63,8 @@ public class StatSystem : Node
 
     public float ManaCount;
 
-    private int _spiritCount;
-    public int SpiritCount
+    private float _spiritCount;
+    public float SpiritCount
     {
         get => _spiritCount;
         set

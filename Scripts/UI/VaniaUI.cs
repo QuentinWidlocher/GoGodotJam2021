@@ -27,6 +27,7 @@ public class VaniaUI : Control
 		_healBar.Value = _player.RemainingHeal;
 
 		_spirit = GetNode<Label>("Spirit/Label");
+		_spirit.Text = $"{Math.Round(_statSystem.SpiritCount, 2)}";
 		_statSystem.Connect(nameof(StatSystem.SpiritChange), this, nameof(OnSpiritChange));
 	}
 
@@ -44,8 +45,8 @@ public class VaniaUI : Control
 		_healBar.Value = _player.RemainingHeal;
 	}
 
-	private void OnSpiritChange(int newValue)
+	private void OnSpiritChange(float newValue)
 	{
-		_spirit.Text = newValue.ToString();
+		_spirit.Text = $"{Math.Round(newValue, 2)}";
 	}
 }

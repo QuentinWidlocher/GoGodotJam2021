@@ -104,6 +104,19 @@ point_in = Vector2( -30.1606, -10.3181 )
 point_out = Vector2( 30.1606, 10.3181 )
 properties = SubResource( 14 )
 
+[sub_resource type="Resource" id=16]
+script = ExtResource( 9 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 6 )
+position = Vector2( 2312.49, 254.785 )
+point_in = Vector2( 3.57166, -28.1764 )
+point_out = Vector2( -0.793701, 9.5244 )
+properties = SubResource( 16 )
+
 [sub_resource type="Resource" id=18]
 script = ExtResource( 9 )
 texture_idx = 0
@@ -112,25 +125,12 @@ width = 1.0
 
 [sub_resource type="Resource" id=19]
 script = ExtResource( 6 )
-position = Vector2( 2312.49, 254.785 )
-point_in = Vector2( 3.57166, -28.1764 )
-point_out = Vector2( -0.793701, 9.5244 )
-properties = SubResource( 18 )
-
-[sub_resource type="Resource" id=20]
-script = ExtResource( 9 )
-texture_idx = 0
-flip = false
-width = 1.0
-
-[sub_resource type="Resource" id=21]
-script = ExtResource( 6 )
 position = Vector2( 1999.77, 249.626 )
 point_in = Vector2( 1.19055, 31.3512 )
 point_out = Vector2( 0.396851, -11.1118 )
-properties = SubResource( 20 )
+properties = SubResource( 18 )
 
-[sub_resource type="Resource" id=16]
+[sub_resource type="Resource" id=20]
 script = ExtResource( 10 )
 _points = {
 0: SubResource( 5 ),
@@ -139,8 +139,8 @@ _points = {
 3: SubResource( 11 ),
 4: SubResource( 13 ),
 5: SubResource( 15 ),
-8: SubResource( 19 ),
-9: SubResource( 21 )
+8: SubResource( 17 ),
+9: SubResource( 19 )
 }
 _point_order = [ 3, 8, 1, 2, 9, 4, 5, 0 ]
 _constraints = {
@@ -148,7 +148,7 @@ _constraints = {
 }
 _next_key = 10
 
-[sub_resource type="Resource" id=22]
+[sub_resource type="Resource" id=21]
 script = ExtResource( 15 )
 textures = [ ExtResource( 12 ) ]
 texture_normals = [  ]
@@ -164,25 +164,25 @@ use_corner_texture = true
 use_taper_texture = true
 fit_mode = 0
 
-[sub_resource type="Resource" id=23]
+[sub_resource type="Resource" id=22]
 script = ExtResource( 13 )
 begin = 350.0
 distance = 200.0
 edgeRendering = Vector2( 0, 0 )
 
-[sub_resource type="Resource" id=24]
+[sub_resource type="Resource" id=23]
 script = ExtResource( 14 )
-edge_material = SubResource( 22 )
-normal_range = SubResource( 23 )
+edge_material = SubResource( 21 )
+normal_range = SubResource( 22 )
 weld = true
 render = true
 z_index = 0
 z_as_relative = true
 offset = 0.0
 
-[sub_resource type="Resource" id=17]
+[sub_resource type="Resource" id=24]
 script = ExtResource( 8 )
-_edge_meta_materials = [ SubResource( 24 ) ]
+_edge_meta_materials = [ SubResource( 23 ) ]
 fill_textures = [ ExtResource( 2 ) ]
 fill_texture_normals = [  ]
 fill_texture_z_index = -10
@@ -224,7 +224,7 @@ position = Vector2( 852.64, 785.054 )
 
 [node name="LoadingZone" parent="." instance=ExtResource( 7 )]
 position = Vector2( 706.92, 522.247 )
-ToScene = 1
+ToScene = 2
 FromId = "TO_HUB_1"
 Id = "FZ_TO_HUB_1"
 
@@ -246,10 +246,10 @@ position = Vector2( -1316, -112 )
 
 [node name="SS2D_Shape_Closed" type="Node2D" parent="StaticBody2D"]
 script = ExtResource( 11 )
-_points = SubResource( 16 )
+_points = SubResource( 20 )
 material_overrides = {
 }
-shape_material = SubResource( 17 )
+shape_material = SubResource( 24 )
 tessellation_stages = 5
 tessellation_tolerence = 4.0
 flip_edges = false
@@ -261,6 +261,6 @@ collision_polygon_node_path = NodePath("../CollisionPolygon2D")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 visible = false
 modulate = Color( 1, 1, 1, 0.3 )
-polygon = PoolVector2Array( 2288.08, 207.523, 2312.68, 233.651, 2313.5, 245.415, 2311.27, 258.554, 2304.79, 270.453, 2288.62, 295.625, 2266.2, 330.918, 2048.44, 332.001, 2024.86, 301.893, 2015.88, 289.04, 2007.96, 275.516, 2004.75, 268.748, 2002.21, 262.115, 2000.5, 255.707, 2000, 252.618, 1999.76, 249.627, 1999.75, 248.576, 1999.65, 247.508, 2003.47, 219.825, 2010.43, 214.51, 2015.9, 211.659, 2022.57, 208.77, 2030.12, 206.177, 2038.13, 204.176, 2055.23, 201.809, 2073.21, 201.335, 2091.43, 202.393, 2125.99, 207.803, 2153.74, 215.389, 2156.71, 216.204, 2159.94, 216.775, 2167.14, 217.242, 2175.19, 216.921, 2183.93, 215.935, 2222.84, 208.479, 2260.78, 202.467, 2268.98, 202.333, 2284.6, 205.598 )
+polygon = PoolVector2Array( 2288.08, 207.523, 2312.69, 233.651, 2313.5, 245.414, 2311.27, 258.554, 2304.8, 270.453, 2288.62, 295.624, 2266.2, 330.917, 2048.44, 332.001, 2024.85, 301.893, 2015.88, 289.039, 2007.96, 275.516, 2004.75, 268.748, 2002.21, 262.114, 2000.5, 255.706, 2000, 252.618, 1999.76, 249.626, 1999.75, 248.576, 1999.65, 247.508, 2003.47, 219.825, 2010.43, 214.51, 2015.9, 211.659, 2022.57, 208.77, 2030.12, 206.177, 2038.13, 204.176, 2055.23, 201.809, 2073.21, 201.335, 2091.43, 202.393, 2125.99, 207.803, 2153.74, 215.389, 2156.71, 216.204, 2159.95, 216.775, 2167.15, 217.242, 2175.19, 216.921, 2183.94, 215.935, 2222.84, 208.479, 2260.78, 202.467, 2268.98, 202.333, 2284.6, 205.598 )
 
 [editable path="LoadingZone"]

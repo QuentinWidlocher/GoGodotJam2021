@@ -1,0 +1,242 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scripts/UI/Idle/IdleMenu.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/UI/Idle/GeneratorButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Backgrounds/PlaceholderTree.jpg" type="Texture" id=4]
+[ext_resource path="res://Assets/Fonts/deutsch_gothic/Deutsch.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Assets/Fonts/chapaza/Chapaza.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 60
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 24
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 20
+extra_spacing_top = 5
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 24
+font_data = ExtResource( 6 )
+
+[node name="Control" type="CanvasLayer"]
+script = ExtResource( 2 )
+GeneratorsPath = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/Generators")
+TotalSpiritPath = NodePath("VBoxContainer/Infos/Spirit/HBoxContainer/TotalSpirit")
+TotalManaPath = NodePath("VBoxContainer/Infos/Mana/HBoxContainer/TotalMana")
+ManaProductionPath = NodePath("VBoxContainer/Infos/Mana/HBoxContainer2/ManaProduction")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color( 0.509804, 0.509804, 0.509804, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 7
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_constants/separation = 50
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+margin_right = 830.0
+margin_bottom = 67.0
+custom_fonts/font = SubResource( 1 )
+text = "Mana Tree"
+align = 1
+
+[node name="Infos" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 117.0
+margin_right = 830.0
+margin_bottom = 177.0
+alignment = 1
+
+[node name="Spirit" type="VBoxContainer" parent="VBoxContainer/Infos"]
+margin_right = 413.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Infos/Spirit"]
+margin_right = 413.0
+margin_bottom = 28.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Infos/Spirit/HBoxContainer"]
+margin_right = 201.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+text = "Total Spirit :"
+align = 2
+
+[node name="TotalSpirit" type="Label" parent="VBoxContainer/Infos/Spirit/HBoxContainer"]
+margin_left = 211.0
+margin_right = 413.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 3 )
+text = "12345"
+
+[node name="Mana" type="VBoxContainer" parent="VBoxContainer/Infos"]
+margin_left = 417.0
+margin_right = 830.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Infos/Mana"]
+margin_right = 413.0
+margin_bottom = 28.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Infos/Mana/HBoxContainer"]
+margin_right = 201.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+text = "Total Mana :"
+align = 2
+
+[node name="TotalMana" type="Label" parent="VBoxContainer/Infos/Mana/HBoxContainer"]
+margin_left = 211.0
+margin_right = 413.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 3 )
+text = "12345"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/Infos/Mana"]
+margin_top = 32.0
+margin_right = 413.0
+margin_bottom = 60.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Infos/Mana/HBoxContainer2"]
+margin_right = 201.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+text = "Mana Production :"
+align = 2
+
+[node name="ManaProduction" type="Label" parent="VBoxContainer/Infos/Mana/HBoxContainer2"]
+margin_left = 211.0
+margin_right = 413.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 3 )
+text = "+1234/s"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 227.0
+margin_right = 830.0
+margin_bottom = 361.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_right = 405.0
+margin_bottom = 134.0
+size_flags_horizontal = 3
+custom_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 405.0
+margin_bottom = 25.0
+custom_fonts/font = SubResource( 4 )
+text = "Tree Upgrades"
+align = 1
+
+[node name="Generators" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 45.0
+margin_right = 405.0
+margin_bottom = 134.0
+custom_constants/separation = 10
+
+[node name="GeneratorButton1" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators" instance=ExtResource( 3 )]
+margin_top = 0.0
+margin_right = 405.0
+margin_bottom = 23.0
+focus_neighbour_bottom = NodePath("../GeneratorButton2/Button")
+
+[node name="CostLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton1" index="0"]
+margin_right = 128.0
+
+[node name="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton1" index="1"]
+margin_left = 132.0
+margin_right = 272.0
+
+[node name="BoughtLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton1" index="2"]
+margin_left = 276.0
+margin_right = 405.0
+
+[node name="GeneratorButton2" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators" instance=ExtResource( 3 )]
+margin_top = 33.0
+margin_right = 405.0
+margin_bottom = 56.0
+focus_neighbour_top = NodePath("../GeneratorButton1/Button")
+
+[node name="CostLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton2" index="0"]
+margin_right = 128.0
+
+[node name="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton2" index="1"]
+margin_left = 132.0
+margin_right = 272.0
+
+[node name="BoughtLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton2" index="2"]
+margin_left = 276.0
+margin_right = 405.0
+
+[node name="GeneratorButton3" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators" instance=ExtResource( 3 )]
+margin_top = 66.0
+margin_right = 405.0
+margin_bottom = 89.0
+focus_neighbour_top = NodePath("../GeneratorButton1/Button")
+
+[node name="CostLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton3" index="0"]
+margin_right = 128.0
+
+[node name="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton3" index="1"]
+margin_left = 132.0
+margin_right = 272.0
+
+[node name="BoughtLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton3" index="2"]
+margin_left = 276.0
+margin_right = 405.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 425.0
+margin_right = 830.0
+margin_bottom = 134.0
+size_flags_horizontal = 3
+custom_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_right = 405.0
+margin_bottom = 25.0
+custom_fonts/font = SubResource( 4 )
+text = "Player Upgrades"
+align = 1
+
+[editable path="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton1"]
+[editable path="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton2"]
+[editable path="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton3"]

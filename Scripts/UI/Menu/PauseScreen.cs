@@ -19,7 +19,7 @@ public class PauseScreen : Control
 
 	public override void _Process(float delta)
 	{
-		if (_sceneSwitcher.CurrentScene != Scene.MainMenu && Input.IsActionJustPressed("pause"))
+		if (_sceneSwitcher.CurrentScene != Scene.MainMenu && _sceneSwitcher.CurrentScene != Scene.IdleSystem && Input.IsActionJustPressed("pause"))
 			TogglePause();
 	}
 
