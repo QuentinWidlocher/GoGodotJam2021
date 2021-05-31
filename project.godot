@@ -182,6 +182,7 @@ PauseScreen="*res://Scenes/UI/Menu/PauseScreen.tscn"
 Player="*res://Scenes/Player/Player.tscn"
 SaveSystem="*res://Scripts/Singletons/SaveSystem.cs"
 StatSystem="*res://Scripts/Singletons/StatSystem/StatSystem.cs"
+Transition="*res://Scenes/UI/Transition.tscn"
 
 [debug]
 
