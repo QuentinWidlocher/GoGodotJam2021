@@ -35,14 +35,29 @@ public class SaveSystem : Node
 			};
 		}
 		
+		var playerUpgrades = new Dictionary();
+		foreach (var upgrade in StatSystem.PlayerUpgrades)
+		{
+			playerUpgrades[upgrade.Id] = upgrade.Bought;
+		}
+		
+		var generators = new Dictionary();
+		foreach (var generator in IdleSystem.Generators)
+		{
+			generators[generator.Id] = generator.Bought;
+		}
+
 		var saveData = new Dictionary
 		{
 			["PlayerPosition"] = _player.Position,
 			["PlayerHealth"] = _player.HealthPoints,
 			["PlayerHeal"] = _player.RemainingHeal,
+			["ManaAmount"] = IdleSystem.Currency,
 			["SpiritAmount"] = _statSystem.SpiritCount,
 			["EnemiesInfos"] = enemiesInfos,
-			["CurrentScene"] = _sceneSwitcher.CurrentScene ?? Scene.Hub	,
+			["PlayerUpgrades"] = playerUpgrades,
+			["Generators"] = generators,
+			["CurrentScene"] = _sceneSwitcher.CurrentScene ?? Scene.Hub,
 		};
 
 		using File file = new File();
@@ -79,7 +94,8 @@ public class SaveSystem : Node
 			
 			_player.RemainingHeal = (int) saveData["PlayerHeal"];
 			_player.HealthPoints = (float) saveData["PlayerHealth"];
-			_statSystem.SpiritCount = (int) saveData["SpiritAmount"];
+			_statSystem.SpiritCount = (float) saveData["SpiritAmount"];
+			IdleSystem.Currency = (float) saveData["ManaAmount"];
 			_sceneSwitcher.CurrentScene = (Scene)((int) saveData["CurrentScene"]);
 			
 			var camera = _player.FindInChildren<Camera2D>();
@@ -89,11 +105,12 @@ public class SaveSystem : Node
 				RunAfterDelay(() => camera.SmoothingEnabled = true, 100);
 			}
 
+			var enemiesInfos = ((Dictionary) saveData["EnemiesInfos"]);
 			foreach (var enemy in GetTree().CurrentScene.GetChildren<Enemy>())
 			{
 				try
 				{
-					Dictionary infos = (Dictionary)((Dictionary) saveData["EnemiesInfos"])[enemy.GetPath()];
+					Dictionary infos = (Dictionary)enemiesInfos[enemy.GetPath()];
 					
 					enemy._healthPoints = (float) infos["EnemiesHealth"];
 					enemy.MaxHealthPoints = (float) infos["EnemiesMaxHealth"];
@@ -103,6 +120,26 @@ public class SaveSystem : Node
 				{
 					enemy.QueueFree();
 				}
+			}
+
+			var playerUpgrades = (Dictionary) saveData["PlayerUpgrades"];
+			foreach (var upgrade in StatSystem.PlayerUpgrades)
+			{
+				try
+				{
+					upgrade.Bought = (int) playerUpgrades[upgrade.Id];
+				}
+				catch (Exception e){ GD.PrintErr(e); }
+			}
+			
+			var generators = (Dictionary) saveData["Generators"];
+			foreach (var generator in IdleSystem.Generators)
+			{
+				try
+				{
+					generator.Bought = (float) generators[generator.Id];
+				}
+				catch (Exception e){ GD.PrintErr(e); }
 			}
 		}
 	}

@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Test/Test.cs" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.18921
+margin_top = 1.18921
+margin_right = -1.18921
+margin_bottom = 1.18921
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Value" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+margin_left = 358.0
+margin_top = 269.109
+margin_right = -361.0
+margin_bottom = 286.109
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Delta" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+margin_left = 358.0
+margin_top = 294.0
+margin_right = -361.0
+margin_bottom = 312.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Generator1" type="Button" parent="."]
+margin_left = 357.951
+margin_top = 325.842
+margin_right = 491.951
+margin_bottom = 355.842
+text = "Buy Upgrade 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Upgrade1" type="Button" parent="."]
+margin_left = 586.279
+margin_top = 325.842
+margin_right = 720.279
+margin_bottom = 355.842
+text = "Buy Bonus for 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Generator1" to="." method="OnGenerator1Pressed"]
+[connection signal="pressed" from="Upgrade1" to="." method="OnUpgrade1Pressed"]

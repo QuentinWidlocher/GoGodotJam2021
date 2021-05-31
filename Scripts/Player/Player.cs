@@ -14,7 +14,7 @@ public class Player : KinematicBody2D
     [Export] public float DashForce = 1500f;
     [Export] public int DashDuration = 150;
     [Export] public int DashCoolDown = 100;
-    [Export] public float KnockbackForce = 500;
+    [Export] public float KnockbackForce = 200;
     [Export] public int InvicibilityCoolDown = 500;
     [Export] public int WallJumpKnockback = 1500;
 
@@ -22,7 +22,7 @@ public class Player : KinematicBody2D
     public delegate void HealthChange(float newValue);
 
     // MaxJumps is public to change the number of max jumps from other classes (is there a better way to do this?)
-    public int MaxJumps = 2;
+    public int MaxJumps => _statSystem.PlayerStat.HasDoubleJump ? 2 : 1;
     public int RemainingHeal;
 
     private float _healthPoints;
@@ -38,6 +38,8 @@ public class Player : KinematicBody2D
     }
     
     private StatSystem _statSystem = null!;
+    private SceneSwitcher _sceneSwitcher = null!;
+    private RayCast2D _rayCast = null!;
 
     private Vector2 _vel = Vector2.Zero;
     private int _jumps = 0;
@@ -53,6 +55,8 @@ public class Player : KinematicBody2D
 
     private bool _isDashing;
     private bool _canDash = true;
+
+    private bool OnGround => _rayCast.IsColliding();
 
     private Vector2 FacingDirection => _isFacingRight ? Vector2.Right : Vector2.Left;
     private bool HaveJumpsLeft => _jumps < MaxJumps;
@@ -79,6 +83,8 @@ public class Player : KinematicBody2D
         _sprite = (AnimatedSprite) GetNode("AnimatedSprite");
         _animations = (AnimationPlayer) GetNode("AnimationPlayer");
         _statSystem = GetNode<StatSystem>("/root/StatSystem");
+        _sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
+        _rayCast = GetNode<RayCast2D>("RayCast2D");
 
         HealthPoints = _statSystem.PlayerStat.HealthPoints;
         RemainingHeal = _statSystem.PlayerStat.MaxHeals;
@@ -90,7 +96,19 @@ public class Player : KinematicBody2D
 
         _vel = MoveAndSlide(_vel, Vector2.Up);
 
-        if (IsOnFloor())
+        for (int i = 0; i < GetSlideCount(); i++)
+        {
+            var collision = GetSlideCollision(i);
+            if (collision.Collider is Spikes)
+            {
+                // Spikes deals 10% of the player max HP
+                Hit(_statSystem.PlayerStat.HealthPoints * 0.1f, collision.Position);
+                // Lazy to override the Hit but idc
+                _knockingBack = new Vector2(_isFacingRight ? -1 : 1, -0.5f) * KnockbackForce;
+            }
+        }
+
+        if (IsOnFloor() || OnGround)
         {
             if (!_hasLanded)
             {
@@ -120,11 +138,11 @@ public class Player : KinematicBody2D
         _sprite.FlipH = !_isFacingRight;
 
         // Setting sprites by order of priority
-        if (_vel.y > 0)
+        if (_vel.y > 0 && !OnGround)
             _sprite.Play("fall");
-        if (_vel.y > 400)
+        if (_vel.y > 400 && !OnGround)
             _sprite.Play("fall_fast");
-        if (IsOnWall() && !IsOnFloor())
+        if (IsOnWall() && !(IsOnFloor() || OnGround) && _statSystem.PlayerStat.HasWallJump)
             _sprite.Play("wall_slide");
         if (Input.IsActionPressed("attack_main"))
             _sprite.Play("attack");
@@ -134,6 +152,18 @@ public class Player : KinematicBody2D
 
     public void GetInput(float delta)
     {
+        if (_knockingBack != Vector2.Zero)
+        {
+            _vel += _knockingBack;
+            _knockingBack = _knockingBack.LinearInterpolate(Vector2.Zero, .5f);
+            if (_knockingBack.Length() < 1)
+            {
+                _knockingBack = Vector2.Zero;
+            }
+
+            return;
+        }
+
         if (!_isDashing)
         {
             if (Input.IsActionPressed("left"))
@@ -159,7 +189,7 @@ public class Player : KinematicBody2D
                 Attack();
             }
 
-            if (Input.IsActionJustPressed("dash"))
+            if (Input.IsActionJustPressed("dash") && _statSystem.PlayerStat.HasDash)
             {
                 Dash();
             }
@@ -174,27 +204,17 @@ public class Player : KinematicBody2D
             _vel = FacingDirection * DashForce;
         }
 
-        if (_knockingBack != Vector2.Zero)
-        {
-            _vel += _knockingBack;
-            _knockingBack = _knockingBack.LinearInterpolate(Vector2.Zero, .5f);
-            if (_knockingBack.Length() < 1)
-            {
-                _knockingBack = Vector2.Zero;
-            }
-        }
-
         // Simulating air resistance and friction (WARNING: Extremely difficult partial differential equation being calculated, proceed with caution)
         _vel.x *= Friction;
 
         // Applying the gravity before jumping so the jump velocity isn't affected by gravity
-        if (!IsOnFloor())
+        if (!(IsOnFloor() || OnGround))
             _vel.y += Gravity;
 
         // When the jump button is held, _jumpTimer counts up to only let the player gain y velocity until JumpTime is reached
-        if (Input.IsActionJustPressed("jump"))
+        if (Input.IsActionJustPressed("jump") && _statSystem.PlayerStat.HasWallJump)
         {
-            if (IsOnWall() && !IsOnFloor()) {
+            if (IsOnWall() && !(IsOnFloor() || OnGround)) {
                 _vel.x += -Mathf.Sign(_vel.x) * WallJumpKnockback;
                 _isJumpFromWall = true;
             }
@@ -264,18 +284,17 @@ public class Player : KinematicBody2D
             .ThenAfterDelay(() => _canDash = true, DashCoolDown);
     }
 
-    public void Hit(float damage, Node2D source)
+    public void Hit(float damage, Vector2 source)
     {
         if (!Vulnerable) return;
 
         // _knockingBack is a force that's applied after the movement and gradually decreases over time
-        var knockDirection = Position > source.Position ? 1 : -1;
+        var knockDirection = Position > source ? 1 : -1;
         _knockingBack = new Vector2(knockDirection, -0.5f) * KnockbackForce;
 
         Vulnerable = false;
         RunAfterDelay(() => Vulnerable = true, InvicibilityCoolDown);
-
-        GD.Print($"Ouch, {damage} damage from {source.Name}");
+        
         HealthPoints -= damage;
 
         if (HealthPoints <= 0)
@@ -286,7 +305,12 @@ public class Player : KinematicBody2D
         _animations.Play("hurt");
     }
 
+    public void Hit(float damage, Node2D source) => Hit(damage, source.Position);
+
     private void Die()
     {
+        _knockingBack = Vector2.Zero;
+        _vel = Vector2.Zero;
+        _sceneSwitcher.Switch(Scene.Hub, "FROM_DEATH");
     }
 }

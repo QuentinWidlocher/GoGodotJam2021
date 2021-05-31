@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Fonts/chapaza/Chapaza.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scripts/UI/Idle/GeneratorButton.cs" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[node name="GeneratorButton" type="HBoxContainer"]
+margin_top = 35.0
+margin_right = 492.0
+margin_bottom = 58.0
+theme = SubResource( 2 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CostLabel" type="Label" parent="."]
+margin_top = 3.0
+margin_right = 161.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Cost : 123 Spirit"
+align = 2
+
+[node name="Button" type="Button" parent="."]
+margin_left = 165.0
+margin_right = 326.0
+margin_bottom = 23.0
+size_flags_horizontal = 3
+text = "Buy Generator #1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BoughtLabel" type="Label" parent="."]
+margin_left = 330.0
+margin_top = 3.0
+margin_right = 492.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Bought : 0"
+align = 1
+
+[connection signal="pressed" from="Button" to="." method="OnBuyGenerator"]

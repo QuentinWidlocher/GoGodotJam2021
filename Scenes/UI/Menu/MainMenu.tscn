@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/UI/Menu/MainMenu.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Backgrounds/PlaceholderForest.jpg" type="Texture" id=3]
+[ext_resource path="res://Assets/Fonts/chapaza/Chapaza.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.556863 )
@@ -27,7 +28,7 @@ default_font = SubResource( 3 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 24
-font_data = ExtResource( 1 )
+font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.32549, 0.27451, 0.388235, 1 )

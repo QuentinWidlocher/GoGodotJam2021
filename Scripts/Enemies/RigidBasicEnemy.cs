@@ -6,13 +6,20 @@ public abstract class RigidBasicEnemy : RigidBody2D, Enemy
     public float _healthPoints { get; set; }
     [Export] public int SpiritValue = 1;
 
+    private AnimationPlayer _animationPlayer = null!;
+
     public override void _Ready()
     {
+        _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        
         _healthPoints = MaxHealthPoints;
     }
 
     public void OnHit(float damage)
     {
+        _animationPlayer.Play("Hurt");
+        
+        GD.Print(damage);
         _healthPoints -= damage;
 
         if (_healthPoints <= 0)

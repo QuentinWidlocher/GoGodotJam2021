@@ -10,18 +10,19 @@ public class SceneSwitcher : Node
     private readonly Dictionary<Scene, PackedScene> _sceneList = new Dictionary<Scene, PackedScene>
     {
         {Scene.MainMenu, GD.Load<PackedScene>("res://Scenes/UI/Menu/MainMenu.tscn")},
+        {Scene.IdleSystem, GD.Load<PackedScene>("res://Scenes/UI/Idle/IdleMenu.tscn")},
         {Scene.Hub, GD.Load<PackedScene>("res://Scenes/Levels/Zones/Hub.tscn")},
         {Scene.FirstZone, GD.Load<PackedScene>("res://Scenes/Levels/Zones/FirstZone.tscn")},
-        {Scene.SecondZone, GD.Load<PackedScene>("res://Scenes/Levels/Zones/SecondZone.tscn")},
+        {Scene.GameEnd, GD.Load<PackedScene>("res://Scenes/Levels/WinScreen.tscn")},
     };
 
     public Scene? CurrentScene;
     private Node? _currentSceneNode;
-    private SaveSystem _saveSystem = null!;
+    private AnimationPlayer _transition = null!;
 
     public override void _Ready()
     {
-        _saveSystem = GetNode<SaveSystem>("/root/SaveSystem");
+        _transition = GetNode<CanvasLayer>("/root/Transition").GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
     public void Switch(Scene sceneToSwitchTo, string? loadingZoneFromId = null)
@@ -31,9 +32,19 @@ public class SceneSwitcher : Node
             GD.PrintErr($"Could not switch to \"{sceneToSwitchTo}\" because it does not exist in the SceneSwitcher");
             return;
         }
-        
-        // We use CallDeferred so the current level can safely end what it's doing before changing
-        CallDeferred(nameof(GoToScene), sceneToSwitchTo, loadingZoneFromId);
+
+        GetTree().Paused = true;
+        _transition.Stop();
+        _transition.Play("Transition");
+
+        int lengthInMs = (int) (_transition.CurrentAnimationLength * 1000);
+
+        RunAfterDelay(() =>
+        {
+            // We use CallDeferred so the current level can safely end what it's doing before changing
+            CallDeferred(nameof(GoToScene), sceneToSwitchTo, loadingZoneFromId);
+        }, lengthInMs / 2);
+        RunAfterDelay(() => GetTree().Paused = false, lengthInMs);
     }
     
 

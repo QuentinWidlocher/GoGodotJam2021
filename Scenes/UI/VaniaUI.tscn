@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/Textures/HealBar.png" type="Texture" id=2]
@@ -18,6 +18,10 @@ Panel/styles/panel = SubResource( 1 )
 [sub_resource type="DynamicFont" id=3]
 size = 24
 font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 20
+font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.498039, 0, 0, 0.462745 )
@@ -61,7 +65,7 @@ ProgressBar/styles/bg = SubResource( 8 )
 ProgressBar/styles/fg = SubResource( 9 )
 
 [sub_resource type="DynamicFont" id=11]
-size = 22
+size = 20
 font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxFlat" id=12]
@@ -103,6 +107,19 @@ margin_right = 75.2234
 margin_bottom = 32.0045
 custom_fonts/font = SubResource( 3 )
 text = "Health"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="Label" parent="HealthBar"]
+margin_left = 199.532
+margin_top = 4.59912
+margin_right = 256.532
+margin_bottom = 32.5991
+custom_fonts/font = SubResource( 13 )
+text = "10/10"
+align = 2
+valign = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }

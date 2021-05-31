@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/UI/Menu/PauseScreen.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Assets/Fonts/chapaza/Chapaza.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.556863 )
@@ -26,7 +27,7 @@ default_font = SubResource( 3 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 24
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.32549, 0.27451, 0.388235, 1 )
@@ -65,6 +66,7 @@ Button/styles/pressed = null
 
 [node name="CanvasLayer" type="CanvasLayer"]
 pause_mode = 2
+layer = 2
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
