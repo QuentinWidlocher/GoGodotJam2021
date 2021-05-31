@@ -90,6 +90,18 @@ public class Player : KinematicBody2D
 
         _vel = MoveAndSlide(_vel, Vector2.Up);
 
+        for (int i = 0; i < GetSlideCount(); i++)
+        {
+            var collision = GetSlideCollision(i);
+            if (collision.Collider is Spikes)
+            {
+                // Spikes deals 10% of the player max HP
+                Hit(_statSystem.PlayerStat.HealthPoints * 0.1f, collision.Position);
+                // Lazy to override the Hit but idc
+                _knockingBack = new Vector2(_isFacingRight ? -1 : 1, -0.5f) * KnockbackForce;
+            }
+        }
+
         if (IsOnFloor())
         {
             if (!_hasLanded)
@@ -134,6 +146,18 @@ public class Player : KinematicBody2D
 
     public void GetInput(float delta)
     {
+        if (_knockingBack != Vector2.Zero)
+        {
+            _vel += _knockingBack;
+            _knockingBack = _knockingBack.LinearInterpolate(Vector2.Zero, .5f);
+            if (_knockingBack.Length() < 1)
+            {
+                _knockingBack = Vector2.Zero;
+            }
+
+            return;
+        }
+
         if (!_isDashing)
         {
             if (Input.IsActionPressed("left"))
@@ -172,16 +196,6 @@ public class Player : KinematicBody2D
         else
         {
             _vel = FacingDirection * DashForce;
-        }
-
-        if (_knockingBack != Vector2.Zero)
-        {
-            _vel += _knockingBack;
-            _knockingBack = _knockingBack.LinearInterpolate(Vector2.Zero, .5f);
-            if (_knockingBack.Length() < 1)
-            {
-                _knockingBack = Vector2.Zero;
-            }
         }
 
         // Simulating air resistance and friction (WARNING: Extremely difficult partial differential equation being calculated, proceed with caution)
@@ -264,18 +278,17 @@ public class Player : KinematicBody2D
             .ThenAfterDelay(() => _canDash = true, DashCoolDown);
     }
 
-    public void Hit(float damage, Node2D source)
+    public void Hit(float damage, Vector2 source)
     {
         if (!Vulnerable) return;
 
         // _knockingBack is a force that's applied after the movement and gradually decreases over time
-        var knockDirection = Position > source.Position ? 1 : -1;
+        var knockDirection = Position > source ? 1 : -1;
         _knockingBack = new Vector2(knockDirection, -0.5f) * KnockbackForce;
 
         Vulnerable = false;
         RunAfterDelay(() => Vulnerable = true, InvicibilityCoolDown);
-
-        GD.Print($"Ouch, {damage} damage from {source.Name}");
+        
         HealthPoints -= damage;
 
         if (HealthPoints <= 0)
@@ -285,6 +298,8 @@ public class Player : KinematicBody2D
 
         _animations.Play("hurt");
     }
+
+    public void Hit(float damage, Node2D source) => Hit(damage, source.Position);
 
     private void Die()
     {
