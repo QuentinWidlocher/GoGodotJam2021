@@ -3,13 +3,16 @@ using Godot;
 
 public class GeneratorButton : HBoxContainer
 {
+	private bool _initialized;
 	private Generator _generator = null!;
 	public Generator Generator
 	{
 		get => _generator;
 		set { 
 			_generator = value;
-			UpdateValues();
+			
+			if (_initialized)
+				UpdateValues();
 		}
 	}
 
@@ -22,6 +25,10 @@ public class GeneratorButton : HBoxContainer
 		_costLabel = GetNode<Label>("CostLabel");
 		_boughtLabel = GetNode<Label>("BoughtLabel");
 		_button = GetNode<Button>("Button");
+
+		_initialized = true;
+		
+		UpdateValues();
 	}
 
 	public void UpdateValues()

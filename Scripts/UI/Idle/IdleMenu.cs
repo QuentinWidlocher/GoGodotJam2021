@@ -7,6 +7,7 @@ using static Helpers.NodeExtensions;
 public class IdleMenu : CanvasLayer
 {
 	[Export] private NodePath GeneratorsPath = null!;
+	[Export] private NodePath PlayerUpgradesPath = null!;
 	[Export] private NodePath TotalSpiritPath = null!;
 	[Export] private NodePath TotalManaPath = null!;
 	[Export] private NodePath ManaProductionPath = null!;
@@ -14,6 +15,10 @@ public class IdleMenu : CanvasLayer
 	private Label _totalSpiritLabel = null!;
 	private Label _totalManaLabel = null!;
 	private Label _manaProductionLabel = null!;
+
+	private PackedScene _playerUpgradeButton = GD.Load<PackedScene>("res://Scenes/UI/Idle/PlayerUpgradeButton.tscn");
+	private List<PlayerUpgradeButton> _playerUpgradeButtons = new List<PlayerUpgradeButton>();
+	private PackedScene _generatorButton = GD.Load<PackedScene>("res://Scenes/UI/Idle/GeneratorButton.tscn");
 	private List<GeneratorButton> _generatorButtons = new List<GeneratorButton>();
 	
 	private static StatSystem _statSystem = null!;
@@ -30,16 +35,23 @@ public class IdleMenu : CanvasLayer
 		_totalManaLabel = GetNode<Label>(TotalManaPath);
 		_manaProductionLabel = GetNode<Label>(ManaProductionPath);
 
-		_generatorButtons = GetNode(GeneratorsPath).GetChildren<GeneratorButton>().ToList();
-		
-		int generatorIndex = 0;
-		foreach (var generatorButton in _generatorButtons)
+		foreach (var generatorButton in IdleSystem.Generators)
 		{
-			generatorButton.Generator = IdleSystem.Generators[generatorIndex];
-			generatorIndex++;
+			var newGenerator = (GeneratorButton) _generatorButton.Instance();
+			newGenerator.Generator = generatorButton;
+			GetNode(GeneratorsPath).AddChild(newGenerator);
+			_generatorButtons.Add(newGenerator);
 		}
 		
-		_generatorButtons.First().GetNode<Button>("Button").GrabFocus();
+		foreach (var playerUpgrade in StatSystem.PlayerUpgrades)
+		{
+			var newButton = (PlayerUpgradeButton) _playerUpgradeButton.Instance();
+			newButton.PlayerUpgrade = playerUpgrade;
+			GetNode(PlayerUpgradesPath).AddChild(newButton);
+			_playerUpgradeButtons.Add(newButton);
+		}
+
+		((Node) GetNode(GeneratorsPath).GetChildren()[0]).GetNode<Button>("Button").GrabFocus();
 	}
 
 	public override void _Process(float delta)
@@ -61,5 +73,6 @@ public class IdleMenu : CanvasLayer
 		_manaProductionLabel.Text = $"{Math.Round(IdleSystem.Production, 2)}/s";
 		
 		_generatorButtons.ForEach(button => button.UpdateValues());
+		_playerUpgradeButtons.ForEach(button => button.UpdateValues());
 	}
 }

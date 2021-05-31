@@ -32,7 +32,7 @@ public class IdleSystem : Timer
             Id = GeneratorId.Generator02,
             Name = "Leaf Composter",
             ProductionBase = 1f,
-            CostBase = 15f,
+            CostBase = 20f,
             CostMultiplier = 1.6f,
             ProductionFormula = g => Mathf.Pow(Mathf.Pow(g.Bought, g.Upgrades + 1), g.ProductionBase)/1.75f,
             CostFormula = g => g.CostBase * Mathf.Pow(g.CostMultiplier, g.Bought),
@@ -42,8 +42,8 @@ public class IdleSystem : Timer
             Id = GeneratorId.Generator03,
             Name = "Bark Peeler",
             ProductionBase = 5f,
-            CostBase = 50f,
-            CostMultiplier = 1.7f,
+            CostBase = 200f,
+            CostMultiplier = 2f,
             ProductionFormula = g => Mathf.Pow(Mathf.Pow(g.Bought, g.Upgrades + 1), g.ProductionBase)/1.5f,
             CostFormula = g => g.CostBase * Mathf.Pow(g.CostMultiplier, g.Bought),
         }
@@ -61,7 +61,7 @@ public class IdleSystem : Timer
         ComputeProduction();
     }
 
-    public void UpdateCurrency() => Currency += Production;
+    public static void UpdateCurrency() => Currency += Production;
 
     public static void BuyGenerator(GeneratorId id)
     {

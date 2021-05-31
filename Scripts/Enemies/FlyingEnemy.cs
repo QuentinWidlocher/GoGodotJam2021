@@ -27,8 +27,6 @@ public class FlyingEnemy : KinematicDetectionEnemy
     public override void _Ready()
     {
         base._Ready();
-
-        GD.Print(Damage);
         
         _healthPoints = MaxHealthPoints;
         _restDetectionCasts = GetNode<Node2D>("RestDetectionCasts").GetChildren<RayCast2D>().ToList();
@@ -40,19 +38,16 @@ public class FlyingEnemy : KinematicDetectionEnemy
 
         if (PlayerIsKnow)
         {
-            GD.Print("GoToPlayer");
             _resting = false;
             _restTarget = null;
             GoToThePlayer();
         }
         else if (_restTarget == null && !_resting)
         {
-            GD.Print("FindSpotToRest");
             FindSpotToRest();
         }
         else if (!_resting && _restTarget != null)
         {
-            GD.Print("Moving To Spot");
             
             foreach (var cast in _restDetectionCasts)
             {
@@ -72,7 +67,6 @@ public class FlyingEnemy : KinematicDetectionEnemy
         }
         else
         {
-            GD.Print("Resting");
             _restTarget = null;
             _resting = true;
         }

@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/UI/Idle/IdleMenu.cs" type="Script" id=2]
-[ext_resource path="res://Scenes/UI/Idle/GeneratorButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Backgrounds/PlaceholderTree.jpg" type="Texture" id=4]
 [ext_resource path="res://Assets/Fonts/deutsch_gothic/Deutsch.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Assets/Fonts/chapaza/Chapaza.ttf" type="DynamicFontData" id=6]
@@ -27,6 +26,7 @@ font_data = ExtResource( 6 )
 [node name="Control" type="CanvasLayer"]
 script = ExtResource( 2 )
 GeneratorsPath = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/Generators")
+PlayerUpgradesPath = NodePath("VBoxContainer/HBoxContainer/VBoxContainer2/PlayerUpgrades")
 TotalSpiritPath = NodePath("VBoxContainer/Infos/Spirit/HBoxContainer/TotalSpirit")
 TotalManaPath = NodePath("VBoxContainer/Infos/Mana/HBoxContainer/TotalMana")
 ManaProductionPath = NodePath("VBoxContainer/Infos/Mana/HBoxContainer2/ManaProduction")
@@ -50,7 +50,7 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = -10.0
 margin_bottom = -10.0
-custom_constants/separation = 50
+custom_constants/separation = 20
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -63,9 +63,9 @@ text = "Mana Tree"
 align = 1
 
 [node name="Infos" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 117.0
+margin_top = 87.0
 margin_right = 830.0
-margin_bottom = 177.0
+margin_bottom = 147.0
 alignment = 1
 
 [node name="Spirit" type="VBoxContainer" parent="VBoxContainer/Infos"]
@@ -147,15 +147,15 @@ custom_fonts/font = SubResource( 3 )
 text = "+1234/s"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 227.0
+margin_top = 167.0
 margin_right = 830.0
-margin_bottom = 361.0
+margin_bottom = 212.0
 custom_constants/separation = 20
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_right = 405.0
-margin_bottom = 134.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 custom_constants/separation = 20
 
@@ -169,64 +169,13 @@ align = 1
 [node name="Generators" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 45.0
 margin_right = 405.0
-margin_bottom = 134.0
-custom_constants/separation = 10
-
-[node name="GeneratorButton1" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators" instance=ExtResource( 3 )]
-margin_top = 0.0
-margin_right = 405.0
-margin_bottom = 23.0
-focus_neighbour_bottom = NodePath("../GeneratorButton2/Button")
-
-[node name="CostLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton1" index="0"]
-margin_right = 128.0
-
-[node name="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton1" index="1"]
-margin_left = 132.0
-margin_right = 272.0
-
-[node name="BoughtLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton1" index="2"]
-margin_left = 276.0
-margin_right = 405.0
-
-[node name="GeneratorButton2" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators" instance=ExtResource( 3 )]
-margin_top = 33.0
-margin_right = 405.0
-margin_bottom = 56.0
-focus_neighbour_top = NodePath("../GeneratorButton1/Button")
-
-[node name="CostLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton2" index="0"]
-margin_right = 128.0
-
-[node name="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton2" index="1"]
-margin_left = 132.0
-margin_right = 272.0
-
-[node name="BoughtLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton2" index="2"]
-margin_left = 276.0
-margin_right = 405.0
-
-[node name="GeneratorButton3" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators" instance=ExtResource( 3 )]
-margin_top = 66.0
-margin_right = 405.0
-margin_bottom = 89.0
-focus_neighbour_top = NodePath("../GeneratorButton1/Button")
-
-[node name="CostLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton3" index="0"]
-margin_right = 128.0
-
-[node name="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton3" index="1"]
-margin_left = 132.0
-margin_right = 272.0
-
-[node name="BoughtLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton3" index="2"]
-margin_left = 276.0
-margin_right = 405.0
+margin_bottom = 45.0
+custom_constants/separation = 5
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 425.0
 margin_right = 830.0
-margin_bottom = 134.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 custom_constants/separation = 20
 
@@ -237,6 +186,8 @@ custom_fonts/font = SubResource( 4 )
 text = "Player Upgrades"
 align = 1
 
-[editable path="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton1"]
-[editable path="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton2"]
-[editable path="VBoxContainer/HBoxContainer/VBoxContainer/Generators/GeneratorButton3"]
+[node name="PlayerUpgrades" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 45.0
+margin_right = 405.0
+margin_bottom = 45.0
+custom_constants/separation = 5

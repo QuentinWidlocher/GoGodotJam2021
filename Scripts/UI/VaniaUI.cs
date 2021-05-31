@@ -19,6 +19,7 @@ public class VaniaUI : Control
 		_player = GetNode<Player>("/root/Player");
 		_player.Connect(nameof(Player.HealthChange), this, nameof(OnPlayerHpChange));
 		
+		
 		_hpBar = GetNode<Range>("HealthBar/ProgressBar");
 		_hpBar.MaxValue = _statSystem.PlayerStat.HealthPoints;
 		_hpValueToAimFor = _player.HealthPoints;
@@ -29,6 +30,7 @@ public class VaniaUI : Control
 		_spirit = GetNode<Label>("Spirit/Label");
 		_spirit.Text = $"{Math.Round(_statSystem.SpiritCount, 2)}";
 		_statSystem.Connect(nameof(StatSystem.SpiritChange), this, nameof(OnSpiritChange));
+		_statSystem.Connect(nameof(StatSystem.MaxHealthChange), this, nameof(OnMaxHpChange));
 	}
 
 	public override void _Process(float delta)
@@ -36,6 +38,7 @@ public class VaniaUI : Control
 		if (Math.Abs(_hpBar.Value - _hpValueToAimFor) > _hpBar.Step)
 		{
 			_hpBar.Value = Mathf.Lerp((float) _hpBar.Value, _hpValueToAimFor, 0.5f);
+			GetNode<Label>("HealthBar/Amount").Text = $"{_hpValueToAimFor}/{_statSystem.PlayerStat.HealthPoints}";
 		}
 	}
 
@@ -43,6 +46,11 @@ public class VaniaUI : Control
 	{
 		_hpValueToAimFor = newValue;
 		_healBar.Value = _player.RemainingHeal;
+	}
+
+	private void OnMaxHpChange()
+	{
+		GetNode<Label>("HealthBar/Amount").Text = $"{_hpValueToAimFor}/{_statSystem.PlayerStat.HealthPoints}";
 	}
 
 	private void OnSpiritChange(float newValue)
