@@ -186,7 +186,6 @@ SaveSystem="*res://Scripts/Singletons/SaveSystem.cs"
 [debug]
 
 settings/fps/force_fps=60
-settings/stdout/print_fps=true
 
 [display]
 

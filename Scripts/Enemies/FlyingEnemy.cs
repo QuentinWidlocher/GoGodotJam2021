@@ -6,8 +6,9 @@ using static Helpers.NodeExtensions;
 
 public class FlyingEnemy : KinematicDetectionEnemy
 {
-    [Export] public new float Damage = 1;
-    [Export] public float Speed = 1;
+    [Export] public override float Damage { get; set; }
+    [Export] public float Speed = 200;
+    [Export] public new float MaxHealthPoints = 2f;
 
     private List<RayCast2D> _restDetectionCasts = new List<RayCast2D>();
 
@@ -22,14 +23,19 @@ public class FlyingEnemy : KinematicDetectionEnemy
     };
 
     private int _restSearchTime;
-    
-    public new float MaxHealthPoints = 2f;
+
+    private AnimatedSprite _sprite = null!;
 
     public override void _Ready()
     {
         base._Ready();
 
+        GD.Print(Damage);
+        
+        _healthPoints = MaxHealthPoints;
         _restDetectionCasts = GetNode<Node2D>("RestDetectionCasts").GetChildren<RayCast2D>().ToList();
+
+        _sprite = (AnimatedSprite)GetNode("Sprite");
     }
 
     public override void _Process(float delta)
@@ -38,16 +44,20 @@ public class FlyingEnemy : KinematicDetectionEnemy
 
         if (PlayerIsKnow)
         {
+            GD.Print("GoToPlayer");
             _resting = false;
             _restTarget = null;
             GoToThePlayer();
         }
         else if (_restTarget == null && !_resting)
         {
+            GD.Print("FindSpotToRest");
             FindSpotToRest();
         }
         else if (!_resting && _restTarget != null)
         {
+            GD.Print("Moving To Spot");
+            
             foreach (var cast in _restDetectionCasts)
             {
                 cast.Enabled = false;
@@ -66,8 +76,10 @@ public class FlyingEnemy : KinematicDetectionEnemy
         }
         else
         {
+            GD.Print("Resting");
             _restTarget = null;
             _resting = true;
+            _sprite.Play("wait");
         }
     }
 
@@ -81,6 +93,8 @@ public class FlyingEnemy : KinematicDetectionEnemy
         }
 
         MoveAndSlide(direction * new Vector2(Speed, Speed / 2), Vector2.Up);
+        _sprite.FlipH = direction.x < 0;
+        _sprite.Play("fly");
     }
 
     private void FindSpotToRest()
@@ -92,24 +106,14 @@ public class FlyingEnemy : KinematicDetectionEnemy
 
             if (_restDetectionCasts[i].IsColliding())
             {
-                if (_restDetectionCasts[i].GetCollider() is TileMap)
+                if (_restDetectionCasts[i].GetCollider() is StaticBody2D)
                 {
                     _restTarget = _restDetectionCasts[i].CastTo;
+                    break;
                 }
             }
             
             _restSearchTime += 2;
-        }
-    }
-
-    public void OnRestingTileFound(Node body)
-    {
-        if (body is TileMap tileMap)
-        {
-            //if (tileMap.GlobalPosition.y > GlobalPosition.y) return;
-
-            var tilePos = tileMap.WorldToMap(Position);
-            
         }
     }
 }

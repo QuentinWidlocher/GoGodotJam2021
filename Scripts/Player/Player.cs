@@ -23,7 +23,7 @@ public class Player : KinematicBody2D
 
     // MaxJumps is public to change the number of max jumps from other classes (is there a better way to do this?)
     public int MaxJumps = 2;
-    public int RemainingHeal = StatSystem.PlayerStat.MaxHeals;
+    public int RemainingHeal;
 
     private float _healthPoints;
 
@@ -36,6 +36,8 @@ public class Player : KinematicBody2D
             EmitSignal(nameof(HealthChange), value);
         }
     }
+    
+    private StatSystem _statSystem = null!;
 
     private Vector2 _vel = Vector2.Zero;
     private int _jumps = 0;
@@ -76,8 +78,10 @@ public class Player : KinematicBody2D
     {
         _sprite = (AnimatedSprite) GetNode("AnimatedSprite");
         _animations = (AnimationPlayer) GetNode("AnimationPlayer");
+        _statSystem = GetNode<StatSystem>("/root/StatSystem");
 
-        HealthPoints = StatSystem.PlayerStat.HealthPoints;
+        HealthPoints = _statSystem.PlayerStat.HealthPoints;
+        RemainingHeal = _statSystem.PlayerStat.MaxHeals;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -226,17 +230,17 @@ public class Player : KinematicBody2D
 
     private void Heal()
     {
-        if (RemainingHeal <= 0 || Math.Abs(HealthPoints - StatSystem.PlayerStat.HealthPoints) < 0.1) return;
+        if (RemainingHeal <= 0 || Math.Abs(HealthPoints - _statSystem.PlayerStat.HealthPoints) < 0.1) return;
 
         RemainingHeal--;
-        HealthPoints += StatSystem.PlayerStat.HealingAmount;
-        HealthPoints = Mathf.Min(HealthPoints, StatSystem.PlayerStat.HealthPoints);
+        HealthPoints += _statSystem.PlayerStat.HealingAmount;
+        HealthPoints = Mathf.Min(HealthPoints, _statSystem.PlayerStat.HealthPoints);
     }
 
     public void Attack()
     {
         var bolt = (Bolt) _bolt.Instance();
-        bolt.Damage = StatSystem.PlayerStat.DamageDealt;
+        bolt.Damage = _statSystem.PlayerStat.DamageDealt;
 
         bolt.Shoot(Position + 32 * FacingDirection, FacingDirection);
 
@@ -271,6 +275,7 @@ public class Player : KinematicBody2D
         Vulnerable = false;
         RunAfterDelay(() => Vulnerable = true, InvicibilityCoolDown);
 
+        GD.Print($"Ouch, {damage} damage from {source.Name}");
         HealthPoints -= damage;
 
         if (HealthPoints <= 0)

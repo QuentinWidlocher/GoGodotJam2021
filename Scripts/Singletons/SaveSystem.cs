@@ -11,6 +11,7 @@ public class SaveSystem : Node
 {
 	private SceneSwitcher _sceneSwitcher = null!;
 	private Player _player = null!;
+	private StatSystem _statSystem = null!;
 
 	private string _savePath = "user://save.dat";
 	
@@ -18,6 +19,7 @@ public class SaveSystem : Node
 	{
 		_sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
 		_player = GetNode<Player>("/root/Player");
+		_statSystem = GetNode<StatSystem>("/root/StatSystem");
 	}
 
 	public void Save()
@@ -38,6 +40,7 @@ public class SaveSystem : Node
 			["PlayerPosition"] = _player.Position,
 			["PlayerHealth"] = _player.HealthPoints,
 			["PlayerHeal"] = _player.RemainingHeal,
+			["SpiritAmount"] = _statSystem.SpiritCount,
 			["EnemiesInfos"] = enemiesInfos,
 			["CurrentScene"] = _sceneSwitcher.CurrentScene ?? Scene.Hub	,
 		};
@@ -76,6 +79,7 @@ public class SaveSystem : Node
 			
 			_player.RemainingHeal = (int) saveData["PlayerHeal"];
 			_player.HealthPoints = (float) saveData["PlayerHealth"];
+			_statSystem.SpiritCount = (int) saveData["SpiritAmount"];
 			_sceneSwitcher.CurrentScene = (Scene)((int) saveData["CurrentScene"]);
 			
 			var camera = _player.FindInChildren<Camera2D>();
