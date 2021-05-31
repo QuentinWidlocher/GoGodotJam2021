@@ -182,6 +182,7 @@ SceneSwitcher="*res://Scripts/Singletons/SceneSwitcher/SceneSwitcher.cs"
 PauseScreen="*res://Scenes/UI/Menu/PauseScreen.tscn"
 Player="*res://Scenes/Player/Player.tscn"
 SaveSystem="*res://Scripts/Singletons/SaveSystem.cs"
+IdleSystem="*res://Scripts/Singletons/IdleSystem/IdleSystem.cs"
 
 [display]
 
