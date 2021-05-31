@@ -124,7 +124,7 @@ public class Player : KinematicBody2D
             _sprite.Play("fall");
         if (_vel.y > 400)
             _sprite.Play("fall_fast");
-        if (IsOnWall() && !IsOnFloor())
+        if (IsOnWall() && !IsOnFloor() && _statSystem.PlayerStat.HasWallJump)
             _sprite.Play("wall_slide");
         if (Input.IsActionPressed("attack_main"))
             _sprite.Play("attack");
@@ -192,7 +192,7 @@ public class Player : KinematicBody2D
             _vel.y += Gravity;
 
         // When the jump button is held, _jumpTimer counts up to only let the player gain y velocity until JumpTime is reached
-        if (Input.IsActionJustPressed("jump"))
+        if (Input.IsActionJustPressed("jump") && _statSystem.PlayerStat.HasWallJump)
         {
             if (IsOnWall() && !IsOnFloor()) {
                 _vel.x += -Mathf.Sign(_vel.x) * WallJumpKnockback;

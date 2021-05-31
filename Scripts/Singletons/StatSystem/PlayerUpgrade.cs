@@ -1,6 +1,7 @@
 using System;
+using Godot;
 
-public class PlayerUpgrade
+public class PlayerUpgrade: Godot.Object
 {
     public PlayerUpgradeId Id;
     public string Name = "";

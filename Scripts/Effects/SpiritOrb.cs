@@ -45,7 +45,7 @@ public class SpiritOrb : Particles2D
 		if (!_fading && body is Player)
 		{
 			GD.Print($"Gained {Value} spirits");
-			_statSystem.SpiritCount += Value;
+			_statSystem.SpiritCount += Value * _statSystem.PlayerStat.SpiritMultiplier;
 			
 			// We let the orb slowly fade before we destroy it
 			Emitting = false;

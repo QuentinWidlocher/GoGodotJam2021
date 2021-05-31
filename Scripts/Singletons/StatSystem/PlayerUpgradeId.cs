@@ -1,5 +1,6 @@
 public enum PlayerUpgradeId
 {
+    SpiritMultiplier,
     HpMultiplier,
     AttackMultiplier,
     BetterHeal,

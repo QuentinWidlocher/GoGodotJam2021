@@ -14,7 +14,7 @@ public class IdleSystem : Timer
      * Big list of all the Generators.
      * This is where the magic happens
      */
-    public static readonly List<Generator> Generators = new List<Generator>
+    public static List<Generator> Generators = new List<Generator>
     {
         new Generator
         {

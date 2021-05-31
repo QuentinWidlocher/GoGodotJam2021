@@ -6,6 +6,7 @@ public struct PlayerStat
     public float HealthPoints;
     public float DamageDealt;
     public float HealingAmount;
+    public float SpiritMultiplier; 
     public int MaxHeals;
     public bool HasDash;
     public bool HasDoubleJump;
@@ -17,6 +18,7 @@ public struct PlayerStat
         DamageDealt = 1,
         HealingAmount = 5,
         MaxHeals = 0,
+        SpiritMultiplier = 1,
     };
 }
 
@@ -35,6 +37,7 @@ public class StatSystem : Node
      */
     public PlayerStat PlayerStat => new PlayerStat
     {
+        SpiritMultiplier = 1 + BasePlayerStat.SpiritMultiplier * GetPlayerUpgrade(PlayerUpgradeId.SpiritMultiplier).Bonus,
         HealthPoints = BasePlayerStat.HealthPoints + GetPlayerUpgrade(PlayerUpgradeId.HpMultiplier).Bonus,
         DamageDealt = BasePlayerStat.DamageDealt + GetPlayerUpgrade(PlayerUpgradeId.AttackMultiplier).Bonus,
         HealingAmount = (BasePlayerStat.HealthPoints + GetPlayerUpgrade(PlayerUpgradeId.HpMultiplier).Bonus) * (0.2f + GetPlayerUpgrade(PlayerUpgradeId.BetterHeal).Bonus),
@@ -55,8 +58,17 @@ public class StatSystem : Node
         }
     }
 
-    public static readonly List<PlayerUpgrade> PlayerUpgrades = new List<PlayerUpgrade>
+    public static List<PlayerUpgrade> PlayerUpgrades = new List<PlayerUpgrade>
     {
+        new PlayerUpgrade
+        {
+            Id = PlayerUpgradeId.SpiritMultiplier,
+            Name = "Spirit Multiplier",
+            CostBase = 10f,
+            CostMultiplier = 1.5f,
+            CostFormula = g => g.CostBase * Mathf.Pow(g.CostMultiplier, g.Bought),
+            BaseBonus = 0.5f,
+        },
         new PlayerUpgrade
         {
             Id = PlayerUpgradeId.HpMultiplier,
