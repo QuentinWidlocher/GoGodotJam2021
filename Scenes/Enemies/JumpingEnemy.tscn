@@ -35,7 +35,7 @@ resource_name = "Hurt"
 length = 0.2
 step = 0.01
 tracks/0/type = "value"
-tracks/0/path = NodePath("../JumpingEnemy/JumpingEnemy8:modulate")
+tracks/0/path = NodePath("Sprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -51,7 +51,6 @@ tracks/0/keys = {
 "EnemiesToSave",
 ]]
 collision_layer = 4
-collision_mask = 3
 mode = 2
 gravity_scale = 3.0
 contacts_reported = 3
@@ -65,7 +64,7 @@ shape = SubResource( 1 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 10
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]

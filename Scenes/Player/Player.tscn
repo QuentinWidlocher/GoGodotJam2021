@@ -12,8 +12,8 @@
 [ext_resource path="res://Scenes/Effects/Parallax.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 11.9779
-height = 35.748
+radius = 15.3043
+height = 27.8866
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )

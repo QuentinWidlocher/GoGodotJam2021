@@ -41,9 +41,9 @@ public class IdleSystem : Timer
         {
             Id = GeneratorId.Generator03,
             Name = "Bark Peeler",
-            ProductionBase = 5f,
-            CostBase = 200f,
-            CostMultiplier = 2f,
+            ProductionBase = 2f,
+            CostBase = 100f,
+            CostMultiplier = 1.7f,
             ProductionFormula = g => Mathf.Pow(Mathf.Pow(g.Bought, g.Upgrades + 1), g.ProductionBase)/1.5f,
             CostFormula = g => g.CostBase * Mathf.Pow(g.CostMultiplier, g.Bought),
         }

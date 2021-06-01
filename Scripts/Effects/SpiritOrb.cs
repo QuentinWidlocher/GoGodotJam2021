@@ -8,7 +8,7 @@ public class SpiritOrb : Particles2D
 	private StatSystem _statSystem = null!;
 	private Light2D _light = null!;
 	
-	public int Value = 1;
+	[Export] public int Value = 100;
 	public float FadingSpeed = 1f;
 	private bool _fading;
 
