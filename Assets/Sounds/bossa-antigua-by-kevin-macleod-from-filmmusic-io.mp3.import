@@ -2,11 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-valid=false
+path="res://.import/bossa-antigua-by-kevin-macleod-from-filmmusic-io.mp3-00646a4c889ab29c41a635cf2d9e063f.mp3str"
 
 [deps]
 
 source_file="res://Assets/Sounds/bossa-antigua-by-kevin-macleod-from-filmmusic-io.mp3"
+dest_files=[ "res://.import/bossa-antigua-by-kevin-macleod-from-filmmusic-io.mp3-00646a4c889ab29c41a635cf2d9e063f.mp3str" ]
+
 [params]
 
 loop=true
