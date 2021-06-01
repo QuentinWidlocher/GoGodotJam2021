@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Assets/player_idle.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player/Player.cs" type="Script" id=2]
@@ -9,12 +9,13 @@
 [ext_resource path="res://Assets/player_dash.png" type="Texture" id=7]
 [ext_resource path="res://Assets/player_attack.png" type="Texture" id=8]
 [ext_resource path="res://Assets/player_fall.png" type="Texture" id=9]
-[ext_resource path="res://Scenes/Effects/Parallax.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/player_wall_slide.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Sounds/shoot.wav" type="AudioStream" id=11]
 [ext_resource path="res://Assets/Sounds/walk2_extended.wav" type="AudioStream" id=12]
 [ext_resource path="res://Assets/Sounds/hit2.wav" type="AudioStream" id=13]
 [ext_resource path="res://Assets/Sounds/jump3.wav" type="AudioStream" id=14]
 [ext_resource path="res://Assets/Sounds/landing.wav" type="AudioStream" id=15]
+[ext_resource path="res://Scenes/Effects/Parallax.tscn" type="PackedScene" id=16]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 15.3043
@@ -52,7 +53,11 @@ region = Rect2( 64, 0, 32, 32 )
 atlas = ExtResource( 6 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=10]
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 10 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=11]
 animations = [ {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
 "loop": true,
@@ -62,21 +67,6 @@ animations = [ {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "jump",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 9 ) ],
-"loop": true,
-"name": "fall",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 7 ) ],
-"loop": true,
-"name": "dash",
-"speed": 5.0
-}, {
-"frames": [ null ],
-"loop": true,
-"name": "wall_slide",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
@@ -89,13 +79,28 @@ animations = [ {
 "name": "attack",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "dash",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "fall_fast",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 10 ) ],
+"loop": true,
+"name": "wall_slide",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "fall",
+"speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 length = 0.5
 step = 0.05
 tracks/0/type = "value"
@@ -111,7 +116,7 @@ tracks/0/keys = {
 "values": [ false, true, false, true, false, true, false, true, false, true ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
@@ -138,7 +143,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, 2 ), Vector2( 1.9, 2.5 ), Vector2( 2, 2 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 0.15
 step = 0.05
 tracks/0/type = "value"
@@ -171,14 +176,14 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
-frames = SubResource( 10 )
+frames = SubResource( 11 )
 animation = "fall"
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hurt = SubResource( 11 )
-anims/jump = SubResource( 12 )
-anims/landing = SubResource( 13 )
+anims/hurt = SubResource( 12 )
+anims/jump = SubResource( 13 )
+anims/landing = SubResource( 14 )
 
 [node name="Light2D" type="Light2D" parent="."]
 light_mask = 0
@@ -211,18 +216,23 @@ cast_to = Vector2( 0, 40 )
 
 [node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 14 )
+volume_db = -5.0
 
 [node name="Footstep" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 12 )
-autoplay = true
+volume_db = -5.0
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 11 )
+volume_db = -5.0
 
 [node name="Landing" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 15 )
+volume_db = -5.0
 
 [node name="Hit" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 13 )
+volume_db = -5.0
 
-[node name="ParallaxBg" parent="." instance=ExtResource( 10 )]
+[node name="ParallaxBg" parent="." instance=ExtResource( 16 )]
+layer = -1

@@ -10,6 +10,7 @@ public class SceneSwitcher : Node
     private readonly Dictionary<Scene, PackedScene> _sceneList = new Dictionary<Scene, PackedScene>
     {
         {Scene.MainMenu, GD.Load<PackedScene>("res://Scenes/UI/Menu/MainMenu.tscn")},
+        {Scene.Guide, GD.Load<PackedScene>("res://Scenes/UI/HelpScreen.tscn")},
         {Scene.IdleSystem, GD.Load<PackedScene>("res://Scenes/UI/Idle/IdleMenu.tscn")},
         {Scene.Hub, GD.Load<PackedScene>("res://Scenes/Levels/Zones/Hub.tscn")},
         {Scene.FirstZone, GD.Load<PackedScene>("res://Scenes/Levels/Zones/FirstZone.tscn")},

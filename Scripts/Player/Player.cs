@@ -21,6 +21,8 @@ public class Player : KinematicBody2D
     [Signal]
     public delegate void HealthChange(float newValue);
 
+    public bool Enabled;
+
     // MaxJumps is public to change the number of max jumps from other classes (is there a better way to do this?)
     public int MaxJumps => _statSystem.PlayerStat.HasDoubleJump ? 2 : 1;
     public int RemainingHeal;
@@ -104,6 +106,8 @@ public class Player : KinematicBody2D
 
     public override void _PhysicsProcess(float delta)
     {
+        if (!Enabled) return;
+        
         GetInput(delta);
 
         _vel = MoveAndSlide(_vel, Vector2.Up);
@@ -336,7 +340,7 @@ public class Player : KinematicBody2D
     {
         _knockingBack = Vector2.Zero;
         _vel = Vector2.Zero;
-        _statSystem.SpiritCount *= 0.8f;
+        _statSystem.SpiritCount *= 0.75f;
         
         // Delay just so we can see the hurting animation
         RunAfterDelay(() => _sceneSwitcher.Switch(Scene.Hub, "FROM_DEATH"), 200);
