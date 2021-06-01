@@ -25,7 +25,7 @@ public class SceneSwitcher : Node
         _transition = GetNode<CanvasLayer>("/root/Transition").GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
-    public void Switch(Scene sceneToSwitchTo, string? loadingZoneFromId = null)
+    public void Switch(Scene sceneToSwitchTo, string? loadingZoneToId = null)
     {
         if (!_sceneList.ContainsKey(sceneToSwitchTo))
         {
@@ -42,13 +42,13 @@ public class SceneSwitcher : Node
         RunAfterDelay(() =>
         {
             // We use CallDeferred so the current level can safely end what it's doing before changing
-            CallDeferred(nameof(GoToScene), sceneToSwitchTo, loadingZoneFromId);
+            CallDeferred(nameof(GoToScene), sceneToSwitchTo, loadingZoneToId);
         }, lengthInMs / 2);
         RunAfterDelay(() => GetTree().Paused = false, lengthInMs);
     }
     
 
-    private void GoToScene(Scene sceneToGoTo, string? loadingZoneFromId = null)
+    private void GoToScene(Scene sceneToGoTo, string? loadingZoneToId = null)
     {
         // We create the instance of our next scene 
         var newScene = _sceneList[sceneToGoTo].Instance();
@@ -65,10 +65,10 @@ public class SceneSwitcher : Node
         CurrentScene = sceneToGoTo;
 
         // If we're using a loading zone and it has the information to get a custom spawn point
-        if (loadingZoneFromId != null)
+        if (loadingZoneToId != null)
         {
             // We find a loading zone that has a ID connected to the one we used
-            LoadingZone? loadingZoneTo = _currentSceneNode.FindInChildrenWhere<LoadingZone>(zone => zone.Id == loadingZoneFromId, true);
+            LoadingZone? loadingZoneTo = _currentSceneNode.FindInChildrenWhere<LoadingZone>(zone => zone.Id == loadingZoneToId, true);
 
             if (loadingZoneTo != null)
             {

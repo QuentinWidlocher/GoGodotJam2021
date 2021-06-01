@@ -4,7 +4,7 @@ using Godot;
 public class LoadingZone : Area2D
 {
 	[Export] public readonly Scene ToScene;
-	[Export] public readonly string? FromId;
+	[Export] public readonly string? ToId;
 	[Export] public string Id = "X_TO_Y_1";
 
 	public Position2D Spawn = null!;
@@ -22,7 +22,7 @@ public class LoadingZone : Area2D
 	{
 		if (body is Player)
 		{
-			_sceneSwitcher.Switch(ToScene, FromId);
+			_sceneSwitcher.Switch(ToScene, ToId);
 		}
 	}
 }

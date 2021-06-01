@@ -9,11 +9,14 @@ public class Bolt : KinematicBody2D
 
     private Vector2 _direction = Vector2.Right;
     private Particles2D _particles = null!;
+    private Light2D _light = null!;
     private Sprite _sprite = null!;
 
     public void Shoot(Vector2 pos, Vector2 dir) {
         _particles = (Particles2D)GetNode("Particles2D");
         _sprite = (Sprite)GetNode("Sprite");
+        _light = GetNode<Light2D>("Light2D");
+        
         _particles.Emitting = true;
         Position = pos;
         _direction = dir;
@@ -43,6 +46,7 @@ public class Bolt : KinematicBody2D
         GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
         _sprite.Visible = false;
         _particles.Emitting = false;
+        _light.Enabled = false;
         RunAfterDelay(QueueFree, 1000);
     }
 }

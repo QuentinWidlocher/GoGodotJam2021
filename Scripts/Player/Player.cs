@@ -299,7 +299,7 @@ public class Player : KinematicBody2D
 
         if (HealthPoints <= 0)
         {
-            CallDeferred(nameof(Die));
+            Die();
         }
 
         _animations.Play("hurt");
@@ -311,6 +311,8 @@ public class Player : KinematicBody2D
     {
         _knockingBack = Vector2.Zero;
         _vel = Vector2.Zero;
-        _sceneSwitcher.Switch(Scene.Hub, "FROM_DEATH");
+        
+        // Delay just so we can see the hurting animation
+        RunAfterDelay(() => _sceneSwitcher.Switch(Scene.Hub, "FROM_DEATH"), 200);
     }
 }
