@@ -63,6 +63,11 @@ animations = [ {
 "name": "run",
 "speed": 10.0
 }, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "fall_fast",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "attack",
@@ -71,11 +76,6 @@ animations = [ {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "dash",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "fall_fast",
 "speed": 5.0
 }, {
 "frames": [ null ],
@@ -196,3 +196,5 @@ editor_draw_drag_margin = true
 [node name="RayCast2D" type="RayCast2D" parent="."]
 enabled = true
 cast_to = Vector2( 0, 40 )
+
+[node name="Sounds" type="Node2D" parent="."]

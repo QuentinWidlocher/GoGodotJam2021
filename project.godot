@@ -196,7 +196,7 @@ window/size/resizable=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/rmsmartshape/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/randomAudioStreamPlayer/plugin.cfg", "res://addons/rmsmartshape/plugin.cfg" )
 
 [importer_defaults]
 

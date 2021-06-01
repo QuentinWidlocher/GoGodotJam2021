@@ -117,6 +117,7 @@ public class Player : KinematicBody2D
             
             if (Input.IsActionPressed("left") || Input.IsActionPressed("right"))
                 _sprite.Play("run");
+
             else
                 _sprite.Play("idle");
 
