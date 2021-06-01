@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mana_tree_bg.png-de4db016ee16785a347bc50f8b829ae3.stex"
+path="res://.import/background_1.png-ca42d23b58cab2b40a80850aca81fb04.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/mana_tree_bg.png"
-dest_files=[ "res://.import/mana_tree_bg.png-de4db016ee16785a347bc50f8b829ae3.stex" ]
+source_file="res://Assets/Backgrounds/Parallax/background_1.png"
+dest_files=[ "res://.import/background_1.png-ca42d23b58cab2b40a80850aca81fb04.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

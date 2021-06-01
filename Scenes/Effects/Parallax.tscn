@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Backgrounds/Parallax/background_2.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Backgrounds/Parallax/background_0.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Backgrounds/Parallax/background_1.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Effects/Parallax.cs" type="Script" id=4]
+
+[node name="ParallaxBg" type="ParallaxBackground"]
+scroll_base_offset = Vector2( 0, -50 )
+scroll_base_scale = Vector2( 1, 0 )
+scroll_ignore_camera_zoom = true
+script = ExtResource( 4 )
+
+[node name="Bottom" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.1, 1 )
+motion_mirroring = Vector2( 864, 0 )
+
+[node name="Sprite" type="Sprite" parent="Bottom"]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Mid" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.3, 1 )
+motion_mirroring = Vector2( 864, 0 )
+
+[node name="Sprite" type="Sprite" parent="Mid"]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Top" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.5, 1 )
+motion_mirroring = Vector2( 864, 0 )
+
+[node name="Sprite" type="Sprite" parent="Top"]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 1 )
+centered = false

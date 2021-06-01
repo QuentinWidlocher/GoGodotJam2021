@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/UI/Idle/IdleMenu.cs" type="Script" id=2]
-[ext_resource path="res://Assets/Backgrounds/PlaceholderTree.jpg" type="Texture" id=4]
+[ext_resource path="res://Assets/Backgrounds/mana_tree_bg.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Fonts/deutsch_gothic/Deutsch.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Assets/Fonts/chapaza/Chapaza.ttf" type="DynamicFontData" id=6]
 
@@ -35,7 +35,7 @@ ManaProductionPath = NodePath("VBoxContainer/Infos/Mana/HBoxContainer2/ManaProdu
 modulate = Color( 0.509804, 0.509804, 0.509804, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 expand = true
 stretch_mode = 7
 flip_h = true

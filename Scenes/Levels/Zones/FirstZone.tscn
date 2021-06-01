@@ -11,15 +11,15 @@
 [ext_resource path="res://Scripts/Helpers/ShowInEditorOnly.cs" type="Script" id=9]
 [ext_resource path="res://Scenes/Levels/Teleporters.tscn" type="PackedScene" id=10]
 
-[sub_resource type="Gradient" id=1]
+[sub_resource type="Gradient" id=5]
 offsets = PoolRealArray( 1 )
 colors = PoolColorArray( 0.158747, 0.132568, 0.1875, 1 )
 
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
 
-[sub_resource type="ConvexPolygonShape2D" id=3]
-points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 20, 34.7405 )
 
 [sub_resource type="TileSet" id=4]
 0/name = "spike.png 0"
@@ -44,43 +44,44 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 } ]
 0/z_index = 0
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=7]
 radius = 79.8448
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=8]
 radius = 77.9079
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=9]
 radius = 36.9305
 
-[sub_resource type="CircleShape2D" id=8]
+[sub_resource type="CircleShape2D" id=10]
 radius = 64.334
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="CircleShape2D" id=11]
 radius = 49.5667
 
-[sub_resource type="CircleShape2D" id=10]
+[sub_resource type="CircleShape2D" id=12]
 radius = 77.4057
 
-[sub_resource type="CircleShape2D" id=11]
+[sub_resource type="CircleShape2D" id=13]
 radius = 43.6811
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 116.793, 113.347 )
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 115.827, 111.361 )
 
-[sub_resource type="CircleShape2D" id=14]
+[sub_resource type="CircleShape2D" id=16]
 radius = 399.671
 
 [node name="FirstZone" type="Node2D"]
 
 [node name="Background" type="Sprite" parent="."]
+visible = false
 position = Vector2( 1177.78, 3016.28 )
 scale = Vector2( 3.84249, 5194.51 )
 z_index = -1
-texture = SubResource( 2 )
+texture = SubResource( 6 )
 
 [node name="SpikeMap" type="TileMap" parent="."]
 scale = Vector2( 2, 2 )
@@ -109,49 +110,49 @@ position = Vector2( -0.890869, 9.80005 )
 position = Vector2( 483.088, -26.1731 )
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb/DetectionArea" index="0"]
-shape = SubResource( 5 )
+shape = SubResource( 7 )
 
 [node name="SpiritOrb2" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 1697.51, 365.833 )
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb2/DetectionArea" index="0"]
-shape = SubResource( 6 )
+shape = SubResource( 8 )
 
 [node name="SpiritOrb3" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 67.8079, 200.682 )
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb3/DetectionArea" index="0"]
-shape = SubResource( 7 )
+shape = SubResource( 9 )
 
 [node name="SpiritOrb4" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 1987.3, 257.923 )
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb4/DetectionArea" index="0"]
-shape = SubResource( 8 )
+shape = SubResource( 10 )
 
 [node name="SpiritOrb5" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 1955.72, 2163.21 )
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb5/DetectionArea" index="0"]
-shape = SubResource( 9 )
+shape = SubResource( 11 )
 
 [node name="SpiritOrb6" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 492.222, 2133.28 )
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb6/DetectionArea" index="0"]
-shape = SubResource( 10 )
+shape = SubResource( 12 )
 
 [node name="SpiritOrb7" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 643.583, 2916.99 )
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb7/DetectionArea" index="0"]
-shape = SubResource( 10 )
+shape = SubResource( 12 )
 
 [node name="SpiritOrb8" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 2688.89, 2171.47 )
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb8/DetectionArea" index="0"]
-shape = SubResource( 11 )
+shape = SubResource( 13 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -222,17 +223,17 @@ MaxHealthPoints = 50.0
 
 [node name="CollisionShape2D" parent="Enemies/JumpingEnemy12" index="0"]
 position = Vector2( 1.78174, 12.4725 )
-shape = SubResource( 12 )
+shape = SubResource( 14 )
 
 [node name="CollisionShape2D" parent="Enemies/JumpingEnemy12/KinematicBody2D" index="0"]
 position = Vector2( 1.74756, 11.9865 )
-shape = SubResource( 13 )
+shape = SubResource( 15 )
 
 [node name="Sprite" parent="Enemies/JumpingEnemy12" index="2"]
 scale = Vector2( 4, 4 )
 
 [node name="CollisionShape2D" parent="Enemies/JumpingEnemy12/DetectionRadius" index="0"]
-shape = SubResource( 14 )
+shape = SubResource( 16 )
 
 [node name="FloorCast1" parent="Enemies/JumpingEnemy12" index="5"]
 position = Vector2( -100.201, 103.5 )
