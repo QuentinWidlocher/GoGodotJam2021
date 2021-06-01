@@ -113,6 +113,7 @@ public class Player : KinematicBody2D
             _jumpSound.Stop();
             _landingSound.Stop();
             _shootSound.Stop();
+            Position = Vector2.Zero;
             return;
         }
         
