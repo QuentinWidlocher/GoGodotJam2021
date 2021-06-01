@@ -336,7 +336,7 @@ public class Player : KinematicBody2D
     {
         _knockingBack = Vector2.Zero;
         _vel = Vector2.Zero;
-        _statSystem.SpiritCount *= 0.8f;
+        _statSystem.SpiritCount *= 0.75f;
         
         // Delay just so we can see the hurting animation
         RunAfterDelay(() => _sceneSwitcher.Switch(Scene.Hub, "FROM_DEATH"), 200);

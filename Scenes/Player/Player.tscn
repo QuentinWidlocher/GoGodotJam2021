@@ -9,6 +9,7 @@
 [ext_resource path="res://Assets/player_dash.png" type="Texture" id=7]
 [ext_resource path="res://Assets/player_attack.png" type="Texture" id=8]
 [ext_resource path="res://Assets/player_fall.png" type="Texture" id=9]
+[ext_resource path="res://Assets/player_wall_slide.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/Effects/Parallax.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Assets/Sounds/shoot.wav" type="AudioStream" id=11]
 [ext_resource path="res://Assets/Sounds/walk2_extended.wav" type="AudioStream" id=12]
@@ -51,6 +52,10 @@ region = Rect2( 64, 0, 32, 32 )
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 6 )
 region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 10 )
+region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=10]
 animations = [ {

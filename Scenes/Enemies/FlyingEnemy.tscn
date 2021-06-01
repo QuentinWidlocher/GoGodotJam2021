@@ -54,6 +54,7 @@ shape = SubResource( 1 )
 
 [node name="LightOccluder2D" parent="." index="4"]
 visible = true
+position = Vector2( 4.45042, -10.3138 )
 
 [node name="Sprite" type="AnimatedSprite" parent="." index="5"]
 scale = Vector2( 2, 2 )
