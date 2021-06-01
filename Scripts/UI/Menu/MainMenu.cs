@@ -30,7 +30,7 @@ public class MainMenu : Control
 		_alreadyLoadedOnce = true;
 		
 		// Since the scene switcher has still not changed, CurrentScene is either null or = to the current scene when saved
-		var defaultLoadZone = nextScene == Scene.Hub ? "TO_HUB_1" : null;
+		var defaultLoadZone = nextScene == Scene.Hub ? "FROM_DEATH" : null;
 		_sceneSwitcher.Switch(nextScene, defaultLoadZone);
 		_saveSystem.CallDeferred(nameof(SaveSystem.Load));
 	}

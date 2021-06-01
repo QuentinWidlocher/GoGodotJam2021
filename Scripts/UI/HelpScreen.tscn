@@ -1,11 +1,11 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://Scripts/UI/Menu/MainMenu.cs" type="Script" id=2]
-[ext_resource path="res://Assets/Backgrounds/PlaceholderForest.jpg" type="Texture" id=3]
-[ext_resource path="res://Assets/Fonts/chapaza/Chapaza.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Scripts/UI/Menu/MainMenu.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Fonts/augusta/Augusta.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Assets/Fonts/chapaza/Chapaza.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Backgrounds/PlaceholderForest.jpg" type="Texture" id=4]
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.556863 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -16,21 +16,21 @@ expand_margin_right = 20.0
 expand_margin_top = 20.0
 expand_margin_bottom = 20.0
 
-[sub_resource type="Theme" id=2]
-Panel/styles/panel = SubResource( 9 )
+[sub_resource type="Theme" id=8]
+Panel/styles/panel = SubResource( 1 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=3]
 size = 50
-font_data = ExtResource( 1 )
+font_data = ExtResource( 2 )
 
-[sub_resource type="Theme" id=4]
-default_font = SubResource( 10 )
+[sub_resource type="Theme" id=9]
+default_font = SubResource( 3 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=5]
 size = 24
-font_data = ExtResource( 4 )
+font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.32549, 0.27451, 0.388235, 1 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -41,7 +41,7 @@ expand_margin_right = 10.0
 expand_margin_top = 10.0
 expand_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id=13]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.188235, 0.168627, 0.211765, 1 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -52,25 +52,25 @@ expand_margin_right = 10.0
 expand_margin_top = 10.0
 expand_margin_bottom = 10.0
 
-[sub_resource type="Theme" id=8]
+[sub_resource type="Theme" id=10]
 Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
 Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 11 )
+Button/fonts/font = SubResource( 5 )
 Button/styles/disabled = null
-Button/styles/focus = SubResource( 12 )
-Button/styles/hover = SubResource( 12 )
-Button/styles/normal = SubResource( 13 )
+Button/styles/focus = SubResource( 6 )
+Button/styles/hover = SubResource( 6 )
+Button/styles/normal = SubResource( 7 )
 Button/styles/pressed = null
 
-[node name="MainMenu" type="CanvasLayer"]
+[node name="Control" type="CanvasLayer"]
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -82,7 +82,7 @@ margin_left = 200.0
 margin_top = 100.0
 margin_right = -200.0
 margin_bottom = -100.0
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -90,7 +90,7 @@ __meta__ = {
 [node name="Panel" type="Panel" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource( 2 )
+theme = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -98,7 +98,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Control"]
 anchor_right = 1.0
 margin_bottom = 51.0
-theme = SubResource( 4 )
+theme = SubResource( 9 )
 text = "IdleVania"
 align = 1
 __meta__ = {
@@ -119,7 +119,7 @@ focus_neighbour_right = NodePath("../ExitButton")
 focus_neighbour_bottom = NodePath("../ExitButton")
 focus_next = NodePath("../ExitButton")
 focus_previous = NodePath("../ExitButton")
-theme = SubResource( 8 )
+theme = SubResource( 10 )
 action_mode = 0
 button_mask = 7
 text = "Continue"
@@ -141,7 +141,7 @@ focus_neighbour_right = NodePath("../ContinueButton")
 focus_neighbour_bottom = NodePath("../ContinueButton")
 focus_next = NodePath("../ContinueButton")
 focus_previous = NodePath("../ContinueButton")
-theme = SubResource( 8 )
+theme = SubResource( 10 )
 text = "Exit"
 __meta__ = {
 "_edit_use_anchors_": false

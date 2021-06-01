@@ -51,11 +51,14 @@ script = ExtResource( 3 )
 texture = ExtResource( 1 )
 texture_scale = 0.2
 color = Color( 0.478431, 0.976471, 1, 1 )
+energy = 0.7
+range_layer_min = -1
 shadow_enabled = true
 shadow_filter = 2
 shadow_filter_smooth = 16.0
 
 [node name="CollectArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectArea"]
 modulate = Color( 1, 1, 1, 0.121569 )
@@ -64,6 +67,7 @@ shape = SubResource( 7 )
 [node name="DetectionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+visible = false
 modulate = Color( 1, 1, 1, 0.121569 )
 shape = SubResource( 8 )
 

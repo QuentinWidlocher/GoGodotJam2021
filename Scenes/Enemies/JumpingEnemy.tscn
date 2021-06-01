@@ -28,14 +28,14 @@ animations = [ {
 radius = 420.0
 
 [sub_resource type="OccluderPolygon2D" id=5]
-polygon = PoolVector2Array( -30, -30, 30, -30, 30, 30, -30, 30 )
+polygon = PoolVector2Array( -8.91975, -23.5394, 27.1834, -5.84173, 30, 30, -24.9656, 31.9132, -28.0332, -10.5611 )
 
 [sub_resource type="Animation" id=6]
 resource_name = "Hurt"
 length = 0.2
 step = 0.01
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/path = NodePath("../JumpingEnemy/Sprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false

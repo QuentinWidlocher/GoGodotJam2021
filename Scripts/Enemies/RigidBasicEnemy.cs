@@ -17,9 +17,10 @@ public abstract class RigidBasicEnemy : RigidBody2D, Enemy
 
     public void OnHit(float damage)
     {
+        _animationPlayer.Stop();
         _animationPlayer.Play("Hurt");
-        
-        GD.Print(damage);
+
+        GD.Print(_animationPlayer.CurrentAnimation);
         _healthPoints -= damage;
 
         if (_healthPoints <= 0)

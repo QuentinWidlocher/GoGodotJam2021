@@ -42,7 +42,7 @@ public class StatSystem : Node
         DamageDealt = BasePlayerStat.DamageDealt + GetPlayerUpgrade(PlayerUpgradeId.AttackMultiplier).Bonus,
         HealingAmount = (BasePlayerStat.HealthPoints + GetPlayerUpgrade(PlayerUpgradeId.HpMultiplier).Bonus) * (0.2f + GetPlayerUpgrade(PlayerUpgradeId.BetterHeal).Bonus),
         MaxHeals = (int) (BasePlayerStat.MaxHeals + GetPlayerUpgrade(PlayerUpgradeId.MoreHeal).Bonus),
-        HasDash = true, //GetPlayerUpgrade(PlayerUpgradeId.Dash).Bought > 0,
+        HasDash = GetPlayerUpgrade(PlayerUpgradeId.Dash).Bought > 0,
         HasDoubleJump = GetPlayerUpgrade(PlayerUpgradeId.DoubleJump).Bought > 0,
         HasWallJump = GetPlayerUpgrade(PlayerUpgradeId.WallJump).Bought > 0,
     };
