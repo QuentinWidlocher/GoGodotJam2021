@@ -5,11 +5,11 @@ using static Helpers.TaskHelpers;
 
 public class Player : KinematicBody2D
 {
-    [Export] public float Gravity = 50f;
+    [Export] public float Gravity = 40f;
     [Export] public float Acceleration = 150f;
     [Export] public float MaxVelocity = 500f;
-    [Export] public float Friction = 0.75f;
-    [Export] public float JumpVelocity = 900f;
+    [Export] public float Friction = 0.8f;
+    [Export] public float JumpVelocity = 500f;
     [Export] public float JumpTime = 0.15f;
     [Export] public float DashForce = 1500f;
     [Export] public int DashDuration = 150;
@@ -111,7 +111,7 @@ public class Player : KinematicBody2D
         for (int i = 0; i < GetSlideCount(); i++)
         {
             var collision = GetSlideCollision(i);
-            if (collision.Collider is Spikes)
+            if (collision.Collider is Spikes && _vulnerable)
             {
                 // Spikes deals 10% of the player max HP
                 Hit(_statSystem.PlayerStat.HealthPoints * 0.1f, collision.Position);
@@ -174,13 +174,15 @@ public class Player : KinematicBody2D
         if (_knockingBack != Vector2.Zero)
         {
             _vel += _knockingBack;
-            _knockingBack = _knockingBack.LinearInterpolate(Vector2.Zero, .5f);
+            _knockingBack = _knockingBack.LinearInterpolate(Vector2.Zero, .7f);
             if (_knockingBack.Length() < 1)
             {
                 _knockingBack = Vector2.Zero;
             }
-
-            return;
+            else
+            {
+                return;   
+            }
         }
 
         if (!_isDashing)
@@ -334,6 +336,7 @@ public class Player : KinematicBody2D
     {
         _knockingBack = Vector2.Zero;
         _vel = Vector2.Zero;
+        _statSystem.SpiritCount *= 0.8f;
         
         // Delay just so we can see the hurting animation
         RunAfterDelay(() => _sceneSwitcher.Switch(Scene.Hub, "FROM_DEATH"), 200);

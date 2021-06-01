@@ -7,7 +7,6 @@
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 837.299, 315.583 )
-JumpTime = 0.2
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true

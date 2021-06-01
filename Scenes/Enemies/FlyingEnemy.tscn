@@ -52,8 +52,10 @@ Damage = 1.0
 position = Vector2( 1.41583, 0 )
 shape = SubResource( 1 )
 
+[node name="LightOccluder2D" parent="." index="4"]
+visible = true
+
 [node name="Sprite" type="AnimatedSprite" parent="." index="5"]
-modulate = Color( 1, 0.8, 0.8, 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 4 )
 animation = "wait"

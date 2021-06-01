@@ -9,7 +9,7 @@ extents = Vector2( 14.5589, 14.5775 )
 radius = 420.0
 
 [sub_resource type="OccluderPolygon2D" id=3]
-polygon = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+polygon = PoolVector2Array( -15.157, -14.2413, 15.0901, -14.4286, 5.91296, 15.1629, -8.4146, 15.8184 )
 
 [node name="DetectionEnemy" type="KinematicBody2D" groups=[
 "EnemiesToSave",
