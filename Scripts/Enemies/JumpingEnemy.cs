@@ -14,6 +14,7 @@ public class JumpingEnemy : RigidDetectionEnemy
     private RayCast2D _floorCast1 = null!;
     private RayCast2D _floorCast2 = null!;
     private AnimatedSprite _sprite = null!;
+    private AudioStreamPlayer2D _deathSound = null!;
     
     private bool _preparingJump;
 
@@ -33,6 +34,8 @@ public class JumpingEnemy : RigidDetectionEnemy
         _timer.Connect("timeout", this, nameof(Jump));
 
         _sprite = (AnimatedSprite)GetNode("Sprite");
+
+        _deathSound = (AudioStreamPlayer2D)GetNode("DeathSound");
     }
 
     public override void _Process(float delta)

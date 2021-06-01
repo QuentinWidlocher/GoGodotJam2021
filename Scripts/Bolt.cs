@@ -11,11 +11,13 @@ public class Bolt : KinematicBody2D
     private Particles2D _particles = null!;
     private Light2D _light = null!;
     private Sprite _sprite = null!;
+    private AudioStreamPlayer2D _hitSound = null!;
 
     public void Shoot(Vector2 pos, Vector2 dir) {
         _particles = (Particles2D)GetNode("Particles2D");
         _sprite = (Sprite)GetNode("Sprite");
         _light = GetNode<Light2D>("Light2D");
+        _hitSound = (AudioStreamPlayer2D)GetNode("HitSound");
         
         _particles.Emitting = true;
         Position = pos;
@@ -44,6 +46,7 @@ public class Bolt : KinematicBody2D
     {
         // We let the bolt slowly fade before we destroy it
         GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
+        _hitSound.Play();
         _sprite.Visible = false;
         _particles.Emitting = false;
         _light.Enabled = false;

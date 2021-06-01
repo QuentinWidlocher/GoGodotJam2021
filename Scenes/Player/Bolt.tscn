@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Bolt.cs" type="Script" id=1]
 [ext_resource path="res://Assets/bolt.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Textures/LightCookieSmooth.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sounds/hit.wav" type="AudioStream" id=4]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.736434, 1 )
@@ -54,3 +55,6 @@ texture = ExtResource( 3 )
 color = Color( 0, 0.203922, 1, 1 )
 energy = 0.5
 shadow_enabled = true
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )

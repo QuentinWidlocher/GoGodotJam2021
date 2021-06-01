@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Assets/Textures/LightCookieSmooth.png" type="Texture" id=1]
 [ext_resource path="res://Assets/circle.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Effects/SpiritOrb.cs" type="Script" id=3]
+[ext_resource path="res://Assets/Sounds/orb_pickup.wav" type="AudioStream" id=4]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -70,6 +71,9 @@ shape = SubResource( 7 )
 visible = false
 modulate = Color( 1, 1, 1, 0.121569 )
 shape = SubResource( 8 )
+
+[node name="Pickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
 
 [connection signal="body_entered" from="CollectArea" to="." method="OnBodyTouched"]
 [connection signal="body_entered" from="DetectionArea" to="." method="OnBodyDetected"]

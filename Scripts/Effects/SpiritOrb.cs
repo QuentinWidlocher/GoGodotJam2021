@@ -7,6 +7,7 @@ public class SpiritOrb : Particles2D
 	private Player? _target;
 	private StatSystem _statSystem = null!;
 	private Light2D _light = null!;
+	private AudioStreamPlayer2D _pickupSound = null!;
 	
 	[Export] public int Value = 100;
 	public float FadingSpeed = 1f;
@@ -16,6 +17,7 @@ public class SpiritOrb : Particles2D
 	{
 		_statSystem = GetNode<StatSystem>("/root/StatSystem");
 		_light = GetNode<Light2D>("Light2D");
+		_pickupSound = (AudioStreamPlayer2D)GetNode("Pickup");
 	}
 
 	public override void _Process(float delta)
@@ -50,6 +52,7 @@ public class SpiritOrb : Particles2D
 			// We let the orb slowly fade before we destroy it
 			Emitting = false;
 			_fading = true;
+			_pickupSound.Play();
 			RunAfterDelay(QueueFree, 1000);
 		}
 	}
