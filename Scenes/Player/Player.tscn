@@ -191,7 +191,7 @@ smoothing_speed = 7.0
 offset_v = -1.0
 drag_margin_left = 0.1
 drag_margin_right = 0.1
-editor_draw_drag_margin = true
+editor_draw_screen = false
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 enabled = true

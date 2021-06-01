@@ -300,7 +300,7 @@ public class Player : KinematicBody2D
 
         if (HealthPoints <= 0)
         {
-            Die();
+            CallDeferred(nameof(Die));
         }
 
         _animations.Play("hurt");

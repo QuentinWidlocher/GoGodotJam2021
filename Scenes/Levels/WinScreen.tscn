@@ -24,7 +24,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 50.0
 margin_top = 50.0
-margin_right = -50.0
+margin_right = -60.0
 margin_bottom = -50.0
 custom_constants/separation = 100
 __meta__ = {
@@ -32,20 +32,29 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Control/VBoxContainer"]
-margin_right = 750.0
+margin_right = 740.0
 margin_bottom = 67.0
 custom_fonts/font = SubResource( 1 )
-text = "You did it !"
+text = "Desperandum Ratum Est"
 align = 1
 
 [node name="Label2" type="Label" parent="Control/VBoxContainer"]
 margin_top = 167.0
-margin_right = 750.0
-margin_bottom = 264.0
+margin_right = 740.0
+margin_bottom = 244.0
+rect_pivot_offset = Vector2( -274, -137 )
 custom_fonts/font = SubResource( 2 )
-text = "You've made the tree grow up to the sky.
-You've collected the souls of many helpless creatures.
-The forest is now empty.
+text = "The tree reaches to the heavens.
+The sun is drowned out, its sorrow spread as a veil of darkness.
 
-The tree hides the forest."
+The air is thick with the stench of death."
 align = 1
+
+[node name="Label3" type="RichTextLabel" parent="Control/VBoxContainer"]
+margin_top = 344.0
+margin_right = 740.0
+margin_bottom = 344.0
+rect_pivot_offset = Vector2( -274, -137 )
+bbcode_enabled = true
+bbcode_text = "You've unlocked New Game +"
+text = "You've unlocked New Game +"
