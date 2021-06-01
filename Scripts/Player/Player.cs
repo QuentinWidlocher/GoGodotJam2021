@@ -43,7 +43,7 @@ public class Player : KinematicBody2D
     private SceneSwitcher _sceneSwitcher = null!;
     private RayCast2D _rayCast = null!;
 
-    private Vector2 _vel = Vector2.Zero;
+    public Vector2 _vel = Vector2.Zero;
     private int _jumps = 0;
     private float _jumpTimer = 0;
     private readonly PackedScene _bolt = GD.Load<PackedScene>("res://Scenes/Player/Bolt.tscn");
@@ -106,7 +106,16 @@ public class Player : KinematicBody2D
 
     public override void _PhysicsProcess(float delta)
     {
-        if (!Enabled) return;
+        if (!Enabled)
+        {
+            _footstepSound.Stop();
+            _hitSound.Stop();
+            _jumpSound.Stop();
+            _landingSound.Stop();
+            _shootSound.Stop();
+            Position = Vector2.Zero;
+            return;
+        }
         
         GetInput(delta);
 
