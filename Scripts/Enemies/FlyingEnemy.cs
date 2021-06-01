@@ -26,6 +26,9 @@ public class FlyingEnemy : KinematicDetectionEnemy
 
     private AnimatedSprite _sprite = null!;
 
+    private AudioStreamPlayer2D _deathSound = null!;
+    private AudioStreamPlayer2D _screechSound = null!;
+
     public override void _Ready()
     {
         base._Ready();

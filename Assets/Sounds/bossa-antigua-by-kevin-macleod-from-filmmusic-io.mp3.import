@@ -1,0 +1,13 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+valid=false
+
+[deps]
+
+source_file="res://Assets/Sounds/bossa-antigua-by-kevin-macleod-from-filmmusic-io.mp3"
+[params]
+
+loop=true
+loop_offset=0

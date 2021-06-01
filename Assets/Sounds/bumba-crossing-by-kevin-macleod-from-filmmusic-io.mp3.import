@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/bumba-crossing-by-kevin-macleod-from-filmmusic-io.mp3-5d2b4870ae98d74b13ee2b458f365b0e.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/bumba-crossing-by-kevin-macleod-from-filmmusic-io.mp3"
+dest_files=[ "res://.import/bumba-crossing-by-kevin-macleod-from-filmmusic-io.mp3-5d2b4870ae98d74b13ee2b458f365b0e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
