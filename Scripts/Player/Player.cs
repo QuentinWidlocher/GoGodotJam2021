@@ -53,6 +53,12 @@ public class Player : KinematicBody2D
     private AnimatedSprite _sprite = null!;
     private AnimationPlayer _animations = null!;
 
+    private AudioStreamPlayer _jumpSound = null!;
+    private AudioStreamPlayer _footstepSound = null!;
+    private AudioStreamPlayer _shootSound = null!;
+    private AudioStreamPlayer _landingSound = null!;
+    private AudioStreamPlayer _hitSound = null!;
+
     private bool _isDashing;
     private bool _canDash = true;
 
@@ -86,6 +92,12 @@ public class Player : KinematicBody2D
         _sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
         _rayCast = GetNode<RayCast2D>("RayCast2D");
 
+        _jumpSound = (AudioStreamPlayer)GetNode("Sounds/Jump");
+        _footstepSound = (AudioStreamPlayer)GetNode("Sounds/Footstep");
+        _shootSound = (AudioStreamPlayer)GetNode("Sounds/Shoot");
+        _landingSound = (AudioStreamPlayer)GetNode("Sounds/Landing");
+        _hitSound = (AudioStreamPlayer)GetNode("Sounds/Hit");
+
         HealthPoints = _statSystem.PlayerStat.HealthPoints;
         RemainingHeal = _statSystem.PlayerStat.MaxHeals;
     }
@@ -112,14 +124,19 @@ public class Player : KinematicBody2D
         {
             if (!_hasLanded)
             {
-                //_animations.Play("landing");
+                _landingSound.Play();
+                _hasLanded = true;
             }
             
-            if (Input.IsActionPressed("left") || Input.IsActionPressed("right"))
+            if (Input.IsActionPressed("left") || Input.IsActionPressed("right")) {
                 _sprite.Play("run");
-
-            else
+                if (!_footstepSound.Playing)
+                    _footstepSound.Play();
+            }
+            else {
                 _sprite.Play("idle");
+                _footstepSound.Stop();
+            }
 
             _hasLanded = true;
 
@@ -127,6 +144,7 @@ public class Player : KinematicBody2D
         }
         else
         {
+            _footstepSound.Stop();
             _hasLanded = false;
         }
 
@@ -220,6 +238,8 @@ public class Player : KinematicBody2D
                 _isJumpFromWall = true;
             }
         }
+        if (Input.IsActionJustPressed("jump") && _jumps < MaxJumps)
+            _jumpSound.Play();
 
         if (Input.IsActionPressed("jump"))
         {
@@ -266,6 +286,7 @@ public class Player : KinematicBody2D
         bolt.Shoot(Position + 32 * FacingDirection, FacingDirection);
 
         GetParent().AddChild(bolt);
+        _shootSound.Play();
     }
 
     public void Dash()
@@ -304,6 +325,7 @@ public class Player : KinematicBody2D
         }
 
         _animations.Play("hurt");
+        _hitSound.Play();
     }
 
     public void Hit(float damage, Node2D source) => Hit(damage, source.Position);

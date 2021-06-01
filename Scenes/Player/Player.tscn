@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Assets/player_idle.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player/Player.cs" type="Script" id=2]
@@ -10,6 +10,11 @@
 [ext_resource path="res://Assets/player_attack.png" type="Texture" id=8]
 [ext_resource path="res://Assets/player_fall.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Effects/Parallax.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Sounds/shoot.wav" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sounds/walk2_extended.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sounds/hit2.wav" type="AudioStream" id=13]
+[ext_resource path="res://Assets/Sounds/jump3.wav" type="AudioStream" id=14]
+[ext_resource path="res://Assets/Sounds/landing.wav" type="AudioStream" id=15]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 15.3043
@@ -59,19 +64,9 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"frames": [ ExtResource( 9 ) ],
 "loop": true,
-"name": "run",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "fall_fast",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "attack",
+"name": "fall",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
@@ -84,9 +79,19 @@ animations = [ {
 "name": "wall_slide",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ) ],
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
-"name": "fall",
+"name": "run",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "attack",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "fall_fast",
 "speed": 5.0
 } ]
 
@@ -199,5 +204,21 @@ enabled = true
 cast_to = Vector2( 0, 40 )
 
 [node name="Sounds" type="Node2D" parent="."]
+
+[node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 14 )
+
+[node name="Footstep" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 12 )
+autoplay = true
+
+[node name="Shoot" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 11 )
+
+[node name="Landing" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 15 )
+
+[node name="Hit" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 13 )
 
 [node name="ParallaxBg" parent="." instance=ExtResource( 10 )]
