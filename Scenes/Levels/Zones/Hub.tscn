@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scenes/Levels/Zone1Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Effects/SpiritOrb.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Scenes/Levels/LoadingZone.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Levels/Hub.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/UI/VaniaUI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/champi_01.png" type="Texture" id=7]
+[ext_resource path="res://Assets/champi_02.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Textures/LightCookieSmooth.png" type="Texture" id=9]
 
 [sub_resource type="Gradient" id=1]
@@ -31,6 +33,36 @@ default_font = SubResource( 5 )
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 56.6242
+
+[sub_resource type="TileSet" id=8]
+0/name = "champi_01.png 0"
+0/texture = ExtResource( 7 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 16, 16 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "champi_02.png 1"
+1/texture = ExtResource( 8 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 16, 16 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
 
 [node name="Hub" type="Node2D"]
 script = ExtResource( 5 )
@@ -129,6 +161,14 @@ Value = 1
 
 [node name="CollisionShape2D" parent="SpiritOrb/DetectionArea" index="0"]
 shape = SubResource( 7 )
+
+[node name="DecorativeMap" type="TileMap" parent="."]
+position = Vector2( 0, 8 )
+scale = Vector2( 2, 2 )
+tile_set = SubResource( 8 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( -3342223, 0, 0, -2621413, 0, 0, -2555885, 1, 0, -2490348, 0, 0, -2424806, 1, 0, -2293739, 1, 0, -2228200, 0, 0, -2162666, 0, 0, -2162665, 1, 0, -1769379, 0, 0, -983050, 0, 0, -852037, 0, 0, -524235, 0, 0, -262140, 1, 0, 25, 1, 0, 131118, 1, 0, 393201, 1, 0, 327713, 0, 0, 589763, 0, 0, 720891, 1, 0, 851886, 1, 0, 851978, 0, 0, 917517, 0, 0, 1441773, 0, 0, 1703974, 1, 0, 1835060, 0, 0, 2359397, 1, 0, 2621457, 1, 0, 3669988, 1, 0, 3604508, 1, 0, 3670084, 0, 0, 4128747, 0, 0, 4259792, 0, 0, 4456505, 0, 0, 4849748, 1, 0, 5111738, 1, 0, 6029340, 0, 0 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
