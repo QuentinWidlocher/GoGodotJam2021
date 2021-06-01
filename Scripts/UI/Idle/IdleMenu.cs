@@ -15,6 +15,7 @@ public class IdleMenu : CanvasLayer
 	private Label _totalSpiritLabel = null!;
 	private Label _totalManaLabel = null!;
 	private Label _manaProductionLabel = null!;
+	private Player _player = null!;
 
 	private PackedScene _playerUpgradeButton = GD.Load<PackedScene>("res://Scenes/UI/Idle/PlayerUpgradeButton.tscn");
 	private List<PlayerUpgradeButton> _playerUpgradeButtons = new List<PlayerUpgradeButton>();
@@ -30,6 +31,9 @@ public class IdleMenu : CanvasLayer
 	{
 		_sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
 		_statSystem = GetNode<StatSystem>("/root/StatSystem");
+		
+		_player = GetNode<Player>("/root/Player");
+		_player.Enabled = false;
 		
 		_totalSpiritLabel = GetNode<Label>(TotalSpiritPath);
 		_totalManaLabel = GetNode<Label>(TotalManaPath);
@@ -58,17 +62,13 @@ public class IdleMenu : CanvasLayer
 	{
 		if (Input.IsActionJustPressed("pause"))
 		{
+			_player.Enabled = true;
 			_sceneSwitcher.Switch(Scene.Hub, "HUB_TO_IDLE_1");
 		}
 		
 		// Rider wants me to perform math to gain accuracy, but I don't want accuracy, I want speed !
 		// ReSharper disable once CompareOfFloatsByEqualityOperator
 		if (PreviousCurrency == IdleSystem.Currency) return;
-
-		if (IdleSystem.Currency >= 100_000)
-		{
-			_sceneSwitcher.Switch(Scene.GameEnd);
-		}
 		
 		PreviousCurrency = IdleSystem.Currency;
 

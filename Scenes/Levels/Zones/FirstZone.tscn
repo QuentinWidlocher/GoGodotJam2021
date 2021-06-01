@@ -1,8 +1,7 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Assets/spike.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Levels/Zone1Tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://Scenes/Effects/Parallax.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/UI/VaniaUI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Enemies/JumpingEnemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Levels/Spikes.cs" type="Script" id=6]
@@ -13,62 +12,62 @@
 [ext_resource path="res://Scenes/Levels/LoadingZone.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Textures/LightCookieSmooth.png" type="Texture" id=12]
 
-[sub_resource type="Gradient" id=28]
+[sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 1 )
 colors = PoolColorArray( 0.158747, 0.132568, 0.1875, 1 )
 
 [sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 28 )
+gradient = SubResource( 1 )
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=3]
 radius = 33.5716
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=4]
 radius = 30.4478
 
-[sub_resource type="CircleShape2D" id=8]
+[sub_resource type="CircleShape2D" id=5]
 radius = 64.334
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="CircleShape2D" id=6]
 radius = 49.5667
 
-[sub_resource type="CircleShape2D" id=10]
+[sub_resource type="CircleShape2D" id=7]
 radius = 77.4057
 
-[sub_resource type="CircleShape2D" id=11]
+[sub_resource type="CircleShape2D" id=8]
 radius = 43.6811
 
-[sub_resource type="CircleShape2D" id=15]
+[sub_resource type="CircleShape2D" id=9]
 radius = 46.2884
 
-[sub_resource type="CircleShape2D" id=16]
+[sub_resource type="CircleShape2D" id=10]
 radius = 77.2985
 
-[sub_resource type="CircleShape2D" id=17]
+[sub_resource type="CircleShape2D" id=11]
 radius = 89.6913
 
-[sub_resource type="CircleShape2D" id=19]
+[sub_resource type="CircleShape2D" id=12]
 radius = 32.3051
 
-[sub_resource type="CircleShape2D" id=20]
+[sub_resource type="CircleShape2D" id=13]
 radius = 99.6551
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 116.793, 113.347 )
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 115.827, 111.361 )
 
-[sub_resource type="CircleShape2D" id=14]
+[sub_resource type="CircleShape2D" id=16]
 radius = 560.738
 
-[sub_resource type="CircleShape2D" id=22]
+[sub_resource type="CircleShape2D" id=17]
 radius = 730.072
 
-[sub_resource type="CircleShape2D" id=23]
+[sub_resource type="CircleShape2D" id=18]
 radius = 535.67
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=19]
 resource_name = "Hurt"
 length = 0.2
 step = 0.01
@@ -85,7 +84,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=20]
 resource_name = "Hurt"
 length = 0.2
 step = 0.01
@@ -102,7 +101,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=21]
 resource_name = "Hurt"
 length = 0.2
 step = 0.01
@@ -119,7 +118,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=22]
 resource_name = "Hurt"
 length = 0.2
 step = 0.01
@@ -136,10 +135,10 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="ConvexPolygonShape2D" id=21]
+[sub_resource type="ConvexPolygonShape2D" id=23]
 points = PoolVector2Array( 9, 16, 7, 16, 7, 2, 9, 2 )
 
-[sub_resource type="TileSet" id=4]
+[sub_resource type="TileSet" id=24]
 0/name = "spike.png 0"
 0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
@@ -150,14 +149,14 @@ points = PoolVector2Array( 9, 16, 7, 16, 7, 2, 9, 2 )
 0/navigation_offset = Vector2( 0, 0 )
 0/shape_offset = Vector2( 0, 0 )
 0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape = SubResource( 21 )
+0/shape = SubResource( 23 )
 0/shape_one_way = false
 0/shape_one_way_margin = 1.0
 0/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 21 ),
+"shape": SubResource( 23 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
@@ -171,9 +170,6 @@ scale = Vector2( 3.40844, 5194.51 )
 z_index = -1
 texture = SubResource( 2 )
 
-[node name="ParallaxBg" parent="." instance=ExtResource( 3 )]
-layer = -1
-
 [node name="SpiritOrbs" type="Node2D" parent="."]
 position = Vector2( -0.890869, 9.80005 )
 
@@ -181,62 +177,62 @@ position = Vector2( -0.890869, 9.80005 )
 position = Vector2( 483.088, -26.1731 )
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb/DetectionArea" index="0"]
-shape = SubResource( 5 )
+shape = SubResource( 3 )
 
 [node name="SpiritOrb3" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 66.0261, 153.464 )
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb3/DetectionArea" index="0"]
-shape = SubResource( 7 )
+shape = SubResource( 4 )
 
 [node name="SpiritOrb4" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 2784.4, 111.089 )
 Value = 200
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb4/DetectionArea" index="0"]
-shape = SubResource( 8 )
+shape = SubResource( 5 )
 
 [node name="SpiritOrb5" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 1955.72, 2163.21 )
 Value = 150
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb5/DetectionArea" index="0"]
-shape = SubResource( 9 )
+shape = SubResource( 6 )
 
 [node name="SpiritOrb6" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 492.222, 2133.28 )
 Value = 50
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb6/DetectionArea" index="0"]
-shape = SubResource( 10 )
+shape = SubResource( 7 )
 
 [node name="SpiritOrb7" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 643.583, 2916.99 )
 Value = 150
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb7/DetectionArea" index="0"]
-shape = SubResource( 10 )
+shape = SubResource( 7 )
 
 [node name="SpiritOrb8" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 2688.89, 2171.47 )
 Value = 300
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb8/DetectionArea" index="0"]
-shape = SubResource( 11 )
+shape = SubResource( 8 )
 
 [node name="SpiritOrb9" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 1899.8, 1309.13 )
 Value = 200
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb9/DetectionArea" index="0"]
-shape = SubResource( 15 )
+shape = SubResource( 9 )
 
 [node name="SpiritOrb10" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 237.235, 811.914 )
 Value = 200
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb10/DetectionArea" index="0"]
-shape = SubResource( 16 )
+shape = SubResource( 10 )
 
 [node name="SpiritOrb2" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( -2544.39, 166.277 )
@@ -247,7 +243,7 @@ position = Vector2( -427.665, 682.302 )
 Value = 700
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb11/DetectionArea" index="0"]
-shape = SubResource( 17 )
+shape = SubResource( 11 )
 
 [node name="SpiritOrb12" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 1731.67, 353.968 )
@@ -255,14 +251,14 @@ Value = 20
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb12/DetectionArea" index="0"]
 visible = true
-shape = SubResource( 19 )
+shape = SubResource( 12 )
 
 [node name="SpiritOrb13" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( -1320.06, 2040.33 )
 Value = 500
 
 [node name="CollisionShape2D" parent="SpiritOrbs/SpiritOrb13/DetectionArea" index="0"]
-shape = SubResource( 20 )
+shape = SubResource( 13 )
 
 [node name="SpiritOrb14" parent="SpiritOrbs" instance=ExtResource( 8 )]
 position = Vector2( 767.382, -1101.83 )
@@ -393,17 +389,17 @@ MaxHealthPoints = 100.0
 
 [node name="CollisionShape2D" parent="Enemies/JumpingEnemy12" index="0"]
 position = Vector2( 1.78174, 12.4725 )
-shape = SubResource( 12 )
+shape = SubResource( 14 )
 
 [node name="CollisionShape2D" parent="Enemies/JumpingEnemy12/KinematicBody2D" index="0"]
 position = Vector2( 1.74756, 11.9865 )
-shape = SubResource( 13 )
+shape = SubResource( 15 )
 
 [node name="Sprite" parent="Enemies/JumpingEnemy12" index="2"]
 scale = Vector2( 4, 4 )
 
 [node name="CollisionShape2D" parent="Enemies/JumpingEnemy12/DetectionRadius" index="0"]
-shape = SubResource( 14 )
+shape = SubResource( 16 )
 
 [node name="FloorCast1" parent="Enemies/JumpingEnemy12" index="5"]
 position = Vector2( -100.201, 103.5 )
@@ -570,49 +566,49 @@ position = Vector2( -1193.02, 2370.38 )
 MaxHealthPoints = 10.0
 
 [node name="CollisionShape2D" parent="Enemies/JumpingEnemy38/DetectionRadius" index="0"]
-shape = SubResource( 22 )
+shape = SubResource( 17 )
 
 [node name="FlyingEnemy34" parent="Enemies" instance=ExtResource( 7 )]
 position = Vector2( -1266.07, 2317.07 )
 
 [node name="CollisionShape2D" parent="Enemies/FlyingEnemy34/DetectionRadius" index="0"]
-shape = SubResource( 23 )
+shape = SubResource( 18 )
 
 [node name="FlyingEnemy35" parent="Enemies" instance=ExtResource( 7 )]
 position = Vector2( -1323.05, 2317.07 )
 
 [node name="CollisionShape2D" parent="Enemies/FlyingEnemy35/DetectionRadius" index="0"]
-shape = SubResource( 23 )
+shape = SubResource( 18 )
 
 [node name="AnimationPlayer" parent="Enemies/FlyingEnemy35" index="7"]
-anims/Hurt = SubResource( 24 )
+anims/Hurt = SubResource( 19 )
 
 [node name="FlyingEnemy36" parent="Enemies" instance=ExtResource( 7 )]
 position = Vector2( -1391.7, 2317.07 )
 
 [node name="CollisionShape2D" parent="Enemies/FlyingEnemy36/DetectionRadius" index="0"]
-shape = SubResource( 23 )
+shape = SubResource( 18 )
 
 [node name="AnimationPlayer" parent="Enemies/FlyingEnemy36" index="7"]
-anims/Hurt = SubResource( 25 )
+anims/Hurt = SubResource( 20 )
 
 [node name="FlyingEnemy37" parent="Enemies" instance=ExtResource( 7 )]
 position = Vector2( -1460.01, 2317.07 )
 
 [node name="CollisionShape2D" parent="Enemies/FlyingEnemy37/DetectionRadius" index="0"]
-shape = SubResource( 23 )
+shape = SubResource( 18 )
 
 [node name="AnimationPlayer" parent="Enemies/FlyingEnemy37" index="7"]
-anims/Hurt = SubResource( 26 )
+anims/Hurt = SubResource( 21 )
 
 [node name="FlyingEnemy38" parent="Enemies" instance=ExtResource( 7 )]
 position = Vector2( -1534.45, 2317.07 )
 
 [node name="CollisionShape2D" parent="Enemies/FlyingEnemy38/DetectionRadius" index="0"]
-shape = SubResource( 23 )
+shape = SubResource( 18 )
 
 [node name="AnimationPlayer" parent="Enemies/FlyingEnemy38" index="7"]
-anims/Hurt = SubResource( 27 )
+anims/Hurt = SubResource( 22 )
 
 [node name="Teleporters" type="Node2D" parent="."]
 
@@ -634,7 +630,7 @@ ToId = "FROM_DEATH"
 
 [node name="SpikeMap" type="TileMap" parent="."]
 scale = Vector2( 2, 2 )
-tile_set = SubResource( 4 )
+tile_set = SubResource( 24 )
 cell_size = Vector2( 4, 4 )
 format = 1
 tile_data = PoolIntArray( -6553249, -1610612736, 0, -6553235, -2147483648, 0, -6291105, -1610612736, 0, -6291091, -2147483648, 0, -6028961, -1610612736, 0, -6028947, -2147483648, 0, -5766817, -1610612736, 0, -5766803, -2147483648, 0, -5504673, -1610612736, 0, -5439123, -2147483648, 0, -851900, 1073741824, 0, -851896, 1073741824, 0, -851892, 1073741824, 0, -851888, 1073741824, 0, -851884, 1073741824, 0, 65604, 0, 0, 65608, 0, 0, 65612, 0, 0, 65616, 0, 0, 65620, 0, 0, 7405635, 0, 0, 7405701, 0, 0, 7667783, 0, 0, 7667841, 0, 0, 8323143, 1073741824, 0, 8323201, 1073741824, 0, 8781476, 0, 0, 8781480, 0, 0, 8781484, 0, 0, 8781488, 0, 0, 8781492, 0, 0, 8781496, 0, 0, 8781500, 0, 0, 8781504, 0, 0, 8781508, 0, 0, 8781512, 0, 0, 8781516, 0, 0, 8781520, 0, 0, 8781524, 0, 0, 8781528, 0, 0, 8781532, 0, 0, 8781536, 0, 0, 8781540, 0, 0, 8781544, 0, 0, 8781548, 0, 0, 8781552, 0, 0, 8781556, 0, 0, 8781560, 0, 0, 8781564, 0, 0, 8781568, 0, 0, 8781572, 0, 0, 8781576, 0, 0, 8781580, 0, 0, 8781584, 0, 0, 8781588, 0, 0, 8781592, 0, 0, 8781596, 0, 0, 8781600, 0, 0, 8781604, 0, 0, 8781608, 0, 0, 8781612, 0, 0, 8781616, 0, 0, 8781620, 0, 0, 8781624, 0, 0, 8781628, 0, 0, 8781632, 0, 0, 8781636, 0, 0, 8781640, 0, 0, 8781644, 0, 0, 8781648, 0, 0, 8781652, 0, 0, 8781656, 0, 0, 8781660, 0, 0, 8781664, 0, 0, 8781668, 0, 0, 8781672, 0, 0, 8781676, 0, 0, 8781680, 0, 0, 8781684, 0, 0, 8781688, 0, 0, 8781692, 0, 0, 8781696, 0, 0, 8781700, 0, 0, 8781704, 0, 0, 8781708, 0, 0, 8781712, 0, 0, 8781716, 0, 0, 8781720, 0, 0, 8781724, 0, 0, 8781728, 0, 0, 8781732, 0, 0, 8781736, 0, 0, 8781740, 0, 0, 8781744, 0, 0, 8781748, 0, 0, 9240676, 0, 0, 13631260, 1073741824, 0, 13631264, 1073741824, 0, 13631268, 1073741824, 0, 13631275, 1073741824, 0, 13631279, 1073741824, 0, 13762500, 0, 0, 13762504, 0, 0, 14417728, 1073741824, 0, 14417732, 1073741824, 0, 14417748, 1073741824, 0, 14417772, 1073741824, 0, 14548756, 0, 0, 14548760, 0, 0, 14548784, 0, 0, 14548828, 0, 0, 14548832, 0, 0, 14548836, 0, 0, 14810932, 0, 0, 14810936, 0, 0, 14810960, 0, 0, 14810964, 0, 0, 14810988, 0, 0, 14810992, 0, 0, 14941988, 1073741824, 0, 14941992, 1073741824, 0, 14941996, 1073741824, 0, 14942016, 1073741824, 0, 14942020, 1073741824, 0, 14942024, 1073741824, 0, 14942044, 1073741824, 0, 14942048, 1073741824, 0, 14942052, 1073741824, 0, 15007787, 0, 0, 15007791, 0, 0, 15007795, 0, 0, 15007799, 0, 0, 15007803, 0, 0, 15007813, 0, 0, 15007817, 0, 0, 15007821, 0, 0, 15007825, 0, 0, 15007837, 0, 0, 15007841, 0, 0, 15007845, 0, 0, 15007849, 0, 0, 15204216, 1073741824, 0, 15269651, -1610612736, 0, 15531795, -1610612736, 0, 15793939, -1610612736, 0, 16056083, -1610612736, 0, 16121664, 0, 0, 16121668, 0, 0, 16187712, 1073741824, 0, 16187716, 1073741824, 0, 16187720, 1073741824, 0, 16187724, 1073741824, 0, 16187728, 1073741824, 0, 16318227, -1610612736, 0, 16514835, -1610612736, 0, 16514928, 1073741824, 0, 16776979, -1610612736, 0, 17039123, -1610612736, 0, 17105216, 0, 0, 17105220, 0, 0, 17105224, 0, 0, 17105228, 0, 0, 17105232, 0, 0, 17301267, -1610612736, 0, 17301368, 1073741824, 0, 17563411, -1610612736, 0, 17825555, -1610612736, 0, 18087699, -1610612736, 0, 18087792, 1073741824, 0, 18480900, 0, 0, 18480919, 0, 0, 18480962, 0, 0, 18874232, 1073741824, 0 )

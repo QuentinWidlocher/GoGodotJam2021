@@ -5,4 +5,5 @@ public enum Scene
     Hub,
     FirstZone,
     GameEnd,
+    Guide,
 }
