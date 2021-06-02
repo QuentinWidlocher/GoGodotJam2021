@@ -8,4 +8,5 @@ public enum PlayerUpgradeId
     DoubleJump,
     Dash,
     WallJump,
+    WinTheGame,
 }

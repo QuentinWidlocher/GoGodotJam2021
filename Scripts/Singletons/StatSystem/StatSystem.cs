@@ -58,6 +58,8 @@ public class StatSystem : Node
         }
     }
 
+    public bool GameEnded => GetPlayerUpgrade(PlayerUpgradeId.WinTheGame).Bought > 0;
+
     public static List<PlayerUpgrade> PlayerUpgrades = new List<PlayerUpgrade>
     {
         new PlayerUpgrade
@@ -111,21 +113,28 @@ public class StatSystem : Node
         {
             Id = PlayerUpgradeId.DoubleJump,
             Name = "Double Jump",
-            CostBase = 1000f,
+            CostBase = 1_000f,
             MaxQuantity = 1,
         },
         new PlayerUpgrade
         {
             Id = PlayerUpgradeId.Dash,
             Name = "Dash",
-            CostBase = 2000f,
+            CostBase = 2_000f,
             MaxQuantity = 1,
         },
         new PlayerUpgrade
         {
             Id = PlayerUpgradeId.WallJump,
             Name = "Wall Jump",
-            CostBase = 5000f,
+            CostBase = 5_000f,
+            MaxQuantity = 1,
+        },
+        new PlayerUpgrade
+        {
+            Id = PlayerUpgradeId.WinTheGame,
+            Name = "End the game",
+            CostBase = 15_000f,
             MaxQuantity = 1,
         },
     };
