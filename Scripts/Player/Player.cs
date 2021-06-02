@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using Helpers;
-using static Helpers.TaskHelpers;
 
 public class Player : KinematicBody2D
 {
@@ -12,12 +11,16 @@ public class Player : KinematicBody2D
     [Export] public float JumpVelocity = 500f;
     [Export] public float JumpTime = 0.15f;
     [Export] public float DashForce = 1500f;
-    [Export] public int DashDuration = 150;
-    [Export] public int DashCoolDown = 100;
+    [Export] public float DashDuration = 0.15f;
+    [Export] public float DashCoolDown = 0.1f;
     [Export] public float KnockbackForce = 200;
-    [Export] public int InvicibilityCoolDown = 500;
+    [Export] public float InvicibilityCoolDown = 0.5f;
     [Export] public int WallJumpKnockback = 1500;
 
+    private float _dashDurationDelay;
+    private float _dashCooldownDelay;
+    private float _invincibilityCooldownDelay;
+    
     [Signal]
     public delegate void HealthChange(float newValue);
 
@@ -115,6 +118,40 @@ public class Player : KinematicBody2D
             _shootSound.Stop();
             Position = Vector2.Zero;
             return;
+        }
+        
+        if (_dashDurationDelay > 0)
+        {
+            _dashDurationDelay -= delta;
+
+            if (_dashDurationDelay <= 0)
+            {
+                _dashDurationDelay = 0;
+                _isDashing = false;
+                Vulnerable = true;
+            }
+        }
+        
+        if (_dashCooldownDelay > 0)
+        {
+            _dashCooldownDelay -= delta;
+
+            if (_dashCooldownDelay <= 0)
+            {
+                _dashCooldownDelay = 0;
+                _canDash = true;
+            }
+        }
+        
+        if (_invincibilityCooldownDelay > 0)
+        {
+            _invincibilityCooldownDelay -= delta;
+
+            if (_invincibilityCooldownDelay <= 0)
+            {
+                _invincibilityCooldownDelay = 0;
+                Vulnerable = true;
+            }
         }
         
         GetInput(delta);
@@ -312,13 +349,9 @@ public class Player : KinematicBody2D
         _isDashing = true;
         _canDash = false;
         Vulnerable = false;
-        //_jumps++;
-        RunAfterDelay(() =>
-            {
-                _isDashing = false;
-                Vulnerable = true;
-            }, DashDuration)
-            .ThenAfterDelay(() => _canDash = true, DashCoolDown);
+
+        _dashDurationDelay = DashDuration;
+        _dashCooldownDelay = DashDuration + DashCoolDown;
     }
 
     public void Hit(float damage, Vector2 source)
@@ -330,7 +363,8 @@ public class Player : KinematicBody2D
         _knockingBack = new Vector2(knockDirection, -0.5f) * KnockbackForce;
 
         Vulnerable = false;
-        RunAfterDelay(() => Vulnerable = true, InvicibilityCoolDown);
+
+        _invincibilityCooldownDelay = InvicibilityCoolDown;
         
         HealthPoints -= damage;
 
@@ -352,6 +386,6 @@ public class Player : KinematicBody2D
         _statSystem.SpiritCount *= 0.75f;
         
         // Delay just so we can see the hurting animation
-        RunAfterDelay(() => _sceneSwitcher.Switch(Scene.Hub, "FROM_DEATH"), 200);
+        _sceneSwitcher.Switch(Scene.Hub, "FROM_DEATH");
     }
 }

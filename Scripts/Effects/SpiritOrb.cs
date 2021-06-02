@@ -1,6 +1,4 @@
-using System;
 using Godot;
-using static Helpers.TaskHelpers;
 
 public class SpiritOrb : Particles2D
 {
@@ -12,6 +10,9 @@ public class SpiritOrb : Particles2D
 	[Export] public int Value = 100;
 	public float FadingSpeed = 1f;
 	private bool _fading;
+	
+	private readonly float _maxDestroyDelay = 1f;
+	private float _destroyDelay;
 
 	public override void _Ready()
 	{
@@ -31,6 +32,17 @@ public class SpiritOrb : Particles2D
 		{
 			_light.Energy -= FadingSpeed;
 			_light.Energy = Mathf.Max(_light.Energy, 0);
+		}
+		
+		if (_destroyDelay > 0)
+		{
+			_destroyDelay -= delta;
+
+			if (_destroyDelay <= 0)
+			{
+				_destroyDelay = 0;
+				QueueFree();
+			}
 		}
 	}
 
@@ -53,7 +65,7 @@ public class SpiritOrb : Particles2D
 			Emitting = false;
 			_fading = true;
 			_pickupSound.Play();
-			RunAfterDelay(QueueFree, 1000);
+			_destroyDelay = _maxDestroyDelay;
 		}
 	}
 }

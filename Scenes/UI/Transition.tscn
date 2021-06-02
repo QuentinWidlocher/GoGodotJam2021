@@ -27,7 +27,7 @@ layer = 3
 anims/Transition = SubResource( 1 )
 
 [node name="Panel" type="Panel" parent="."]
-modulate = Color( 0, 0, 0, 0 )
+modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -0.943878

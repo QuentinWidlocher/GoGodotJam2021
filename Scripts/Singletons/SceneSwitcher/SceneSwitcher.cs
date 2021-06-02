@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using Helpers;
-using static Helpers.TaskHelpers;
 
 public class SceneSwitcher : Node
 {
@@ -20,10 +17,58 @@ public class SceneSwitcher : Node
     public Scene? CurrentScene;
     private Node? _currentSceneNode;
     private AnimationPlayer _transition = null!;
+    
+    private readonly float _maxSwitchDelay = 0.75f;
+    private float _switchDelay;
+    
+    private readonly float _maxFadeDelay = 1.5f;
+    private float _fadeDelay;
+    
+    private float _smoothingDelay;
+    private float _smoothingMaxDelay = 0.1f;
 
     public override void _Ready()
     {
         _transition = GetNode<CanvasLayer>("/root/Transition").GetNode<AnimationPlayer>("AnimationPlayer");
+        PauseMode = PauseModeEnum.Process;
+    }
+
+    private Scene _sceneToSwitchTo = Scene.Hub;
+    private string? _loadingZoneToId;
+
+    public override void _Process(float delta)
+    {
+        if (_switchDelay > 0)
+        {
+            _switchDelay -= delta;
+
+            if (_switchDelay <= 0)
+            {
+                _switchDelay = 0;
+                CallDeferred(nameof(GoToScene), _sceneToSwitchTo, _loadingZoneToId);
+            }
+        }
+        
+        if (_fadeDelay > 0)
+        {
+            _fadeDelay -= delta;
+
+            if (_fadeDelay <= 0)
+            {
+                _fadeDelay = 0;
+                GetTree().Paused = false;
+            }
+        }
+        
+        if (_smoothingDelay > 0)
+        {
+            _smoothingDelay -= delta;
+
+            if (_smoothingDelay <= 0)
+            {
+                GetNode<Player>("/root/Player").FindInChildren<Camera2D>().SmoothingEnabled = true;
+            }
+        }
     }
 
     public void Switch(Scene sceneToSwitchTo, string? loadingZoneToId = null)
@@ -38,26 +83,22 @@ public class SceneSwitcher : Node
         _transition.Stop();
         _transition.Play("Transition");
 
-        int lengthInMs = (int) (_transition.CurrentAnimationLength * 1000);
-
-        RunAfterDelay(() =>
-        {
-            // We use CallDeferred so the current level can safely end what it's doing before changing
-            CallDeferred(nameof(GoToScene), sceneToSwitchTo, loadingZoneToId);
-        }, lengthInMs / 2);
-        RunAfterDelay(() => GetTree().Paused = false, lengthInMs);
+        _fadeDelay = _maxFadeDelay;
+        _switchDelay = _maxSwitchDelay;
+        _sceneToSwitchTo = sceneToSwitchTo;
+        _loadingZoneToId = loadingZoneToId;
     }
-    
+
 
     private void GoToScene(Scene sceneToGoTo, string? loadingZoneToId = null)
     {
         // We create the instance of our next scene 
         var newScene = _sceneList[sceneToGoTo].Instance();
-        
+
         // We remove the current scene and add the new at its place
         GetTree().Root.RemoveChild(GetTree().CurrentScene);
         GetTree().Root.AddChild(newScene);
-        
+
         // We tell godot this is the current scene now
         GetTree().CurrentScene = newScene;
 
@@ -69,13 +110,14 @@ public class SceneSwitcher : Node
         if (loadingZoneToId != null)
         {
             // We find a loading zone that has a ID connected to the one we used
-            LoadingZone? loadingZoneTo = _currentSceneNode.FindInChildrenWhere<LoadingZone>(zone => zone.Id == loadingZoneToId, true);
+            LoadingZone? loadingZoneTo =
+                _currentSceneNode.FindInChildrenWhere<LoadingZone>(zone => zone.Id == loadingZoneToId, true);
 
             if (loadingZoneTo != null)
             {
                 // We find the player in the new scene
                 Player player = GetNode<Player>("/root/Player");
-                
+
                 // If we find a connected loading zone, we place the player at its spawn point
                 player.Position = loadingZoneTo.Spawn.GlobalTransform.origin;
 
@@ -83,7 +125,8 @@ public class SceneSwitcher : Node
                 if (camera != null)
                 {
                     camera.SmoothingEnabled = false;
-                    RunAfterDelay(() => camera.SmoothingEnabled = true, 100);
+
+                    _smoothingDelay = _smoothingMaxDelay;
                 }
             }
         }

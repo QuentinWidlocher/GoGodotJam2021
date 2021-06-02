@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using static Helpers.TaskHelpers;
 
 public class Bolt : KinematicBody2D
 {
@@ -12,6 +10,9 @@ public class Bolt : KinematicBody2D
     private Light2D _light = null!;
     private Sprite _sprite = null!;
     private AudioStreamPlayer2D _hitSound = null!;
+    
+    private readonly float _maxDestroyDelay = 1f;
+    private float _destroyDelay;
 
     public void Shoot(Vector2 pos, Vector2 dir) {
         _particles = (Particles2D)GetNode("Particles2D");
@@ -35,6 +36,17 @@ public class Bolt : KinematicBody2D
 
             DeleteBolt();
         }
+        
+        if (_destroyDelay > 0)
+        {
+            _destroyDelay -= delta;
+
+            if (_destroyDelay <= 0)
+            {
+                _destroyDelay = 0;
+                QueueFree();
+            }
+        }
     }
 
     public void OnVisibilityNotifier2DScreenExited()
@@ -50,6 +62,6 @@ public class Bolt : KinematicBody2D
         _sprite.Visible = false;
         _particles.Emitting = false;
         _light.Enabled = false;
-        RunAfterDelay(QueueFree, 1000);
+        _destroyDelay = _maxDestroyDelay;
     }
 }

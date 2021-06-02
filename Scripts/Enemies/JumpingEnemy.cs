@@ -1,7 +1,4 @@
-using System.Threading.Tasks;
 using Godot;
-using Helpers;
-using static Helpers.TaskHelpers;
 
 public class JumpingEnemy : RigidDetectionEnemy
 {
@@ -15,7 +12,10 @@ public class JumpingEnemy : RigidDetectionEnemy
     private RayCast2D _floorCast2 = null!;
     private AnimatedSprite _sprite = null!;
     private AudioStreamPlayer2D _deathSound = null!;
-    
+
+    private readonly float _maxFloorDelay = 0.5f;
+    private float _floorDelay;
+
     private bool _preparingJump;
 
     private bool OnGround => _floorCast1.IsColliding() || _floorCast2.IsColliding();
@@ -23,9 +23,9 @@ public class JumpingEnemy : RigidDetectionEnemy
     public override void _Ready()
     {
         base._Ready();
-        
+
         _healthPoints = MaxHealthPoints;
-        
+
         _timer = GetNode<Timer>("Timer");
         _floorCast1 = GetNode<RayCast2D>("FloorCast1");
         _floorCast2 = GetNode<RayCast2D>("FloorCast2");
@@ -33,19 +33,31 @@ public class JumpingEnemy : RigidDetectionEnemy
         _timer.OneShot = true;
         _timer.Connect("timeout", this, nameof(Jump));
 
-        _sprite = (AnimatedSprite)GetNode("Sprite");
+        _sprite = (AnimatedSprite) GetNode("Sprite");
 
-        _deathSound = (AudioStreamPlayer2D)GetNode("DeathSound");
+        _deathSound = (AudioStreamPlayer2D) GetNode("DeathSound");
     }
 
     public override void _Process(float delta)
     {
         base._Process(delta);
-        
+
         // We prepare to jump only if we're not already preparing to, if the player has been seen and if we're on ground
         if (!_preparingJump && _hasSeenPlayer && _target != null && OnGround)
         {
             PrepareJump();
+        }
+        
+        if (_floorDelay > 0)
+        {
+            _floorDelay -= delta;
+
+            if (_floorDelay <= 0)
+            {
+                _floorDelay = 0;
+                _floorCast1.Enabled = true;
+                _floorCast2.Enabled = true;
+            }
         }
     }
 
@@ -74,10 +86,6 @@ public class JumpingEnemy : RigidDetectionEnemy
     {
         _floorCast1.Enabled = false;
         _floorCast2.Enabled = false;
-        RunAfterDelay(() =>
-        {
-            _floorCast1.Enabled = true;
-            _floorCast2.Enabled = true;
-        }, ms);
+        _floorDelay = _maxFloorDelay;
     }
 }

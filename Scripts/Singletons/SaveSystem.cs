@@ -4,14 +4,15 @@ using System.Linq;
 using Godot;
 using Godot.Collections;
 using static Helpers.NodeExtensions;
-using static Helpers.TaskHelpers;
-using Object = System.Object;
 
 public class SaveSystem : Node
 {
 	private SceneSwitcher _sceneSwitcher = null!;
 	private Player _player = null!;
 	private StatSystem _statSystem = null!;
+	
+	private float _smoothingDelay;
+	private float _smoothingMaxDelay = 0.1f;
 
 	private string _savePath = "user://save.dat";
 	
@@ -20,6 +21,19 @@ public class SaveSystem : Node
 		_sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
 		_player = GetNode<Player>("/root/Player");
 		_statSystem = GetNode<StatSystem>("/root/StatSystem");
+	}
+
+	public override void _Process(float delta)
+	{
+		if (_smoothingDelay > 0)
+		{
+			_smoothingDelay -= delta;
+
+			if (_smoothingDelay <= 0)
+			{
+				_player.FindInChildren<Camera2D>().SmoothingEnabled = true;
+			}
+		}
 	}
 
 	public void Save()
@@ -102,7 +116,7 @@ public class SaveSystem : Node
 			if (camera != null)
 			{
 				camera.SmoothingEnabled = false;
-				RunAfterDelay(() => camera.SmoothingEnabled = true, 100);
+				_smoothingDelay = _smoothingMaxDelay;
 			}
 
 			var enemiesInfos = ((Dictionary) saveData["EnemiesInfos"]);
