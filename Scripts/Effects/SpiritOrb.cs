@@ -1,11 +1,11 @@
 using System;
 using Godot;
 using static Helpers.TaskHelpers;
+using static ServiceLocator;
 
 public class SpiritOrb : Particles2D
 {
 	private Player? _target;
-	private StatSystem _statSystem = null!;
 	private Light2D _light = null!;
 	private AudioStreamPlayer2D _pickupSound = null!;
 	
@@ -15,7 +15,6 @@ public class SpiritOrb : Particles2D
 
 	public override void _Ready()
 	{
-		_statSystem = GetNode<StatSystem>("/root/StatSystem");
 		_light = GetNode<Light2D>("Light2D");
 		_pickupSound = (AudioStreamPlayer2D)GetNode("Pickup");
 	}
@@ -47,7 +46,7 @@ public class SpiritOrb : Particles2D
 		if (!_fading && body is Player)
 		{
 			GD.Print($"Gained {Value} spirits");
-			_statSystem.SpiritCount += Value * _statSystem.PlayerStat.SpiritMultiplier;
+			StatSystemService.SpiritCount += Value * StatSystemService.PlayerStat.SpiritMultiplier;
 			
 			// We let the orb slowly fade before we destroy it
 			Emitting = false;

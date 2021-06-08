@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using static ServiceLocator;
 
 public class LoadingZone : Area2D
 {
@@ -9,12 +10,9 @@ public class LoadingZone : Area2D
 
 	public Position2D Spawn = null!;
 
-	private SceneSwitcher _sceneSwitcher = null!;
-
 	public override void _Ready()
 	{
 		Spawn = GetNode<Position2D>("Spawn");
-		_sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
 		Connect("body_entered", this, nameof(OnBodyEntered));
 	}
 
@@ -22,7 +20,7 @@ public class LoadingZone : Area2D
 	{
 		if (body is Player)
 		{
-			_sceneSwitcher.Switch(ToScene, ToId);
+			SceneSwitcherService.Switch(ToScene, ToId);
 		}
 	}
 }

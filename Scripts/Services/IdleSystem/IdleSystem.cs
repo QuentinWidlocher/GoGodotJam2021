@@ -13,7 +13,7 @@ public class IdleSystem : Timer
      * Big list of all the Generators.
      * This is where the magic happens
      */
-    public static List<Generator> Generators = new List<Generator>
+    public static readonly List<Generator> Generators = new List<Generator>
     {
         new Generator
         {
@@ -50,8 +50,6 @@ public class IdleSystem : Timer
 
     public override void _Ready()
     {
-        StatSystemService = GetNode<StatSystem>("/root/StatSystem");
-        
         // We update the currency each seconds (by default)
         Connect("timeout", this, nameof(UpdateCurrency));
         WaitTime = .5f;

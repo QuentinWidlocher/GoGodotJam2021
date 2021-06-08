@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using static Helpers.NodeExtensions;
+using static ServiceLocator;
 
 public class IdleMenu : CanvasLayer
 {
@@ -15,25 +16,17 @@ public class IdleMenu : CanvasLayer
 	private Label _totalSpiritLabel = null!;
 	private Label _totalManaLabel = null!;
 	private Label _manaProductionLabel = null!;
-	private Player _player = null!;
 
-	private PackedScene _playerUpgradeButton = GD.Load<PackedScene>("res://Scenes/UI/Idle/PlayerUpgradeButton.tscn");
-	private List<PlayerUpgradeButton> _playerUpgradeButtons = new List<PlayerUpgradeButton>();
-	private PackedScene _generatorButton = GD.Load<PackedScene>("res://Scenes/UI/Idle/GeneratorButton.tscn");
-	private List<GeneratorButton> _generatorButtons = new List<GeneratorButton>();
-	
-	private static StatSystem _statSystem = null!;
-	private SceneSwitcher _sceneSwitcher = null!;
-	
+	private readonly PackedScene _playerUpgradeButton = GD.Load<PackedScene>("res://Scenes/UI/Idle/PlayerUpgradeButton.tscn");
+	private readonly List<PlayerUpgradeButton> _playerUpgradeButtons = new List<PlayerUpgradeButton>();
+	private readonly PackedScene _generatorButton = GD.Load<PackedScene>("res://Scenes/UI/Idle/GeneratorButton.tscn");
+	private readonly List<GeneratorButton> _generatorButtons = new List<GeneratorButton>();
+
 	private float PreviousCurrency;
 	
 	public override void _Ready()
 	{
-		_sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
-		_statSystem = GetNode<StatSystem>("/root/StatSystem");
-		
-		_player = GetNode<Player>("/root/Player");
-		_player.Enabled = false;
+		PlayerInstance.Enabled = false;
 		
 		_totalSpiritLabel = GetNode<Label>(TotalSpiritPath);
 		_totalManaLabel = GetNode<Label>(TotalManaPath);
@@ -60,16 +53,16 @@ public class IdleMenu : CanvasLayer
 
 	public override void _Process(float delta)
 	{
-		if (_statSystem.GameEnded)
+		if (StatSystemService.GameEnded)
 		{
-			_player.Enabled = false;
-			_sceneSwitcher.Switch(Scene.GameEnd);
+			PlayerInstance.Enabled = false;
+			SceneSwitcherService.Switch(Scene.GameEnd);
 		}
 		
 		if (Input.IsActionJustPressed("pause"))
 		{
-			_player.Enabled = true;
-			_sceneSwitcher.Switch(Scene.Hub, "HUB_TO_IDLE_1");
+			PlayerInstance.Enabled = true;
+			SceneSwitcherService.Switch(Scene.Hub, "HUB_TO_IDLE_1");
 		}
 		
 		// Rider wants me to perform math to gain accuracy, but I don't want accuracy, I want speed !
@@ -78,7 +71,7 @@ public class IdleMenu : CanvasLayer
 		
 		PreviousCurrency = IdleSystem.Currency;
 
-		_totalSpiritLabel.Text = $"{Math.Round(_statSystem.SpiritCount, 2)}";
+		_totalSpiritLabel.Text = $"{Math.Round(StatSystemService.SpiritCount, 2)}";
 		
 		_totalManaLabel.Text = $"{Math.Round(IdleSystem.Currency, 2)}";
 		_manaProductionLabel.Text = $"{Math.Round(IdleSystem.Production, 2)}/s";
