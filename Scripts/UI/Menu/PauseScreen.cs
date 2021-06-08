@@ -1,18 +1,15 @@
 using Godot;
+using static ServiceLocator;
 
 public class PauseScreen : Control
 {
 	private bool _gamePaused;
 
 	private Button _continueButton = null!;
-	private SceneSwitcher _sceneSwitcher = null!;
-	private SaveSystem _saveSystem = null!;
 	
 	public override void _Ready()
 	{
 		_continueButton = GetNode<Button>("ContinueButton");
-		_sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
-		_saveSystem = GetNode<SaveSystem>("/root/SaveSystem");
 		
 		Pause(false);	
 	}
@@ -20,9 +17,9 @@ public class PauseScreen : Control
 	public override void _Process(float delta)
 	{
 		if (
-			_sceneSwitcher.CurrentScene != Scene.MainMenu
-			&& _sceneSwitcher.CurrentScene != Scene.Guide
-			&& _sceneSwitcher.CurrentScene != Scene.IdleSystem 
+			SceneSwitcherService.CurrentScene != Scene.MainMenu
+			&& SceneSwitcherService.CurrentScene != Scene.Guide
+			&& SceneSwitcherService.CurrentScene != Scene.IdleSystem 
 			&& Input.IsActionJustPressed("pause"))
 		{
 			TogglePause();
@@ -54,7 +51,7 @@ public class PauseScreen : Control
 	public void OnExitButtonPressed()
 	{
 		Pause(false);
-		_saveSystem.Save();
-		_sceneSwitcher.Switch(Scene.MainMenu);
+		SaveSystemService.Save();
+		SceneSwitcherService.Switch(Scene.MainMenu);
 	}
 }

@@ -60,6 +60,12 @@ public class IdleMenu : CanvasLayer
 
 	public override void _Process(float delta)
 	{
+		if (_statSystem.GameEnded)
+		{
+			_player.Enabled = false;
+			_sceneSwitcher.Switch(Scene.GameEnd);
+		}
+		
 		if (Input.IsActionJustPressed("pause"))
 		{
 			_player.Enabled = true;

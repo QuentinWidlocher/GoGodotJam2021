@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using static ServiceLocator;
 
 public class IdleSystem : Timer
 {
     public static float Currency; // In Mana
     public static float Production; // In Mana/Sec
-
-    private static StatSystem _statSystem = null!;
 
     /**
      * Big list of all the Generators.
@@ -51,7 +50,7 @@ public class IdleSystem : Timer
 
     public override void _Ready()
     {
-        _statSystem = GetNode<StatSystem>("/root/StatSystem");
+        StatSystemService = GetNode<StatSystem>("/root/StatSystem");
         
         // We update the currency each seconds (by default)
         Connect("timeout", this, nameof(UpdateCurrency));
@@ -67,16 +66,16 @@ public class IdleSystem : Timer
     {
         var generator = GetGenerator(id);
 
-        if (generator?.Cost <= _statSystem.SpiritCount)
+        if (generator?.Cost <= StatSystemService.SpiritCount)
         {
-            _statSystem.SpiritCount -= generator.Cost;
+            StatSystemService.SpiritCount -= generator.Cost;
             generator.Bought++;
             ComputeProduction();
         }
     }
 
-    public static bool CanAffordGenerator(GeneratorId id) => GetGenerator(id)?.Cost <= _statSystem.SpiritCount;
-    public static bool CanAffordGenerator(Generator generator) => generator.Cost <= _statSystem.SpiritCount;
+    public static bool CanAffordGenerator(GeneratorId id) => GetGenerator(id)?.Cost <= StatSystemService.SpiritCount;
+    public static bool CanAffordGenerator(Generator generator) => generator.Cost <= StatSystemService.SpiritCount;
 
     public static Generator? GetGenerator(GeneratorId id) => Generators.Find(g => g.Id == id);
 

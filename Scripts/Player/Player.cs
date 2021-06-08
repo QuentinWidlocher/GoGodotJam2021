@@ -2,6 +2,7 @@ using Godot;
 using System;
 using Helpers;
 using static Helpers.TaskHelpers;
+using static ServiceLocator;
 
 public class Player : KinematicBody2D
 {
@@ -24,7 +25,7 @@ public class Player : KinematicBody2D
     public bool Enabled;
 
     // MaxJumps is public to change the number of max jumps from other classes (is there a better way to do this?)
-    public int MaxJumps => _statSystem.PlayerStat.HasDoubleJump ? 2 : 1;
+    public int MaxJumps => StatSystemService.PlayerStat.HasDoubleJump ? 2 : 1;
     public int RemainingHeal;
 
     private float _healthPoints;
@@ -39,8 +40,6 @@ public class Player : KinematicBody2D
         }
     }
     
-    private StatSystem _statSystem = null!;
-    private SceneSwitcher _sceneSwitcher = null!;
     private RayCast2D _rayCast = null!;
 
     public Vector2 _vel = Vector2.Zero;
@@ -90,8 +89,6 @@ public class Player : KinematicBody2D
     {
         _sprite = (AnimatedSprite) GetNode("AnimatedSprite");
         _animations = (AnimationPlayer) GetNode("AnimationPlayer");
-        _statSystem = GetNode<StatSystem>("/root/StatSystem");
-        _sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
         _rayCast = GetNode<RayCast2D>("RayCast2D");
 
         _jumpSound = (AudioStreamPlayer)GetNode("Sounds/Jump");
@@ -100,8 +97,8 @@ public class Player : KinematicBody2D
         _landingSound = (AudioStreamPlayer)GetNode("Sounds/Landing");
         _hitSound = (AudioStreamPlayer)GetNode("Sounds/Hit");
 
-        HealthPoints = _statSystem.PlayerStat.HealthPoints;
-        RemainingHeal = _statSystem.PlayerStat.MaxHeals;
+        HealthPoints = StatSystemService.PlayerStat.HealthPoints;
+        RemainingHeal = StatSystemService.PlayerStat.MaxHeals;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -127,7 +124,7 @@ public class Player : KinematicBody2D
             if (collision.Collider is Spikes && _vulnerable)
             {
                 // Spikes deals 10% of the player max HP
-                Hit(_statSystem.PlayerStat.HealthPoints * 0.1f, collision.Position);
+                Hit(StatSystemService.PlayerStat.HealthPoints * 0.1f, collision.Position);
                 // Lazy to override the Hit but idc
                 _knockingBack = new Vector2(_isFacingRight ? -1 : 1, -0.5f) * KnockbackForce;
             }
@@ -174,7 +171,7 @@ public class Player : KinematicBody2D
             _sprite.Play("fall");
         if (_vel.y > 400 && !OnGround)
             _sprite.Play("fall_fast");
-        if (IsOnWall() && !(IsOnFloor() || OnGround) && _statSystem.PlayerStat.HasWallJump)
+        if (IsOnWall() && !(IsOnFloor() || OnGround) && StatSystemService.PlayerStat.HasWallJump)
             _sprite.Play("wall_slide");
         if (Input.IsActionPressed("attack_main"))
             _sprite.Play("attack");
@@ -223,7 +220,7 @@ public class Player : KinematicBody2D
                 Attack();
             }
 
-            if (Input.IsActionJustPressed("dash") && _statSystem.PlayerStat.HasDash)
+            if (Input.IsActionJustPressed("dash") && StatSystemService.PlayerStat.HasDash)
             {
                 Dash();
             }
@@ -246,7 +243,7 @@ public class Player : KinematicBody2D
             _vel.y += Gravity;
 
         // When the jump button is held, _jumpTimer counts up to only let the player gain y velocity until JumpTime is reached
-        if (Input.IsActionJustPressed("jump") && _statSystem.PlayerStat.HasWallJump)
+        if (Input.IsActionJustPressed("jump") && StatSystemService.PlayerStat.HasWallJump)
         {
             if (IsOnWall() && !(IsOnFloor() || OnGround)) {
                 _vel.x += -Mathf.Sign(_vel.x) * WallJumpKnockback;
@@ -286,17 +283,17 @@ public class Player : KinematicBody2D
 
     private void Heal()
     {
-        if (RemainingHeal <= 0 || Math.Abs(HealthPoints - _statSystem.PlayerStat.HealthPoints) < 0.1) return;
+        if (RemainingHeal <= 0 || Math.Abs(HealthPoints - StatSystemService.PlayerStat.HealthPoints) < 0.1) return;
 
         RemainingHeal--;
-        HealthPoints += _statSystem.PlayerStat.HealingAmount;
-        HealthPoints = Mathf.Min(HealthPoints, _statSystem.PlayerStat.HealthPoints);
+        HealthPoints += StatSystemService.PlayerStat.HealingAmount;
+        HealthPoints = Mathf.Min(HealthPoints, StatSystemService.PlayerStat.HealthPoints);
     }
 
     public void Attack()
     {
         var bolt = (Bolt) _bolt.Instance();
-        bolt.Damage = _statSystem.PlayerStat.DamageDealt;
+        bolt.Damage = StatSystemService.PlayerStat.DamageDealt;
 
         bolt.Shoot(Position + 32 * FacingDirection, FacingDirection);
 
@@ -349,9 +346,9 @@ public class Player : KinematicBody2D
     {
         _knockingBack = Vector2.Zero;
         _vel = Vector2.Zero;
-        _statSystem.SpiritCount *= 0.75f;
+        StatSystemService.SpiritCount *= 0.75f;
         
         // Delay just so we can see the hurting animation
-        RunAfterDelay(() => _sceneSwitcher.Switch(Scene.Hub, "FROM_DEATH"), 200);
+        RunAfterDelay(() => SceneSwitcherService.Switch(Scene.Hub, "FROM_DEATH"), 200);
     }
 }

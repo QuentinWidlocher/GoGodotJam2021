@@ -5,22 +5,12 @@ using Godot;
 using Godot.Collections;
 using static Helpers.NodeExtensions;
 using static Helpers.TaskHelpers;
+using static ServiceLocator;
 using Object = System.Object;
 
 public class SaveSystem : Node
 {
-	private SceneSwitcher _sceneSwitcher = null!;
-	private Player _player = null!;
-	private StatSystem _statSystem = null!;
-
 	private string _savePath = "user://save.dat";
-	
-	public override void _Ready()
-	{
-		_sceneSwitcher = GetNode<SceneSwitcher>("/root/SceneSwitcher");
-		_player = GetNode<Player>("/root/Player");
-		_statSystem = GetNode<StatSystem>("/root/StatSystem");
-	}
 
 	public void Save()
 	{
@@ -49,15 +39,15 @@ public class SaveSystem : Node
 
 		var saveData = new Dictionary
 		{
-			["PlayerPosition"] = _player.Position,
-			["PlayerHealth"] = _player.HealthPoints,
-			["PlayerHeal"] = _player.RemainingHeal,
+			["PlayerPosition"] = PlayerInstance.Position,
+			["PlayerHealth"] = PlayerInstance.HealthPoints,
+			["PlayerHeal"] = PlayerInstance.RemainingHeal,
 			["ManaAmount"] = IdleSystem.Currency,
-			["SpiritAmount"] = _statSystem.SpiritCount,
+			["SpiritAmount"] = StatSystemService.SpiritCount,
 			["EnemiesInfos"] = enemiesInfos,
 			["PlayerUpgrades"] = playerUpgrades,
 			["Generators"] = generators,
-			["CurrentScene"] = _sceneSwitcher.CurrentScene ?? Scene.Hub,
+			["CurrentScene"] = SceneSwitcherService.CurrentScene ?? Scene.Hub,
 		};
 
 		using File file = new File();
@@ -85,20 +75,20 @@ public class SaveSystem : Node
 			{
 				var tilePosition = tileMap.MapToWorld(tileMap.WorldToMap(storedPosition));
 				var topOfTile = tilePosition + (tileMap.CellSize / 2);
-				_player.Position = topOfTile;
+				PlayerInstance.Position = topOfTile;
 			}
 			else
 			{
-				_player.Position = storedPosition;
+				PlayerInstance.Position = storedPosition;
 			}
 			
-			_player.RemainingHeal = (int) saveData["PlayerHeal"];
-			_player.HealthPoints = (float) saveData["PlayerHealth"];
-			_statSystem.SpiritCount = (float) saveData["SpiritAmount"];
+			PlayerInstance.RemainingHeal = (int) saveData["PlayerHeal"];
+			PlayerInstance.HealthPoints = (float) saveData["PlayerHealth"];
+			StatSystemService.SpiritCount = (float) saveData["SpiritAmount"];
 			IdleSystem.Currency = (float) saveData["ManaAmount"];
-			_sceneSwitcher.CurrentScene = (Scene)((int) saveData["CurrentScene"]);
+			SceneSwitcherService.CurrentScene = (Scene)((int) saveData["CurrentScene"]);
 			
-			var camera = _player.FindInChildren<Camera2D>();
+			var camera = PlayerInstance.FindInChildren<Camera2D>();
 			if (camera != null)
 			{
 				camera.SmoothingEnabled = false;
