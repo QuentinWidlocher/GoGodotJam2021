@@ -176,13 +176,14 @@ config/icon="res://icon.png"
 
 [autoload]
 
-IdleSystem="*res://Scripts/Singletons/IdleSystem/IdleSystem.cs"
-SceneSwitcher="*res://Scripts/Singletons/SceneSwitcher/SceneSwitcher.cs"
-PauseScreen="*res://Scenes/UI/Menu/PauseScreen.tscn"
-Player="*res://Scenes/Player/Player.tscn"
-SaveSystem="*res://Scripts/Singletons/SaveSystem.cs"
-StatSystem="*res://Scripts/Singletons/StatSystem/StatSystem.cs"
+ServiceLocator="*res://Scripts/Services/ServiceLocator.cs"
 Transition="*res://Scenes/UI/Transition.tscn"
+SceneSwitcher="*res://Scripts/Services/SceneSwitcher/SceneSwitcher.cs"
+IdleSystem="*res://Scripts/Services/IdleSystem/IdleSystem.cs"
+PauseScreen="*res://Scenes/UI/Menu/PauseScreen.tscn"
+SaveSystem="*res://Scripts/Services/SaveSystem.cs"
+StatSystem="*res://Scripts/Services/StatSystem/StatSystem.cs"
+Player="*res://Scenes/Player/Player.tscn"
 
 [debug]
 

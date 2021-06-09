@@ -2,14 +2,14 @@ using Godot;
 
 public class ServiceLocator : Node
 {
-    public static IdleSystem IdleSystemService;
-    public static StatSystem StatSystemService;
-    public static SceneSwitcher SceneSwitcherService;
-    public static SaveSystem SaveSystemService;
+    public static IdleSystem IdleSystemService = null!;
+    public static StatSystem StatSystemService = null!;
+    public static SceneSwitcher SceneSwitcherService = null!;
+    public static SaveSystem SaveSystemService = null!;
 
-    public static Player PlayerInstance;
+    public static Player PlayerInstance = null!;
 
-    public ServiceLocator()
+    public override void _Ready()
     {
         IdleSystemService = GetNode<IdleSystem>("/root/IdleSystem");
         StatSystemService = GetNode<StatSystem>("/root/StatSystem");

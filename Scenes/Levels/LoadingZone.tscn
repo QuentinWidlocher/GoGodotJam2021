@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scripts/Singletons/SceneSwitcher/LoadingZone.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Services/SceneSwitcher/LoadingZone.cs" type="Script" id=1]
 [ext_resource path="res://Assets/player_idle.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Helpers/ShowInEditorOnly.cs" type="Script" id=3]
 
